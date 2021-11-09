@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","result_s","state_s","startedCount_s","finishedCount_s","from_h","to_h"
+"744cef56-2cae-4017-b84e-cbef647319b4","989d634e-0e0e-4d35-a235-d9126579a837","/monitoringProjects/processings/structureCheckResult","projectStructureCheckAggrResult","NOT_PROCESSED","PENDING",,,"540","541"
+"744cef56-2cae-4017-b84e-cbef647319b4","989d634e-0e0e-4d35-a235-d9126579a837","/monitoringProjects/processings/structureCheckResult","projectStructureCheckAggrResult","NOT_PROCESSED","RUNNING","1","1","541","542"
+"744cef56-2cae-4017-b84e-cbef647319b4","989d634e-0e0e-4d35-a235-d9126579a837","/monitoringProjects/processings/structureCheckResult","projectStructureCheckAggrResult","SUCCESS","FINISHED","1","1","542",

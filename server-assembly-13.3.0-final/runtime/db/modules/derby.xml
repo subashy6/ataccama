@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="derby" driver="org.apache.derby.jdbc.ClientDriver" urlTemplate="jdbc:derby:&lt;databaseName&gt;">
+<!-- Derby embedded driver -->
+<!-- driver="org.apache.derby.jdbc.EmbeddedDriver"  -->
+	<jars>
+		<!-- embedded driver -->
+		<!--  <jar file="../libs/derby-10.5.1.jar"/> -->
+		<jar file="../libs/derbyclient.jar"/>
+	</jars>
+	<!-- identifier size not limited, so limit it internally -->
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter=";">
+		<createScript>CREATE TABLE &lt;tableName&gt; (&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;};separator=&quot;,&quot;&gt;);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; ALTER COLUMN &lt;attr.name&gt; SET DATA TYPE &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<pagedSelectScript>
+		SELECT &lt;selNames:{it | &lt;it&gt;};separator=","&gt; FROM &lt;tableName&gt; &lt;if(columns)&gt; WHERE &lt;columns:{it | &lt;it&gt;=?};separator=" AND "&gt;&lt;endif&gt; 
+		&lt;if(groups)&gt; GROUP BY &lt;groups:{it | &lt;it&gt;};separator=","&gt;&lt;endif&gt; 
+		&lt;if(sorters)&gt; ORDER BY &lt;sorters:{it | &lt;it&gt;};separator=","&gt;&lt;endif&gt;
+		OFFSET &lt;offset&gt; ROWS FETCH FIRST &lt;count&gt; ROWS ONLY
+		</pagedSelectScript>
+		
+		<!-- indexes -->		
+		<createIndex>CREATE INDEX &lt;indexName&gt; ON &lt;tableName&gt; (&lt;columns;separator=&quot;,&quot;&gt;)</createIndex>
+		<dropIndex>DROP INDEX &lt;indexName&gt;</dropIndex>		
+
+		<!-- identity used in dedicated table -->
+		<sequenceCreate>CREATE TABLE &lt;seqName&gt; (sqid BIGINT GENERATED ALWAYS AS IDENTITY)</sequenceCreate>
+		<sequenceNext>INSERT INTO &lt;seqName&gt; VALUES (DEFAULT); SELECT max(sqid) FROM &lt;seqName&gt;</sequenceNext>
+		<sequenceDrop>DROP TABLE &lt;seqName&gt;</sequenceDrop>
+		<sequenceSet></sequenceSet>
+		
+	</templates>
+	
+	<nonParametricDbTypes>
+		BLOB,CLOB,BIGINT,SMALLINT,TIME,DOUBLE PRECISION,FLOAT,REAL,TIMESTAMP
+	</nonParametricDbTypes>
+	
+	<persistenceMappings>
+		<mapping type="STRING" dbType="VARCHAR($size)" defaultSize="255"/>
+		<mapping type="BOOLEAN" dbType="SMALLINT" />
+		<mapping type="INTEGER" dbType="INTEGER" />
+		<mapping type="LONG_INTEGER" dbType="BIGINT" />
+		<mapping type="BIG_INTEGER" dbType="BIGINT" />
+		<mapping type="FLOAT" dbType="DOUBLE" />
+		<mapping type="DATETIME" dbType="TIMESTAMP" />
+		<mapping type="BLOB" dbType="BLOB" />
+		<mapping type="CLOB" dbType="CLOB" />
+	</persistenceMappings>
+	
+	<genericMappings>
+		<!-- strings -->
+		<mapping sourceType="LONG VARCHAR(%s)" targetType="VARCHAR($1)" />
+		<mapping sourceType="LONG VARCHAR" targetType="VARCHAR(255)" />
+		<mapping sourceType="VARCHAR(%s)" targetType="VARCHAR($1)" />
+		<mapping sourceType="VARCHAR" targetType="VARCHAR(255)" />
+		<mapping sourceType="CHAR" targetType="VARCHAR(255)" />
+		<!-- this may represent boolean, keep it -->
+		<mapping sourceType="CHAR(1)" targetType="CHAR(1)" />
+		<mapping sourceType="CHAR(%s)" targetType="VARCHAR($1)" />
+		<!-- datetime -->
+		<mapping sourceType="TIME" targetType="TIMESTAMP" />
+		<!-- numeric types -->
+		<mapping sourceType="REAL" targetType="DOUBLE" />
+		<mapping sourceType="FLOAT" targetType="DOUBLE" />
+		<mapping sourceType="DOUBLE PRECISION" targetType="DOUBLE" />
+		<mapping sourceType="SMALLINT" targetType="INTEGER" />
+		<mapping sourceType="BIGINT" targetType="BIGINT" />
+		<!-- generic numeric types -->
+		<mapping sourceType="NUMERIC" targetType="NUMERIC(10,2)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL" targetType="NUMERIC(10,2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+	</genericMappings>
+	
+</dbModule>

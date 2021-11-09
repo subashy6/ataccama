@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","name_s","dataSource_ri","dataSource_rh","catalogItem_ri","catalogItem_rh","catalogItemInstance_s","from_h","to_h"
+"96be21c2-572a-4fc1-96af-7aea7bd46861","ef3a0f36-0e1c-47bb-8948-d373d59fdc35","/monitoringProjects/configuration/aggregation","baseAggregation","Overall",,,,,,"541",
+"371a5ef9-9008-4c84-9693-ecdc83e0bf1f","96be21c2-572a-4fc1-96af-7aea7bd46861","/monitoringProjects/configuration/aggregation","dataSourceAggregation",,"3bc4a6c0-cd9f-4e6f-a1c4-d0d5de161eee","540",,,,"541",
+"4b6977bb-7282-492f-af94-d264cfcc77a7","371a5ef9-9008-4c84-9693-ecdc83e0bf1f","/monitoringProjects/configuration/aggregation","catalogItemAggregation",,,,"1589346f-d5b5-4400-9a13-ad3f733c70ea","540","0e5574f1-d4c7-4381-92e0-f8e0278cb95e","541",

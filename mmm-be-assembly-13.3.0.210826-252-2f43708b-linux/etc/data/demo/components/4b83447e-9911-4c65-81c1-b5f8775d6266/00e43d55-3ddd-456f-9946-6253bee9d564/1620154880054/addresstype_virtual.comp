@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="13.1.0.rc1">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (addresstype) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.catalogItems.CatalogItemReader" disabled="false" id="addresstype">
+		<properties workflowState="draft" serverName="local" catalogItem="0726c74e-fc9e-40ad-a29d-23ec1dac8769">
+			<columns>
+				<catalogItemColumn name="addresstypeid" type="LONG"/>
+				<catalogItemColumn name="modifieddate" type="DATETIME"/>
+				<catalogItemColumn name="name" type="STRING"/>
+				<catalogItemColumn name="rowguid" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="72,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="addresstype"/>
+		<target endpoint="in" step="out"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (out) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.common.usersteps.io.OutputStep" disabled="false" id="out">
+		<properties enforceFormat="true">
+			<requiredColumns>
+				<requiredColumn name="addresstypeid" type="LONG"/>
+				<requiredColumn name="modifieddate" type="DATETIME"/>
+				<requiredColumn name="name" type="STRING"/>
+				<requiredColumn name="rowguid" type="STRING"/>
+			</requiredColumns>
+		</properties>
+		<visual-constraints layout="vertical" bounds="72,360,-1,-1"/>
+	</step>
+
+</purity-config>

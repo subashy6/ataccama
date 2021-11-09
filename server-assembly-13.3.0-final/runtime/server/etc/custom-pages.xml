@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<cwc-config>
+	<!--  Every custom page has following attributes:
+	      class: class name defining what page rendering to use
+	      label: label of page in left menu and breadcrumb
+	      url: url of this page
+	      showInMenu [optional]: default true, if false - page is not shown in menu and is accesible only via url
+	      -->
+	<pages>
+		<!-- specific configuration based on class -->
+		
+		<!--
+		     FileBrowserPage displays list of files in configured directory - filename, size and date of last modification.
+		     Files might be filtered by regular expression. Viewer can click on filename and see content of file.
+		-->
+		<!--
+		<page class="com.ataccama.dqc.web.console.custom.FileBrowserPage" label="Logs files" url="logs1">
+			<description>Backend log files</description>
+			<directory>../logs/backend</directory>
+			<regex>.*\.log</regex>
+			<showMaxBytes>10000</showMaxBytes>
+			<encoding>US-ASCII</encoding>
+		</page>
+		-->
+
+		<!--
+		     FileTablePage displays list of files in configured directory. Files are divided into several columns based
+		     on regular expression filter. Columns are not exclusive - one file might be in more columns.
+		     Viewer can click on filename and see content of file.
+		-->
+		<!--
+		<page class="com.ataccama.dqc.web.console.custom.FileTablePage" label="Logs files" url="logs2">
+		    <description>Backend log files</description>
+		    <directory>../logs/backend</directory>
+		    <showMaxBytes>1000000</showMaxBytes>
+		    <encoding>US-ASCII</encoding>
+		    <columns>
+			<column label="Morning" regex="\d{8}_(0[0-9]|10|11)\d{4}\.log" />
+			<column label="Afternoon" regex="\d{8}_(1[234567])\d{4}\.log" />
+			<column label="Evening" regex="\d{8}_(1[89]|2[0-3])\d{4}\.log" />
+		    </columns>
+		</page>
+		-->
+
+		<!--
+		     DatabaseQueryPage displays results of one or more SQL queries.
+		-->
+		<!--
+		<page class="com.ataccama.dqc.web.console.custom.DatabaseQueryPage" label="DB status logs" url="dblogs">
+		    <queries>
+			<!- - every query is one section of custom Admin Center page - ->
+			<query>
+			    <label>Main status</label>
+			    <description>This is main status of operations.</description>
+			    <query>SELECT ID,NAME,STATUS FROM WF_OPERATION</query>
+			    <dataSource>WF_DB_CONN</dataSource>
+			    <links>
+				<!- - ${ID} is replaced by value of ID column returned by SELECT - ->
+				<link label="Details" url="/console/dblogsdetail/?id=${ID}" />
+			    </links>
+			</query>         
+			<query>
+			    <label>Incoming requests</label>
+			    <description>This is list of incoming reqests</description>
+			    <!- - ${ID} is replaced by request parameter id - taken from web request - ->
+			    <query>SELECT ID, CALLER, REQ_DATE, SUMMARY FROM WF_REQUEST_I WHERE ID_OPERATION=${id}</query>
+			    <dataSource>mdc_db</dataSource>
+			    <links>
+				<!- - ${ID} is replaced by value of ID column returned by SELECT - ->
+				<link label="Details" url="http://other.system.intranet/processing/id/${ID}" />
+			    </links>
+			</query>
+		    </queries>
+		</page>
+		-->
+	</pages>
+</cwc-config>

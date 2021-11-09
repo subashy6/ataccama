@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","result_s","state_s","startedCount_s","finishedCount_s","profiling_ri","profiling_rh","from_h","to_h"
+"1229cd18-9b1d-45b1-b575-63b1f1f3441a","73c3d183-2e47-4d84-8dd3-842208edb207","/monitoringProjects/processings/items/anomalyDetectionResult","projectCatalogItemAnomalyDetectionResult","NOT_PROCESSED","PENDING",,,,,"541","542"
+"1229cd18-9b1d-45b1-b575-63b1f1f3441a","73c3d183-2e47-4d84-8dd3-842208edb207","/monitoringProjects/processings/items/anomalyDetectionResult","projectCatalogItemAnomalyDetectionResult","SKIPPED","FINISHED","0","0",,,"542",

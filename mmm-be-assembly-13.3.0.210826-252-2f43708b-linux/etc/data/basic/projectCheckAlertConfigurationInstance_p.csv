@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","checkAlert_ri","checkAlert_rh","from_h","to_h"
+"d2771105-5974-4583-b3ce-b4e5eb9c29f4","d08528a6-22be-497f-8b80-4490d026edff","/projectCheckAlertConfiguration/defaultStructureCheckAlerts","projectCheckAlertConfigurationInstance","581b082c-f05e-44e4-8b01-a616621c0a4b",,"0",
+"0f148856-69f7-4c43-967d-90632cbfd5f1","d08528a6-22be-497f-8b80-4490d026edff","/projectCheckAlertConfiguration/defaultDqCheckAlerts","projectCheckAlertConfigurationInstance","1ca0598b-4159-4234-99bd-182f6721dce8",,"0",
+"4aee5a8a-96b5-49a8-be60-1d51c93964b7","d08528a6-22be-497f-8b80-4490d026edff","/projectCheckAlertConfiguration/defaultAnomalyCheckAlerts","projectCheckAlertConfigurationInstance","1ca0598b-4159-4234-99bd-182f6721dce8",,"0",

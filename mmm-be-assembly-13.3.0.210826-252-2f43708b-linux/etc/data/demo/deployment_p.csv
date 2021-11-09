@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","name_s","from_h","to_h"
+"924741eb-fed9-48a7-a015-2ef153a70cf1","f51147fa-f609-450c-b44e-5fd57ef7cc7a","/valueLists/deployments","deployment","CLOUD","102",
+"bcd1f3b5-b71a-4123-b2a5-e564193d38cc","f51147fa-f609-450c-b44e-5fd57ef7cc7a","/valueLists/deployments","deployment","ON-PREMISE","102",

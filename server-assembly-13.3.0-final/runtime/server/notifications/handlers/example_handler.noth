@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<notificationHandler>
+    <description>Sample handler</description>
+    <enabled>true</enabled>
+    <job class="com.ataccama.adt.scheduler.job.RunWinCmdJob">
+        <command>../resources/greeting.bat ${ewf_NotificationEvents}</command>
+        <workingDir>.</workingDir>
+        <logStartStop>false</logStartStop>
+    </job>
+    <serverName>one-server</serverName>
+    <subscription ackLimit="5"/>
+</notificationHandler>

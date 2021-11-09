@@ -1,0 +1,104 @@
+<commands>
+<!--
+
+Symbolic names used in templates in {}:
+
+	data		table of data records
+	key			table of unification keys
+	ts			table for timestamps
+	morules
+	moreuni
+	meta
+	
+	idxpk		pk - index on table {key}
+	idxukey		ukey - index on table {key}
+	
+	tmpkey		tmp table of input unif.keys
+	tmpdkey		tmp table of expanded unif.keys
+	tmppk		tmp table of input/expandex pks
+	tmppkt		tmp table of input/expanded pks with timestamp
+
+	== temporary tables used in delayed update strategy:
+		column utype identifies update(0) insert(1) or delete(2)
+	upddata		tmp table of updated {data} rows (utype, pk, attr, data#)
+	upddext		tmp table of updated {data} extents (pk, dataex)
+	updkey		tmp table of updated {key} rows (utype, ukey, pk)
+	upddel		tmp table of deleted pks (pk)
+	updts		tmp table of updated {ts} rows (utype, pk, ts)
+
+-->
+	<!-- called after connect and initialize repository when runtime starts -->
+	<afterStart/>
+
+	<!-- -->
+	<beforeBatch/>
+
+	<!-- -->
+	<afterBatch/>
+
+	<!-- -->
+	<beforeExpand/>
+
+	<!-- expand commands -->
+	<addPks>
+	</addPks>
+
+	<addKeys>
+	</addKeys>
+
+	<!-- -->
+	<afterExpand/>
+
+	<!-- before reading expanded recs from repository and sending them to unify -->
+	<beforeUpdate>
+	</beforeUpdate>
+
+	<!-- -->
+	<afterUpdate>
+	</afterUpdate>
+
+	<!-- -->
+	<beforeDelayedUpdate>
+		drop index {idxukey};
+		drop index {idxpk};
+	</beforeDelayedUpdate>
+
+	<delayedUpdate>
+		merge into {data} d using {upddata} u on (d.pk = u.pk)
+		when matched then
+			update set d.attr = u.attr{*, d.data# = u.data#}
+		when not matched then
+			insert (d.pk, d.attr{*, d.data#}) values(u.pk, u.attr{*, u.data#});
+
+		merge into {data} d using {upddext} u on (d.pk = u.pk)
+		when matched then
+			update set d.dataex = u.dataex;
+
+		merge into {key} k using {updkey} u on (k.pk = u.pk)
+		when matched then
+			update set k.ukey = u.ukey where utype = 0
+			delete where utype = 2
+		when not matched then
+			insert (k.ukey, k.pk) values(u.ukey, u.pk);
+
+		merge into {ts} t using {updts} u on (t.pk = u.pk)
+		when matched then
+			update set t.ts = u.ts where utype = 0
+			delete where utype = 2
+		when not matched then
+			insert (t.pk, t.ts) values(u.pk, u.ts);
+	</delayedUpdate>
+
+	<!-- -->
+	<afterDelayedUpdate>
+		create index {idxpk} on {key} (pk);
+		create index {idxukey} on {key} (ukey)
+	</afterDelayedUpdate>
+
+	<!-- -->
+	<beforeStop/>
+
+	<!-- [DIRECT] | DELAYED | DELAY_DELETE | SERVER_DELETE -->
+	<updateStrategy>DELAYED</updateStrategy>
+
+</commands>

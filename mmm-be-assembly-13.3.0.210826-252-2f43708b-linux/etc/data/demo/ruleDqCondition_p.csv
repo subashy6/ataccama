@@ -1,0 +1,6 @@
+"id_i","parent_id_i","path_i","type_i","order_s","name_s","result_ri","result_rh","aggregated_s","groupBy_ri","groupBy_rh","score_s","disabled_s","from_h","to_h"
+"ea76e19a-0471-4827-93bf-eab7f5111696","d2b85350-0504-4f9f-815c-19f615d1a548","/rules/implementation/conditions","ruleDqCondition","0","IS_INVALID","ec49b8ed-52b2-469c-8424-4866249755cb",,"false",,,"1000","false","73",
+"6e3725d2-a9ca-4ea7-90ef-9c3fa93d5253","c41da24a-fbba-442b-84d7-0cf0a7506f8f","/rules/implementation/conditions","ruleDqCondition","0","VALID","67b7aed6-b54f-4be3-a987-95899f605029",,"false",,,"0","false","73",
+"026b42fa-5861-4a14-8870-d825b90dd984","c9ed69d6-ce76-4d24-a4e4-e50ca7f08092","/rules/implementation/conditions","ruleDqCondition","0","IS_INVALID","ec49b8ed-52b2-469c-8424-4866249755cb",,"false",,,"1000","false","73",
+"c3c4d936-af29-4c14-91e6-a89a4da7e410","3c89e693-a577-426b-abb1-927c6b04b00e","/rules/implementation/conditions","ruleDqCondition","0","IS_INVALID","ec49b8ed-52b2-469c-8424-4866249755cb",,"false",,,"1000","false","73",
+"5a69e2d1-c74c-43a2-a5a2-2705cc2a760d","8b529d06-179a-46a0-83de-d34cf3346008","/rules/implementation/conditions","ruleDqCondition","1","IS_EMPTY","ec49b8ed-52b2-469c-8424-4866249755cb",,"false",,,,"false","73",

@@ -1,0 +1,89 @@
+<commands>
+<!--
+
+Symbolic names used in templates in {}:
+
+	data		table of data records
+	key			table of unification keys
+	ts			table for timestamps
+	morules
+	moreuni
+	meta
+	
+	idxpk		pk - index on table {key}
+	idxukey		ukey - index on table {key}
+	
+	tmpkey		tmp table of input unif.keys
+	tmpdkey		tmp table of expanded unif.keys
+	tmppk		tmp table of input/expandex pks
+	tmppkt		tmp table of input/expanded pks with timestamp
+
+	== temporary tables used in delayed update strategy:
+		column utype identifies update(0) insert(1) or delete(2)
+	upddata		tmp table of updated {data} rows (utype, pk, attr, data#)
+	upddext		tmp table of updated {data} extents (pk, dataex)
+	updkey		tmp table of updated {key} rows (utype, ukey, pk)
+	upddel		tmp table of deleted pks (pk)
+	updts		tmp table of updated {ts} rows (utype, pk, ts)
+
+-->
+	<!-- called after connect and initialize repository when runtime starts -->
+	<afterStart/>
+
+	<!-- -->
+	<beforeBatch/>
+
+	<!-- -->
+	<afterBatch/>
+
+	<!-- -->
+	<beforeExpand/>
+
+	<!-- expand commands -->
+	<addPks>
+	</addPks>
+
+	<addKeys>
+	</addKeys>
+
+	<!-- -->
+	<afterExpand/>
+
+	<!-- before reading expanded recs from repository and sending them to unify -->
+	<beforeUpdate>
+	</beforeUpdate>
+
+	<!-- -->
+	<afterUpdate>
+	</afterUpdate>
+
+	<!-- -->
+	<beforeDelayedUpdate>
+		drop index {key}.{idxpk};
+		drop index {key}.{idxukey}
+	</beforeDelayedUpdate>
+
+	<delayedUpdate>
+		insert into {data} (pk, attr{*, data#}) select pk, attr{*, data#} from {upddata} where utype = 1;
+		update {data} set attr = u.attr{*, data# = u.data#} from {data} d join {upddata} u on d.pk = u.pk and utype = 0;
+		update {data} set dataex = u.dataex from {data} d join {upddext} u on d.pk = u.pk;
+		insert into {key} (ukey, pk) select ukey, pk from {updkey} where utype = 1;
+		delete from {key} from {key} k join {updkey} u on k.pk = u.pk and k.ukey = u.ukey and utype = 2;
+		update {ts} set ts = u.ts from {ts} t join {updts} u on t.pk = u.pk and utype = 0;
+		delete from {ts} from {ts} t join {updts} u on t.pk = u.pk and utype = 2;
+		insert into {ts} (pk, ts) select pk, ts from {updts} where utype = 1;
+	</delayedUpdate>
+
+	<!-- -->
+	<afterDelayedUpdate>
+		create index {idxpk} on {key} (pk);
+		create index {idxukey} on {key} (ukey)
+	</afterDelayedUpdate>
+
+	<!-- -->
+	<beforeStop/>
+
+	<!-- [DIRECT] | DELAYED | DELAY_DELETE | SERVER_DELETE -->
+	<updateStrategy>DELAYED</updateStrategy>
+
+</commands>

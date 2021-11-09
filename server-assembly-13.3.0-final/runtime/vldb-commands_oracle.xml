@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<vldb-commands>
+	<!-- 
+	Configuration file - templates of VlDb SQL commands. This file provides default configuration with hints for Oracle.
+	
+	Symbolic names used in templates in {} for FIND commands:
+		columns	- list of columns to be selected
+		data	- table to get data from
+		xdata	- corresponding X table
+		where	- where condition (expands to "WHERE col1 = ? ...")
+		order	- order by sorting (expands to "ORDER BY col1 DESC, ...")
+	
+	More symbolic names used in templates in {} for IN_LISTS commands:	
+		inlist	- name of inlist table with values to join with data table
+		keyName	- name of column in data table used in join
+		inwhere - special variant of where (expands to " AND col1 = ? ...") because it is replaced in SQL command that contains WHERE query already
+	
+	
+	FIND command have two variants (small and large data), threshold is runtime parameter nme.vldb.smallDataThreshold (default is 200 000).
+	
+	IN_LIST commands can have more variants. Variants are considered in order of appearance and chosen if condition is met (element expectedDataSize).
+		Element expectedDataSize can have following attributes:
+			- size 			- either SMALL or LARGE, threshold is same as in FIND command via nme.vldb.smallDataThreshold.
+			- lessThan		- number, requests in inlist table must be less than given number
+			- greaterThan	- number, requests in inlist table must be greater than given number
+		If size is defined, nothing else can be defined.
+		If size is not defined, at least one of lessThan, greaterThan must be defined.
+		If whole element expectedDataSize is not defined, variant is always used.
+		
+	IN_LIST command UNMATCH does not have any variants (as it selects all records not in inlist). Just provide template. 
+	-->
+
+	<inlistOrderedCommand>
+		<variants>
+			<commandVariant>
+				<expectedDataSize size="SMALL" />
+				<template>
+					SELECT /*+ ORDERED USE_NL(l d x) FULL(l) INDEX(d) INDEX(x) */ l.seq_num, d.xctid, x.xdtid, {columns}
+					FROM
+					(
+						{inlist} l INNER JOIN {data} d
+							ON l.id_list = ? AND d.{keyName}=l.key_val
+					)
+					LEFT JOIN {xdata} x ON d.xid = x.xid
+						{where} {order}
+				</template>
+			</commandVariant>
+			<commandVariant>
+				<expectedDataSize size="LARGE" />
+				<template>
+					SELECT /*+ORDERED USE_HASH(l d x) SWAP_JOIN_INPUTS(l) SWAP_JOIN_INPUTS(x) FULL(d) FULL(x) FULL(l) */ l.seq_num, d.xctid, x.xdtid, {columns}
+					FROM
+					(
+						{inlist} l INNER JOIN {data} d
+							ON l.id_list = ? AND d.{keyName}=l.key_val
+					)
+					LEFT JOIN {xdata} x ON d.xid = x.xid
+						{where} {order}
+				</template>
+			</commandVariant>
+		</variants>
+	</inlistOrderedCommand>
+	
+	
+	<inlistUnorderedCommand>
+		<variants>
+			<commandVariant>
+				<expectedDataSize size="SMALL" />
+				<template>
+					SELECT /*+ ORDERED USE_NL(l d x) FULL(l) INDEX(d) INDEX(x) */ d.xctid, x.xdtid, {columns}
+						FROM
+						(
+							{inlist} l INNER JOIN {data} d
+								on l.id_list = ? and d.{keyName}=l.key_val
+						)
+						LEFT JOIN {xdata} x on d.xid = x.xid
+							{where}
+				</template>
+			</commandVariant>
+			<commandVariant>
+				<expectedDataSize size="LARGE" />
+				<template>
+					SELECT /*+ORDERED USE_HASH(l d x) SWAP_JOIN_INPUTS(l) SWAP_JOIN_INPUTS(x) FULL(d) FULL(x) FULL(l) */ d.xctid, x.xdtid, {columns}
+						FROM
+						(
+							{inlist} l INNER JOIN {data} d
+								on l.id_list = ? and d.{keyName}=l.key_val
+						)
+						LEFT JOIN {xdata} x on d.xid = x.xid
+							{where}
+				</template>
+			</commandVariant>
+		</variants>
+	</inlistUnorderedCommand>
+
+
+	<inlistUnmatchedCommand>
+		<template>
+			SELECT /*+ORDERED USE_HASH(l d x) SWAP_JOIN_INPUTS(l) SWAP_JOIN_INPUTS(x) FULL(d) FULL(x) FULL(l) */ d.xctid, x.xdtid, {columns}
+			FROM
+			(
+				{inlist} l
+					RIGHT JOIN {data} d
+					ON d.{keyName} = l.key_val and l.id_list = ?
+			)
+			LEFT JOIN {xdata} x on d.xid = x.xid
+				WHERE l.key_val is null
+				{inwhere}
+		</template>
+	</inlistUnmatchedCommand>
+
+
+	<findCommand>
+		<smallDataVariant>
+			SELECT /*+ORDERED USE_NL(x d) INDEX(x) */ d.xctid, x.xdtid, {columns}
+			FROM {data} d
+				LEFT JOIN {xdata} x on d.xid = x.xid
+				{where} {order}
+		</smallDataVariant>
+		<largeDataVariant>
+			SELECT /*+ORDERED USE_HASH(x d) SWAP_JOIN_INPUTS(x) FULL(d) FULL(x) */ d.xctid, x.xdtid, {columns}
+			FROM {xdata} x
+				RIGHT JOIN {data} d on d.xid = x.xid
+				{where} {order}
+		</largeDataVariant>
+	</findCommand>
+</vldb-commands>

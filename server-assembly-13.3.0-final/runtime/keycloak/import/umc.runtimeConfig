@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<runtimeconfig>
+  <contributedConfigs>
+  </contributedConfigs>
+  <pathVariables>
+    <pathVariable name="DATA" value="data"/>
+  </pathVariables>
+  <dataSources>
+    <dataSource password="crypted:AES:+REcee6/qmE3ZKlGX2qKYF6Ko/2REzXSoq4s2c0Mt68=" name="UMC" driverclass="org.apache.derby.jdbc.ClientDriver" user="umc" url="jdbc:derby://localhost:1527/umc"/>
+  </dataSources>
+  <parallelismLevel>1</parallelismLevel>
+</runtimeconfig>

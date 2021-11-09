@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+
+elements and attributes:
+	refreshOnRequest ... If true, this file is checked and loaded on every unification request.
+	commandSet	... Defines commands that can be specialized for database (optional attribute dbType).
+					If the same dbType (or none) is specified in more commandSet, the last occurence overwrites previous ones!
+					Currently supported dbType are: oracle, mssql, mysql, postgresql, derby, hsqldb
+	command		... Defines command used in particular phase of repository expand process.
+					The comand has id (expandGid, expandPks)
+					and variants depending on condition.
+	commandVariant ... Defines template for sql command used when optional condition is satisfied.
+	template	... Contains customized sql command with placeholders for table names.
+	condition   ... Expression selecting the variant,
+	                use integer pseudo-columns wpk, wkey and wgid containing number of rows in appropriate working sets
+
+used substitutes:
+	{meta} ... repository meta table (maxId, records)
+	{data} ... repository data table (pk varchar, its timestamp, ots timestamp, data0 varchar, data1 varchar, ...)
+	{keys} ... repository key table (op int, ukey varchar , pk varchar)
+	{wpk}  ... working set of input and expanded (pk, ord, op)
+	{wgid} ... working set of group ids to expand (op, gid)
+	{wkey} ... working set of keys to expand (op, ukey)
+	{wdkey} ... working set of keys (duplicit, used as source for distinct set in {wkey})
+	{data_wu} ... working table for batch update (insert/update data)
+	{data_wd} ... working table for batch update (delete from data)
+	{keys_wi} ... working table for batch update (insert keys)
+	{keys_wu} ... working table for batch update (update keys)
+	{keys_wd} ... working table for batch update (delete from keys)
+
+join hints:
+	for mssql: { LOOP | HASH | MERGE }
+	 place it between INNER/OUTER and JOIN keywords, f.e: SELECT .... FROM a INNER MERGE JOIN b ON ...
+
+	for oracle: /*+ hint(table1 table2) */ where hint is USE_NL, NO_USE_NL, USE_HASH, NO_USE_HASH, USE_MERGE, NO_USE_MERGE
+	 place it after SELECT, f.e: SELECT /*+ USE_MERGE(a b) .... FROM a INNER JOIN b ON ...
+
+example:
+	<commandsSet dbType="oracle">
+		<commands>
+			<command id="...">
+				<variants>
+					<commandVariant condition="...">
+						<template>
+							...
+						</template>
+					</commandVariant>
+				</variants>
+			</command>
+		</commands>
+	</commandsSet>
+
+-->
+
+<root refreshOnRequest="false">
+<!--
+	Default command set, copy paste and edit your own
+-->
+	<sets>
+		<commandsSet>
+			<commands>
+				<command id="joinData">
+				<!-- join input or expanded pk set with data table -->
+					<variants>
+						<commandVariant>
+							<template>
+								SELECT d.pk, t.ord, d.its, d.ots, d.fmid{*, d.data#} FROM {wpk} t {nolock} INNER JOIN {data} d {nolock} ON (d.pk = t.pk AND t.pid = :pid AND t.op = :op) ORDER BY t.ord, t.pk
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="joinKeys">
+				<!-- join input or expanded pk set with keys table -->
+					<variants>
+						<commandVariant>
+							<template>
+								SELECT k.pk, k.op, k.ukey, k.gid, k.center FROM {wpk} t {nolock} INNER JOIN {keys} k {nolock} ON (k.pk = t.pk AND t.pid = :pid AND t.op = :op) ORDER BY t.ord, t.pk
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="distKey">
+				<!-- prepare distinct set of input keys -->
+					<variants>
+						<commandVariant>
+							<template>
+								INSERT INTO {wkey} (pid, ukey) SELECT DISTINCT :pid, ukey FROM {wdkey} {nolock} WHERE pid = :pid
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='expandGid'>
+				<!-- get distinct gids for affected keys -->
+					<variants>
+						<commandVariant>
+							<template>
+								INSERT INTO {wgid} (pid, gid) SELECT DISTINCT :pid, k.gid FROM {wkey} t {nolock} INNER JOIN {keys} k {nolock} ON (k.op = :op AND k.ukey = t.ukey AND t.pid = :pid)
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='addGidKeys'>
+				<!-- get additional keys for gids in hier.union -->
+					<variants>
+						<commandVariant>
+							<template>
+								INSERT INTO {wkey} (pid, ukey) SELECT DISTINCT :pid, k.ukey FROM {wgid} t {nolock} INNER JOIN {keys} k {nolock} ON (k.op = :op AND k.gid = t.gid AND t.pid = :pid) WHERE NOT EXISTS (SELECT 1 FROM {wkey} tt {nolock} WHERE tt.ukey = k.ukey AND tt.pid = :pid)
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='addKeyGids'>
+				<!-- get additional gids for keys in hier.union -->
+					<variants>
+						<commandVariant>
+							<template>
+								INSERT INTO {wgid} (pid, gid) SELECT DISTINCT :pid, k.gid FROM {wkey} t {nolock} INNER JOIN {keys} k {nolock} ON (k.op = :op AND k.ukey = t.ukey AND t.pid = :pid) WHERE NOT EXISTS (SELECT 1 FROM {wgid} tt {nolock} WHERE tt.gid = k.gid AND tt.pid = :pid)
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='expandPks'>
+				<!-- get distinct pks for affected gids, not loaded yet -->
+					<variants>
+						<commandVariant>
+							<template>
+								INSERT INTO {wpk} (pid, pk, op) SELECT DISTINCT :pid, k.pk, :op FROM {wgid} t {nolock} INNER JOIN {keys} k {nolock} ON (k.op = :op AND k.gid = t.gid AND t.pid = :pid) WHERE NOT EXISTS (SELECT 1 FROM {wpk} tt {nolock} WHERE tt.pk = k.pk AND tt.pid = :pid)
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='expandCPks'>
+				<!-- get distinct pks for affected gids, not loaded yet, but for centers only, used in identification -->
+					<variants>
+						<commandVariant>
+							<template>
+								INSERT INTO {wpk} (pid, pk, op) SELECT DISTINCT :pid, k.pk, :op FROM {wgid} t {nolock} INNER JOIN {keys} k {nolock} ON (k.op = :op AND k.gid = t.gid AND t.pid = :pid AND k.center = 1) WHERE NOT EXISTS (SELECT 1 FROM {wpk} tt {nolock} WHERE tt.pk = k.pk AND tt.pid = :pid)
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="clearWPk">
+				<!-- clear work table -->
+					<variants>
+						<commandVariant>
+							<template>
+								DELETE FROM {wpk} WHERE pid = :pid
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="clearWDKey">
+				<!-- clear work table -->
+					<variants>
+						<commandVariant>
+							<template>
+								DELETE FROM {wdkey} WHERE pid = :pid
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="clearWKey">
+				<!-- clear work table -->
+					<variants>
+						<commandVariant>
+							<template>
+								DELETE FROM {wkey} WHERE pid = :pid
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="clearWGid">
+				<!-- clear work table -->
+					<variants>
+						<commandVariant>
+							<template>
+								DELETE FROM {wgid} WHERE pid = :pid
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="clearBatchUpdate">
+				<!-- clear work tables for batch update, optional -->
+					<variants>
+						<commandVariant>
+							<template>
+								begin
+									delete from {data_wu} where pid = :pid;
+									delete from {data_wd} where pid = :pid;
+									delete from {keys_wi} where pid = :pid;
+									delete from {keys_wu} where pid = :pid;
+									delete from {keys_wd} where pid = :pid;
+								end;
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+			</commands>
+		</commandsSet>
+		<commandsSet dbType="mssql">
+			<commands>
+				<command id="batchUpdate">
+				<!-- statements for batch update, optional, when not present, normal update will be performed -->
+					<variants>
+						<commandVariant>
+							<template>
+							begin
+								-- update of data table
+								merge into {data} t using (select * from {data_wu} where pid = :pid) s
+									on (t.pk = s.pk)
+									when matched then update set
+									t.its = t.its + s.its, t.ots = s.ots, t.fmid = s.fmid{*, t.data# = s.data#}
+									when not matched then insert
+									(pk, its, ots, fmid{*, data#}) values (s.pk, s.its, s.ots, s.fmid{*, s.data#});
+								-- delete from data table
+								delete from {data} where pk in (select pk from {data_wd} where pid = :pid);
+								-- update of key table
+								merge into {keys} t using (select * from {keys_wu} where pid = :pid) s
+									on (t.pk = s.pk and t.op = s.op)
+									when matched then update set
+									t.gid = s.gid, t.center = s.center;
+								-- new pk-key relation
+								insert into {keys} (pk, op, ukey, gid, center) select pk, op, ukey, gid, center from {keys_wi} where pid = :pid; 
+								-- delete of one pk-key relation from key table
+								merge into {keys} t using (select * from {keys_wd} where pid = :pid) s
+									on t.pk = s.pk and t.op = s.op and t.ukey = s.ukey
+									when matched then delete;
+							end;
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+			</commands>
+		</commandsSet>
+		<commandsSet dbType="oracle">
+			<commands>
+				<command id="batchUpdate">
+					<variants>
+						<commandVariant>
+							<template>
+							begin
+
+								-- update of data table
+								merge into {data} t using (select * from {data_wu} where pid = :pid) s
+									on (t.pk = s.pk)
+									when matched then update set
+									t.its = t.its + s.its, t.ots = s.ots, t.fmid = s.fmid{*, t.data# = s.data#}
+									when not matched then insert
+									(pk, its, ots, fmid{*, data#}) values (s.pk, s.its, s.ots, s.fmid{*, s.data#});
+
+								-- delete from data table
+								delete from {data} trg where  exists 
+								(select 1 
+									from {data_wd} src
+									where
+									src.pid = :pid   and
+									src.pk  = trg.pk
+								);
+
+								-- update of key table
+								merge into {keys} t using (select * from {keys_wu} where pid = :pid) s
+									on (t.pk = s.pk and t.op = s.op)
+									when matched then update set t.gid = s.gid, t.center = s.center;
+
+								-- new pk-key relation
+								insert into {keys} (pk, op, ukey, gid, center) select pk, op, ukey, gid, center from {keys_wi} where pid = :pid; 
+
+								-- delete of one pk-key relation from key table
+								delete from {keys} trg where exists 
+								(select 1
+									from {keys_wd} src
+									where
+									src.pid  = :pid     and 
+									src.OP   = trg.OP   and
+									src.UKEY = trg.UKEY and
+									src.PK   = trg.PK
+								);
+
+							end;
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+			</commands>
+		</commandsSet>
+	</sets>
+</root>

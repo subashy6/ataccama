@@ -1,0 +1,1 @@
+All log files should be placed to this folder.

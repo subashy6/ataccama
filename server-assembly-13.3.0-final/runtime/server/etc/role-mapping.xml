@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dqc-roles>
+	<roles>
+		<role name="manager">
+			<or>
+				<require role="admin" />
+				<location ip="172.17.17.0" mask="255.255.248.0" />
+				<and>
+					<require role="role1" />
+					<location ip="172.16.17.0" mask="255.255.248.0" />
+				</and>
+			</or>
+		</role>
+		<role name="ip_role">
+			<location ip="172.16.17.0" mask="255.255.248.0" />
+		</role>
+	</roles>
+</dqc-roles>

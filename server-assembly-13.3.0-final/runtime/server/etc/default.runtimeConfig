@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<runtimeconfig>
+	<!--
+	     Contributed configurations contain connection definitions that can be referenced from various steps and configuration files.
+	     There are several kind of such configurations, e.g. JMS servers or URLs.
+	-->
+	<contributedConfigs>
+	    <!-- Optional authorization: user, password -->
+		<!--
+		<config class="com.ataccama.dqc.processor.support.UrlResourceContributor">
+			<urls>
+				<url name="SomeConfiguredServer" user="myusername" password="crypted:DESede:p63913D4fMa175vrXECs1nOHdV1SG5sUto5HhuV6Izg=" url="localhost:22"/>
+			</urls>
+		</config>
+		-->
+		
+	    <!--
+	    Authorization options:	
+	     - optional authorization on the connection level: specified in user, password attributes (both unencrypted/encrypted forms are possible for password)
+	     - optional authorization on the context level (used for search in JNDI registry): specified in java.naming.security.principal, java.naming.security.credentials parameters
+	    -->
+	    <!--
+		<config class="com.ataccama.dqc.jms.config.JmsContributor">
+			<jmsConnections>
+				<jmsConnection connectionFactory="QueueConnectionFactory" name="someJMSbroker">
+					<contextParams>
+						<contextParam name="java.naming.factory.initial" value="org.apache.activemq.jndi.ActiveMQInitialContextFactory"/>
+						<contextParam name="java.naming.provider.url" value="tcp://server.com:61616"/>
+					</contextParams>
+				</jmsConnection>
+			</jmsConnections>
+		</config>
+		-->
+		
+		<!-- 
+			An example of Hadoop Configuration in runtime configuration.
+			Please configure the element before usage.
+				1. Hadoop configuration must contain *-site.xml files.
+				2. Valid options for distribution field: "Native" or "REST-API" 
+				3. Valid options for authenticationType field: "SIMPLE" or "KERBEROS"
+		--> 
+		<!--
+		<config class="com.ataccama.dqc.tasks.hadoop.support.HadoopContributor">
+			<hadoops>
+				<hadoop configuration="path_to_client_conf/" name="hadoop" distribution="Native">
+					<services>
+						<service class="com.ataccama.dqc.tasks.hadoop.support.hdfs.HdfsServiceConfig" use="true" authenticationType="KERBEROS"/>
+						<service class="com.ataccama.dqc.tasks.hadoop.support.catalog.HCatalogServiceConfig" use="true" authenticationType="KERBEROS"/>
+						<service class="com.ataccama.dqc.tasks.hadoop.support.hbase.HBaseServiceConfig" use="true" authenticationType="KERBEROS"/>
+					</services>
+					<authentications>
+						<authentication class="com.ataccama.dqc.tasks.hadoop.support.authentication.SimpleAuthenticationConfig" user="your_username"/>
+						<authentication class="com.ataccama.dqc.tasks.hadoop.support.authentication.KerberosAuthenticationConfig" principal="username@DOMAIN.COM" keytab="path_to_keytab" />
+					</authentications>
+				</hadoop>
+			</hadoops>
+		</config>
+		-->
+	</contributedConfigs>
+
+	<!--
+	  Bellow you can define path variables. You can use path variables in configuration files like 
+	  configuration plans as shortcuts to folders which may be on each system on little bit 
+	  different location.
+	-->
+	<pathVariables>
+		<!-- 
+		<pathVariable name="data" value="c:/data"/>
+		-->
+	</pathVariables>
+	
+	<!-- List of database connection definitions. -->
+	<dataSources>
+		<!--
+		These attributes define the DB connection:
+		  name		  - unique identifier of the data source connection.
+		  url		  - connection string to data source (JDBC)
+		  driverClass - java class name of the driver used for connection (JDBC)
+		  user		  - name of the data source user (DB schema)
+		  password	  - password used for data source connection
+		  
+		Optional attributes influencing the connection pooling behavior:
+		  minSize	  - minimum number of connections in the connection pool
+		  maxAge	  - if the connection is not used for specified time (in milliseconds) the connection will be closed
+		  maxIdleSize - maximum number of inactive connections that will be used for connection pooling
+		-->
+		<!--
+    	<dataSource driverclass="org.apache.derby.jdbc.ClientDriver" name="derby"
+    			url="jdbc:derby://localhost:1527/test"
+    			user="test" password="crypted:DES:uj3hAwlJSWwwD1Jp62KwJRz8lUK36qMUto5HhuV6Izg="/>
+    	<dataSource driverclass="oracle.jdbc.OracleDriver" name="oracle"
+    			url="jdbc:oracle:thin:@localhost:1521:test"
+    			user="test" password="crypted:DES:uj3hAwlJSWwwD1Jp62KwJRz8lUK36qMUto5HhuV6Izg="/>
+    	<dataSource driverclass="org.postgresql.Driver" name="pgsql"
+    			url="jdbc:postgresql://localhost:5432/test"
+    			user="test" password="crypted:DES:uj3hAwlJSWwwD1Jp62KwJRz8lUK36qMUto5HhuV6Izg="/>
+    	<dataSource driverclass="org.gjt.mm.mysql.Driver" name="mysql"
+    			url="jdbc:mysql://localhost:3306/test"
+    			user="test" password="crypted:DES:uj3hAwlJSWwwD1Jp62KwJRz8lUK36qMUto5HhuV6Izg="/>
+    	-->
+	</dataSources>
+	
+	<!--
+	<parallelismLevel>1</parallelismLevel>
+	-->
+
+	<!--
+	     Location of workflow resources, e.g., run result logs. Relative path is resolved to the location of this file.
+	     In relation to definition in serverConfiguration, the final value is resolved with this priority:
+	     - serverConfig.WorkflowComponent.resourcesFolder
+	     - runtimeConfig.resourcesFolder
+	     - "." (current directory, i.e. where server/runtimeConfiguration resides)
+	-->
+	<!--
+	<resourcesFolder>./resources</resourcesFolder>
+	-->
+
+	<!--
+	     Configuration of shared resources allocated for the workflow:
+	-->
+	<!--
+	<resources>
+		<resource id="demo" units="4" name="Demo resource" />
+		<resource id="db-oracle" units="4" name="DB Oracle (connections)"/>
+		<resource id="cpu" units="16" name="CPU usage (cores)" />
+		<resource id="memory" units="1000" name="Memory (MB)" />
+		<resource id="storage" name="Storage device (MB)" />
+	</resources>
+	-->
+ 
+</runtimeconfig>

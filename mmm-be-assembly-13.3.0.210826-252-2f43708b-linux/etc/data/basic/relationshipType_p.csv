@@ -1,0 +1,8 @@
+"id_i","parent_id_i","path_i","type_i","name_s","description_s","sourceRelName_s","targetRelName_s","from_h","to_h"
+"125861e2-8f58-43d6-a8a6-7d25b8d524e0","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","ParentChild","Parent to Child Relationship","Parent of","Child of","0",
+"7edff48c-a0c9-4106-a82c-50493a219497","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","Data Quality Hierarchy",,"Domain of","Is in Domain","0",
+"27c7c212-6f45-11ea-bc55-0242ac130003","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","CopyOf",,"Copy of","Copy of","0",
+"27c7c4a6-6f45-11ea-bc55-0242ac130003","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","SampleOf",,"Sample of","Is in Sample","0",
+"27c7c5b4-6f45-11ea-bc55-0242ac130003","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","DerivativeIn",,"Derived in","Derived from","0",
+"27c7c690-6f45-11ea-bc55-0242ac130003","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","ContributionTo",,"Contributes to","Is Contributed in","0",
+"0c001aa0-6f47-11ea-bc55-0242ac130003","00000000-0000-0000-0000-000000000001","/relationshipTypes","relationshipType","BackupOf",,"Backup of","Is Backed up in","0",

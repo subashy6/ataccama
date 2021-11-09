@@ -1,0 +1,2 @@
+"id_i","parent_id_i","path_i","type_i","targetState_ri","targetState_rh","displayName_s","from_h","to_h"
+"a0f68c37-185c-41a2-b8d3-d6932f24eed0","8cb566b7-ff63-4c58-82ef-34c362645abe","/system/workflows/states/transitions","mdWorkflowTransition","bbceb2dd-5ee5-4268-89d3-4cf9a15ba63f",,"Approve & Publish",1,

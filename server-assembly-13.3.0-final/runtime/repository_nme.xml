@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+
+elements and attributes:
+	refreshOnRequest ... If true, this file is checked and loaded on every unification request.
+	commandSet	... Defines commands that can be specialized for database (optional attribute dbType).
+					If the same dbType (or none) is specified in more commandSet, the last occurence overwrites previous ones!
+					Currently supported dbType are: oracle, mssql, mysql, postgresql, derby, hsqldb
+	command		... Defines command used in particular phase of repository expand process.
+					The comand has id (expandGid, expandPks)
+					and variants depending on condition.
+	commandVariant ... Defines template for sql command used when optional condition is satisfied.
+	template	... Contains customized sql command with placeholders for table names.
+	condition   ... Expression selecting the variant,
+	                use integer pseudo-columns 'lpk', 'lkey' and 'lgid' containing number of rows in appropriate inlist
+	                column 'from' contains start position of list (see :from in template)
+	                column 'stage' contains order of stage:
+	                1: expanding key -> gid list ('expand' template only) 
+	                2: additional gid -> key ('expandAdd', used only when HierarchyUnion used)
+	                3: additional key -> gid ('expandAdd', used only when HierarchyUnion used)
+	                4: final gid -> pk ('expandAdd')
+	                
+
+used substitutes:
+	{data}, {Xdata} ... repository data table (pk varchar, its timestamp, ots timestamp, data0 varchar, data1 varchar, ...) and its x-table supporting logical transaction
+	{keys}, {Xkeys} ... repository key table (op int, ukey varchar , pk varchar) and its x-table supporting logical transaction
+	{list} ... nme inlist table (id_list, key_val, seq_num)
+	{columns} ... placeholder for columns selected in data/keys fetch join
+	{incol}, {outcol} ... columns of referential table "keys", used in expanding thru list > keys > list
+
+join hints:
+	for mssql: { LOOP | HASH | MERGE }
+	 place it between INNER/OUTER and JOIN keywords, f.e: SELECT .... FROM a INNER MERGE JOIN b ON ...
+
+	for oracle: /*+ hint(table1 table2) */ where hint is USE_NL, NO_USE_NL, USE_HASH, NO_USE_HASH, USE_MERGE, NO_USE_MERGE
+	 place it after SELECT, f.e: SELECT /*+ USE_MERGE(a b) .... FROM a INNER JOIN b ON ...
+
+example:
+	<commandsSet dbType="oracle">
+		<commands>
+			<command id="...">
+				<variants>
+					<commandVariant condition="...">
+						<template>
+							...
+						</template>
+					</commandVariant>
+				</variants>
+			</command>
+		</commands>
+	</commandsSet>
+
+-->
+
+<root refreshOnRequest="false">
+<!--
+	Default command set, copy paste and edit your own
+-->
+	<sets>
+		<commandsSet>
+			<commands>
+				<command id="joinData">
+				<!-- join input or expanded pk set with data table, must be sorted by l.seq_num -->
+					<variants>
+						<commandVariant>
+							<template>
+								select {columns} from {list} l join {data} d on (l.id_list = :inlist and l.seq_num >= :from and d.pk = l.key_val) left join {xdata} x on (x.xid = d.xid) order by l.seq_num
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id="joinKeys">
+				<!-- join input or expanded pk set with keys table, must be sorted by l.seq_num -->
+					<variants>
+						<commandVariant>
+							<template>
+								select {columns} from {list} l join {keys} d on (l.id_list = :inlist and l.seq_num >= :from and d.pk = l.key_val) left join {xkeys} x on (x.xid = d.xid) order by l.seq_num
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='expand'>
+				<!-- get gids/keys for affected keys/gids -->
+					<variants>
+						<commandVariant>
+							<template>
+								select distinct d.{outcol},d.xctid,x.xdtid from {list} l join {keys} d on (l.id_list = :inlist and l.seq_num >= :from and d.{incol} = l.key_val and d.op = :op) left join {xkeys} x on (x.xid = d.xid)
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='expandAdd'>
+				<!-- get additional gids/keys for affected keys/gids, used for hierarchical union only -->
+					<variants>
+						<commandVariant>
+							<template>
+								select distinct d.{outcol},d.xctid,x.xdtid from {list} l join {keys} d on (l.id_list = :inlist and l.seq_num >= :from and d.{incol} = l.key_val and d.op = :op) left join {xkeys} x on (x.xid = d.xid) where not exists (select 1 from {list} ll where ll.id_list = :outlist and ll.key_val = d.{outcol})
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+				<command id='expandOut'>
+				<!-- get final pks for affected gids, must be sorted by d.pk -->
+					<variants>
+						<commandVariant>
+							<template>
+								select distinct d.pk,d.xctid,x.xdtid from {list} l join {keys} d on (l.id_list = :inlist and l.seq_num >= :from and d.gid = l.key_val and d.op = :op) left join {xkeys} x on (x.xid = d.xid) where not exists (select 1 from {list} ll where ll.id_list = :outlist and ll.key_val = d.pk) order by d.pk
+							</template>
+						</commandVariant>
+					</variants>
+				</command>
+			</commands>
+		</commandsSet>
+	</sets>
+</root>

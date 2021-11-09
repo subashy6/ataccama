@@ -1,0 +1,8 @@
+"id_i"                                ,"parent_id_i"                         ,"path_i"                  ,"type_i"                ,"entityName_s"    ,"condition_s","propertyPath_s"                  ,"from_h","to_h"
+"26432cf6-5a2c-49e6-83c0-3a134d6729d6","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","catalogItem"     ,"HAS_TERM"   ,"termInstances/target"            ,"0"     ,
+"3d9b9a54-0f90-480f-ae82-8e65f6d3ae1d","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","attribute"       ,"HAS_TERM"   ,"termSuggestions/target"          ,"0"     ,
+"893a257c-72f5-47f8-b73f-dcfa9c62f780","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","attribute"       ,"HAS_TERM"   ,"termInstances/target"            ,"0"     ,
+"9c805809-3975-409f-b3b5-9ac9da67a65d","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","location"        ,"HAS_TERM"   ,"termInstances/target"            ,"0"     ,
+"f4d3ed52-9b5b-4983-8df8-a48e57919866","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","attributeProfile","HAS_TERM"   ,"attribute/termInstances/target"  ,"0"     ,
+"fc697660-8492-411b-9353-b8ba16125c2f","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","attributeProfile","HAS_TERM"   ,"attribute/termSuggestions/target","0"     ,
+"7952219b-6d1d-466f-a3fc-4c2fdf0d91db","00000000-0000-0000-0000-000000000001","/policyConditionSettings","policyConditionSetting","attributeProfile","HAS_NAME"   ,"attribute/name"                  ,"0"     ,

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="oracle" driver="oracle.jdbc.OracleDriver" urlTemplate="jdbc:oracle:thin:@&lt;host&gt;:&lt;port1521&gt;/&lt;database&gt;">
+	<jars>
+		<jar file="../libs/ojdbc14.jar"/>
+	</jars>
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter="">
+		<createScript>CREATE TABLE &lt;tableName&gt; (
+	&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;}; separator=&quot;,\n&quot;&gt;
+);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; MODIFY &lt;attr.name&gt; &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<!-- indexes -->
+		<createIndex>CREATE INDEX &lt;indexName&gt; ON &lt;tableName&gt; (&lt;columns;separator=&quot;,&quot;&gt;)</createIndex>
+		<dropIndex>DROP INDEX &lt;indexName&gt;</dropIndex>		
+		
+		<sequenceCreate>CREATE SEQUENCE &lt;seqName&gt;</sequenceCreate>
+		<sequenceNext>SELECT &lt;seqName&gt;.NEXTVAL FROM SYS.DUAL</sequenceNext>
+		<sequenceDrop>DROP SEQUENCE &lt;seqName&gt;</sequenceDrop>
+	</templates>
+
+    <persistenceMappings>
+    	<mapping type="STRING" dbType="VARCHAR2($size)" defaultSize="255" />
+    	<mapping type="BOOLEAN" dbType="NUMBER(1)" />
+    	<mapping type="INTEGER" dbType="NUMBER(10,0)" />
+    	<mapping type="LONG_INTEGER" dbType="NUMBER(20,0)" />
+    	<mapping type="BIG_INTEGER" dbType="NUMBER(38,0)" />
+    	<mapping type="FLOAT" dbType="NUMBER(38,10)" />
+    	<mapping type="DATETIME" dbType="DATE" />
+    	<mapping type="BLOB" dbType="BLOB" />
+    	<mapping type="CLOB" dbType="CLOB" />
+    </persistenceMappings>
+
+	<nonParametricDbTypes>
+		STRING,INT,SMALLINT,INTEGER,INT,DATE,BLOB,CLOB
+	</nonParametricDbTypes>
+		
+    <genericMappings>
+    	<!-- strings -->
+    	<mapping sourceType="CHARACTER" targetType="VARCHAR2(255)"/>
+    	<mapping sourceType="CHARACTER(%s)" targetType="VARCHAR2($1)"/>
+      	<mapping sourceType="VARCHAR" targetType="VARCHAR2(255)"/>
+      	<mapping sourceType="VARCHAR(%s)" targetType="VARCHAR2($1)"/>
+      	<mapping sourceType="NCHAR" targetType="VARCHAR2(255)" />
+      	<mapping sourceType="NCHAR(%s)" targetType="VARCHAR2($1)" />
+      	<mapping sourceType="NVARCHAR2" targetType="VARCHAR2(255)" />
+      	<mapping sourceType="NVARCHAR2(%s)" targetType="VARCHAR2($1)" />
+      	<mapping sourceType="STRING" targetType="VARCHAR2(255)"/>
+      	<mapping sourceType="STRING(%s)" targetType="VARCHAR2($1)"/>
+    	<!-- datetime -->
+    	<mapping sourceType="TIMESTAMP" targetType="DATE" />
+	    <mapping sourceType="DATE" targetType="DATE"/>
+	    <!-- boolean -->
+	    <mapping sourceType="NUMBER(1)" targetType="NUMBER(1)"/>
+    	<!-- numeric types -->
+      	<mapping sourceType="SMALLINT" targetType="NUMERIC(10,0)"/>
+      	<mapping sourceType="SMALLINT(%s)" targetType="NUMERIC($1,0)"/>
+      	<mapping sourceType="INTEGER" targetType="NUMERIC(10,0)"/>
+      	<mapping sourceType="INTEGER(%s)" targetType="NUMERIC($1,0)"/>
+      	<mapping sourceType="INT" targetType="NUMERIC(10,0)" />
+      	<mapping sourceType="INT(%s)" targetType="NUMERIC($1,0)" />
+	    <mapping sourceType="BIGINT" targetType="NUMERIC(38,0)"/>
+	    <mapping sourceType="BIGINT(%s)" targetType="NUMERIC($1,0)"/>
+	   	<mapping sourceType="REAL" targetType="NUMERIC(38,10)"/>
+	   	<mapping sourceType="REAL(%s,%p)" targetType="NUMERIC($1,$2)"/>
+    	<!-- generic numeric types -->
+		<mapping sourceType="DECIMAL(%s,%d)" targetType="NUMERIC($1,$2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL" targetType="NUMERIC(20,2)" />
+		<mapping sourceType="NUMERIC" targetType="NUMERIC(20,2)" />    	    	
+	    <mapping sourceType="DEC" targetType="NUMERIC(20,0)"/>
+	    <mapping sourceType="DEC(%s)" targetType="NUMERIC($1,0)"/>
+	    <mapping sourceType="DEC(%s,%p)" targetType="NUMERIC($1,$2)"/>
+	    <mapping sourceType="NUMBER(%s,%p)" targetType="NUMERIC($1,$2)"/>
+	    <mapping sourceType="NUMBER(%s)" targetType="NUMERIC($1,0)"/>
+	    <mapping sourceType="NUMBER" targetType="NUMERIC(20,0)"/>
+    </genericMappings>
+    
+    <dqcMappings>
+    	<mapping sourceType="NUMERIC(%s,%p)" targetType="FLOAT">
+    		<cases>
+    			<case maxSize="10" maxPrecision="0" targetType="INTEGER" />
+    			<case maxPrecision="0" targetType="LONG" />
+    		</cases>
+    	</mapping>    
+    	<mapping sourceType="VARCHAR2(%s)" targetType="STRING" />
+    	<mapping sourceType="DATE" targetType="DATETIME" />
+    	<mapping sourceType="NUMBER(1)" targetType="BOOLEAN" />
+    </dqcMappings>
+ 
+</dbModule>

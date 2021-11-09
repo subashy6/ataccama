@@ -1,0 +1,2 @@
+id_i,parent_id_i,path_i,type_i,primary_s,secondary_s,tertiary_s,navigation_s,display_s,separate_s,interaction_s,success_s,warning_s,error_s,from_h,to_h
+e1e07776-1528-4014-8622-b79e6f6e2891,00000000-0000-0000-0000-000000000001,/colorPalette,colorPalette,#D6006D,#583F99,#FFFFFF,"linear-gradient(0deg, rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36)), linear-gradient(179.93deg, #583F99 0%, #D6006D 100%)",#67686F,#57727F,#1141C5,#419544,#D68F00,#C61010,100,

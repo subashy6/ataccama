@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dqc-users>
+	<users>
+		<user username="admin" password="crypted:DES:NsuAku14ipInv4Z7FZAFKRjAVIxjqxmTpX8HwSTGUlE=" roles="admin"/> <!-- password="admin" -->
+		<user username="user" password="crypted:DES:UHGwbGUrU1YRNV9EM8mZf3y+UFq4leioqrqKGiKUsYw=" roles="users" /><!-- password is "secret" -->
+		<user username="charles" password="crypted:DES:uVKoMYrmVWdIfkvTeRzjVo4PmdjADvXlof1TWh8mSMo=" roles="role1" /><!-- password is "quality" -->
+	</users>
+</dqc-users>

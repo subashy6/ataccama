@@ -1,0 +1,122 @@
+{
+  relationshipsConfiguration: {
+    default: {
+      nodeConfiguration: {},
+      edgeConfiguration: {
+        "defaultEdgeLabels": {},
+        "customEdgeLabels": []
+      }
+    },
+    catalogRelationships: {
+      externalRelationshipsEnabled: false,
+      nodeConfiguration: {
+        "attribute": {
+          additionalProperties: [
+            "dataType",
+            "order"
+          ]
+        }
+      },
+      allowedRelationships: [
+          "termRelationship",
+          "catalogItemRelationship"
+      ],
+      edgeConfiguration: {
+        defaultEdgeLabels: {
+          ARRAY_EMBEDDED: "Embedded",
+          SINGLE_EMBEDDED: "Embedded",
+          REFERENCE: "Relates",
+          SKIP: "Relates"
+        },
+        "customEdgeLabels": []
+      }
+    },
+    catalogLineage: {
+      externalRelationshipsEnabled: true,
+      nodeConfiguration: {
+        "externalCatalogItem": {
+          additionalProperties: [
+            "link"
+          ]
+        },
+        "externalAttribute": {
+          additionalProperties: [
+            "dataType",
+            "order",
+            "link"
+          ]
+        },
+        "catalogItem": {
+          additionalProperties: [
+            "link"
+          ]
+        },
+        "attribute": {
+          additionalProperties: [
+            "dataType",
+            "order",
+            "link"
+          ]
+        }
+      },
+      "edgeConfiguration": {
+        "defaultEdgeLabels": {
+          ARRAY_EMBEDDED: "Embedded",
+          SINGLE_EMBEDDED: "Embedded",
+          REFERENCE: "Relates",
+          SKIP: "Relates",
+          EXTERNAL: "DIRECT",
+          EXTERNAL_PARENT: "EXTERNAL_PARENT",
+          EXTERNAL_INTERNAL: "DIRECT"
+        },
+        "customEdgeLabels": [
+          {
+            entityTypeFrom: "catalogItem",
+            entityTypeTo: "attribute",
+            label: "Attribute"
+          }
+        ]
+      }
+    },
+    termRelationships: {
+      externalRelationshipsEnabled: false,
+      nodeConfiguration: {
+        "attribute": {
+          additionalProperties: [
+            "dataType",
+            "order"
+          ]
+        }
+      },
+      allowedRelationships: [
+        "termRelationship",
+        "catalogItemRelationship"
+      ],
+      edgeConfiguration: {
+        defaultEdgeLabels: {
+          ARRAY_EMBEDDED: "Embedded",
+          SINGLE_EMBEDDED: "Embedded",
+          REFERENCE: "Relates",
+          SKIP: "Relates"
+        },
+        "customEdgeLabels": []
+      }
+    },
+    rdm: {
+      externalRelationshipsEnabled: false,
+      nodeConfiguration: {},
+      "edgeConfiguration": {
+        "defaultEdgeLabels": {
+          ARRAY_EMBEDDED: "Embedded",
+          SINGLE_EMBEDDED: "Embedded",
+          REFERENCE: "Relates",
+          SKIP: "Relates",
+          EXTERNAL: "DIRECT",
+          EXTERNAL_PARENT: "EXTERNAL_PARENT",
+          EXTERNAL_INTERNAL: "DIRECT"
+        },
+        "customEdgeLabels": []
+      }
+    }
+  }
+}

@@ -1,0 +1,925 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="12.0.0.ga-2018-05-03">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (APP) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="APP">
+		<properties queryString="select APP_ID, APP_NAME from UMC.APP" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="APP_ID" type="LONG"/>
+				<jdbcReaderColumn name="APP_NAME" type="STRING"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="672,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="APP"/>
+		<target endpoint="in_right" step="Join DQD role"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (GRP) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="GRP">
+		<properties queryString="select GRP_ID, GRP_NAME, SRC_ID, STATUS from UMC.GRP" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="GRP_ID" type="LONG"/>
+				<jdbcReaderColumn name="GRP_NAME" type="STRING"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="960,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="GRP"/>
+		<target endpoint="in" step="active groups only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (GRP_GRP) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="GRP_GRP">
+		<properties queryString="select OWNER_ID, MEMBER_ID, SRC_ID, STATUS from UMC.GRP_GRP" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="OWNER_ID" type="LONG"/>
+				<jdbcReaderColumn name="MEMBER_ID" type="LONG"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1368,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="GRP_GRP"/>
+		<target endpoint="in" step="active group-group only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (GRP_ROLE) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="GRP_ROLE">
+		<properties queryString="select GRP_ID, ROLE_ID, SRC_ID, STATUS from UMC.GRP_ROLE" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="GRP_ID" type="LONG"/>
+				<jdbcReaderColumn name="ROLE_ID" type="LONG"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1200,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="GRP_ROLE"/>
+		<target endpoint="in" step="active group-role only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Join DQD role) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="Join DQD role">
+		<properties matchStrategy="MERGE" leftKey="APP_ID" rightKey="APP_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.SRC_ID" name="SRC_ID"/>
+				<columnDefinition expression="in_left.ROLE_ID" name="ROLE_ID"/>
+				<columnDefinition name="ROLE_NAME">
+					<expression>decode(in_right.APP_NAME,
+	&#39;DQD&#39;, getParameterValue(&#39;system.dqc.dqd_prefix&#39;, &#39;DQD_&#39;),
+	&#39;DQIT&#39;, getParameterValue(&#39;system.dqc.dqit_prefix&#39;, &#39;&#39;),
+	&#39;&#39;)
++ iif(in_left.ROLE_NAME == &#39;DQD_ADMIN&#39;,
+	&#39;ADMIN&#39;, 
+	in_left.ROLE_NAME)
+ </expression>
+				</columnDefinition>
+				<columnDefinition expression="in_left.ROLE_DESCR" name="ROLE_DESCR"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="552,168,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Join DQD role"/>
+		<target endpoint="in" step="Mult Roles"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Mult Groups) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" id="Mult Groups">
+		<properties/>
+		<visual-constraints layout="vertical" bounds="960,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Groups"/>
+		<target endpoint="in" step="group UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Groups"/>
+		<target endpoint="in_left" step="join_grp-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Groups"/>
+		<target endpoint="in_right" step="join_grp-id 2"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Groups"/>
+		<target endpoint="in_left" step="join_member-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Groups"/>
+		<target endpoint="in_left" step="join_owner-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Mult Roles) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" id="Mult Roles">
+		<properties/>
+		<visual-constraints layout="vertical" bounds="552,240,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Roles"/>
+		<target endpoint="in_right" step="join_role-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Roles"/>
+		<target endpoint="in_left" step="join_role-id 2"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Roles"/>
+		<target endpoint="in" step="role UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Mult Users) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.flow.Multiplicator" disabled="false" id="Mult Users">
+		<properties/>
+		<visual-constraints layout="vertical" bounds="288,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Users"/>
+		<target endpoint="in_right" step="join_usr-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Users"/>
+		<target endpoint="in_right" step="join_usr-id 2"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Mult Users"/>
+		<target endpoint="in" step="user UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (ROLE) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="ROLE">
+		<properties queryString="select ROLE_ID, APP_ID, ROLE_NAME, ROLE_DESCR, SRC_ID, STATUS from UMC.ROLE" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="ROLE_ID" type="LONG"/>
+				<jdbcReaderColumn name="APP_ID" type="LONG"/>
+				<jdbcReaderColumn name="ROLE_NAME" type="STRING"/>
+				<jdbcReaderColumn name="ROLE_DESCR" type="STRING"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="528,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="ROLE"/>
+		<target endpoint="in" step="active roles only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by group id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by group id">
+		<properties>
+			<sort>
+				<orderBy expression="GRP_ID" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="960,456,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by group id"/>
+		<target endpoint="in" step="groups_to_add.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by group, role) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by group, role">
+		<properties>
+			<sort>
+				<orderBy expression="GRP_NAME" nullsFirst="false" orderDescending="false"/>
+				<orderBy expression="ROLE_NAME" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1200,480,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by group, role"/>
+		<target endpoint="in" step="grp_role.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by owner, member) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by owner, member">
+		<properties>
+			<sort>
+				<orderBy expression="OWNER_GRP_NAME" nullsFirst="false" orderDescending="false"/>
+				<orderBy expression="MEMBER_GRP_NAME" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1344,480,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by owner, member"/>
+		<target endpoint="in" step="grp_grp.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by role id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by role id">
+		<properties>
+			<sort>
+				<orderBy expression="ROLE_ID" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="528,456,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by role id"/>
+		<target endpoint="in" step="roles_to_add.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by user id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by user id">
+		<properties>
+			<sort>
+				<orderBy expression="USR_ID" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="288,456,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by user id"/>
+		<target endpoint="in" step="users_to_add.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by user, group) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by user, group">
+		<properties>
+			<sort>
+				<orderBy expression="USR_NAME" nullsFirst="false" orderDescending="false"/>
+				<orderBy expression="GRP_NAME" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="-168,456,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by user, group"/>
+		<target endpoint="in" step="usr_grp.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Sort by user, role) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.identify.sort.SortEngine" disabled="false" id="Sort by user, role">
+		<properties>
+			<sort>
+				<orderBy expression="USR_NAME" nullsFirst="false" orderDescending="false"/>
+				<orderBy expression="ROLE_NAME" nullsFirst="false" orderDescending="false"/>
+			</sort>
+		</properties>
+		<visual-constraints layout="vertical" bounds="72,456,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Sort by user, role"/>
+		<target endpoint="in" step="usr_role.txt"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (USR) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="USR">
+		<properties queryString="select USR_ID, USR_NAME, USR_PASSWORD, SRC_ID, STATUS from UMC.USR" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="USR_ID" type="LONG"/>
+				<jdbcReaderColumn name="USR_NAME" type="STRING"/>
+				<jdbcReaderColumn name="USR_PASSWORD" type="STRING"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="288,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="USR"/>
+		<target endpoint="in" step="active users only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (USR_GRP) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="USR_GRP">
+		<properties queryString="select USR_ID, GRP_ID, SRC_ID, STATUS from UMC.USR_GRP" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="USR_ID" type="LONG"/>
+				<jdbcReaderColumn name="GRP_ID" type="LONG"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="-144,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="USR_GRP"/>
+		<target endpoint="in" step="active user-group only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (USR_ROLE) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.jdbc.read.JdbcReader" disabled="false" id="USR_ROLE">
+		<properties queryString="select USR_ID, ROLE_ID, SRC_ID, STATUS from UMC.USR_ROLE" dataSourceName="UMC">
+			<columns>
+				<jdbcReaderColumn name="USR_ID" type="LONG"/>
+				<jdbcReaderColumn name="ROLE_ID" type="LONG"/>
+				<jdbcReaderColumn name="SRC_ID" type="LONG"/>
+				<jdbcReaderColumn name="STATUS" type="LONG"/>
+			</columns>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="24,24,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="USR_ROLE"/>
+		<target endpoint="in" step="active user-role only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active group-group only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active group-group only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="1368,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active group-group only"/>
+		<target endpoint="in" step="group-group UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active group-role only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active group-role only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="1200,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active group-role only"/>
+		<target endpoint="in" step="group-role UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active groups only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active groups only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="960,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active groups only"/>
+		<target endpoint="in" step="Mult Groups"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active roles only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active roles only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="528,96,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active roles only"/>
+		<target endpoint="in_left" step="Join DQD role"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active user-group only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active user-group only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="-168,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active user-group only"/>
+		<target endpoint="in" step="user-group UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active user-role only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active user-role only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="24,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active user-role only"/>
+		<target endpoint="in" step="user-role UMC only"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (active users only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="active users only">
+		<properties condition="STATUS == 1"/>
+		<visual-constraints layout="vertical" bounds="288,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="active users only"/>
+		<target endpoint="in" step="Mult Users"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (group UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="group UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="960,360,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="group UMC only"/>
+		<target endpoint="in" step="Sort by group id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (group-group UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="group-group UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="1368,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="group-group UMC only"/>
+		<target endpoint="in_right" step="join_owner-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (group-role UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="group-role UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="1200,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="group-role UMC only"/>
+		<target endpoint="in_right" step="join_grp-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (groups_to_add.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="groups_to_add.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/groups_to_add.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn name="GRP_NAME"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="960,552,-1,-1"/>
+	</step>
+
+
+
+<!-- (grp_grp.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="grp_grp.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/grp_grp.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn name="OWNER_GRP_NAME"/>
+				<textWriterColumn name="MEMBER_GRP_NAME"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1344,552,-1,-1"/>
+	</step>
+
+
+
+<!-- (grp_role.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="grp_role.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/grp_role.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn name="GRP_NAME"/>
+				<textWriterColumn name="ROLE_NAME"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1200,552,-1,-1"/>
+	</step>
+
+
+
+<!-- (join_grp-id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_grp-id">
+		<properties matchStrategy="MERGE" leftKey="GRP_ID" rightKey="GRP_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.GRP_NAME" name="GRP_NAME"/>
+				<columnDefinition expression="in_right.ROLE_ID" name="ROLE_ID"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1200,312,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_grp-id"/>
+		<target endpoint="in_right" step="join_role-id 2"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_grp-id 2) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_grp-id 2">
+		<properties matchStrategy="MERGE" leftKey="GRP_ID" rightKey="GRP_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="lower(in_left.USR_NAME)" name="USR_NAME"/>
+				<columnDefinition expression="in_right.GRP_NAME" name="GRP_NAME"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="-168,384,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_grp-id 2"/>
+		<target endpoint="in" step="Sort by user, group"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_member-id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_member-id">
+		<properties matchStrategy="MERGE" leftKey="GRP_ID" rightKey="MEMBER_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_right.OWNER_GRP_NAME" name="OWNER_GRP_NAME"/>
+				<columnDefinition expression="in_left.GRP_NAME" name="MEMBER_GRP_NAME"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1344,408,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_member-id"/>
+		<target endpoint="in" step="Sort by owner, member"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_owner-id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_owner-id">
+		<properties matchStrategy="MERGE" leftKey="GRP_ID" rightKey="OWNER_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_left.GRP_NAME" name="OWNER_GRP_NAME"/>
+				<columnDefinition expression="in_right.MEMBER_ID" name="MEMBER_ID"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1344,312,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_owner-id"/>
+		<target endpoint="in_right" step="join_member-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_role-id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_role-id">
+		<properties matchStrategy="MERGE" leftKey="ROLE_ID" rightKey="ROLE_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="lower(in_left.USR_NAME)" name="USR_NAME"/>
+				<columnDefinition expression="in_right.ROLE_NAME" name="ROLE_NAME"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="72,384,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_role-id"/>
+		<target endpoint="in" step="Sort by user, role"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_role-id 2) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_role-id 2">
+		<properties matchStrategy="MERGE" leftKey="ROLE_ID" rightKey="ROLE_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_right.GRP_NAME" name="GRP_NAME"/>
+				<columnDefinition expression="in_left.ROLE_NAME" name="ROLE_NAME"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="1200,408,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_role-id 2"/>
+		<target endpoint="in" step="Sort by group, role"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_usr-id) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_usr-id">
+		<properties matchStrategy="MERGE" leftKey="USR_ID" rightKey="USR_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_right.USR_NAME" name="USR_NAME"/>
+				<columnDefinition expression="in_left.ROLE_ID" name="ROLE_ID"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="48,312,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_usr-id"/>
+		<target endpoint="in_left" step="join_role-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (join_usr-id 2) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.merge.Join" disabled="false" id="join_usr-id 2">
+		<properties matchStrategy="MERGE" leftKey="USR_ID" rightKey="USR_ID" joinType="INNER">
+			<columnDefinitions>
+				<columnDefinition expression="in_right.USR_NAME" name="USR_NAME"/>
+				<columnDefinition expression="in_left.GRP_ID" name="GRP_ID"/>
+			</columnDefinitions>
+		</properties>
+		<visual-constraints layout="vertical" bounds="-168,312,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="join_usr-id 2"/>
+		<target endpoint="in_left" step="join_grp-id 2"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (role UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="role UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="528,360,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="role UMC only"/>
+		<target endpoint="in" step="Sort by role id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (roles_to_add.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="roles_to_add.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/roles_to_add.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn name="ROLE_NAME"/>
+				<textWriterColumn name="ROLE_DESCR"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="528,552,-1,-1"/>
+	</step>
+
+
+
+<!-- (user UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="user UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="288,360,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="user UMC only"/>
+		<target endpoint="in" step="Sort by user id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (user-group UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="user-group UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="-168,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="user-group UMC only"/>
+		<target endpoint="in_left" step="join_usr-id 2"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (user-role UMC only) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="user-role UMC only">
+		<properties condition="SRC_ID == 1"/>
+		<visual-constraints layout="vertical" bounds="24,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="user-role UMC only"/>
+		<target endpoint="in_left" step="join_usr-id"/>
+		<visual-constraints>
+			<bendpoints/>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (users_to_add.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="users_to_add.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/users_to_add.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn expression="lower(USR_NAME)" name="USR_NAME"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="288,552,-1,-1"/>
+	</step>
+
+
+
+<!-- (usr_grp.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="usr_grp.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/usr_grp.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn name="USR_NAME"/>
+				<textWriterColumn name="GRP_NAME"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="-168,552,-1,-1"/>
+	</step>
+
+
+
+<!-- (usr_role.txt) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="usr_role.txt">
+		<properties writeHeader="false" fileName="pathvar://DATA/out/usr_role.txt" fieldSeparator=";" generateMetadata="true" writeAllColumns="false" compression="NONE" encoding="UTF-8" lineSeparator="\n" useStringQualifierOnAllColumns="false">
+			<columns>
+				<textWriterColumn name="USR_NAME"/>
+				<textWriterColumn name="ROLE_NAME"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="72,552,-1,-1"/>
+	</step>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="456,24,25,217" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="456,312,25,289" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="888,312,25,289" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="1104,24,25,217" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="1104,360,25,241" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="216,312,25,289" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="216,24,25,217" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="888,24,25,217" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="-24,312,25,289" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="255,255,180" borderColor="183,183,0" bounds="-24,24,25,241" foregroundColor="51,51,51"></modelComment>
+
+
+
+<modelComment backgroundColor="205,225,162" borderColor="183,183,0" bounds="696,120,169,121" foregroundColor="51,51,51">DQD and DQIT prefixes
+uses system variables:
+  * dqc.dqit_prefix
+  * dqc.dqd_prefix</modelComment>
+
+</purity-config>

@@ -1,0 +1,449 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<server>
+	<!--
+	  Internal communication port. It is used the server is being stopped, or when asking for
+	  server status, etc...
+	-->
+	<port>7777</port>
+
+	<!-- List of folders used for storage of temporary files. -->
+	<!--
+	<tempFolders>
+		<tempFolder path="/tmp" />
+	</tempFolders>
+	-->
+
+	<!--
+	  Runtime configuration defines shared resources like Data Source connections (DB) and Path Variables.
+	  Path to the runtimeConfiguration can be either absolute or relative. When the path is relative then it is
+	  calculated against the folder containing the serverConfig.xml file.
+
+	  Runtime configuration can be changed from the server-side.
+	  In such case the changes are written down to the original runtimeConfiguration definition file (attributes
+	  not used in the server are preserved/not changed).
+	-->
+	<runtimeConfiguration>default.runtimeConfig</runtimeConfiguration>
+
+	<!--
+	  List of components deployed in the online server. Components are started in order of
+	  appearance in this configuration file. Some components require to be started before other
+	  can use them, so be careful to put them in correct order.
+	-->
+	<serverComponents>
+
+		<!--
+		  Logging component is used to inject the logging configuration to the server.
+		  In relation to runtimeConfiguration, the order of logging configuration processing is following:
+		  1) if the 'configFile' attribute is defined on the LoggingComponent then it is used
+			 (and overrides possible logging configuration from the runtimeConfiguration)
+		  2) if 'configFile' is not defined or points to the invalid/unparsable logging configuration, then logging
+			configuration defined in the runtimeConfiguration is used
+		  3) if logging configuration is not defined in the runtimeConfiguration, the default logging setup is used
+
+		  If the LoggingComponent is not defined in the server configuration, the server implicitly uses configuration
+		  specified in the runtimeConfiguration. The logging component then only brings some additional features such as:
+		  - logging health monitoring in the console
+		  - ability to modify logging setup via console
+			(it is ensured that proper logging configuration file is updated after change)
+		-->
+		<component class="com.ataccama.dqc.web.logging.LoggingComponent" configFile="logging.xml"/>
+
+		<!--
+		  Basic component that enables the communication by HTTP protocol and responds to HTTP
+		  requests. The component is required by many others which register them self into
+		  HttpDispatcher on specified URL path so the HttpDispatcher may redirect handling of
+		  requests.
+		  It is also possible to define filters and their mapping for URLs. Filters will be applied
+		  on the incoming HTTP requests before they will invoke the service itself.
+		  - The listeners section is used to define listener threads that will receive requests on
+			specified TCP ports and specify if the listener should communicate via SSL or not. It also
+			provides former worker queues functionality using these properties:
+				threads - number of threads that process requests in pararell
+				maxWaitingRequests - maximum number of requests that will wait for available thread (when the queue is full, server
+					will respond with 503 code). By default this value is "infinite"
+				threadPoolTimeout - how long does the request wait for available thread. (when timeouted, the server responds with 408 code)
+				backlog - how many request can wait for approval from operating system
+		  - In the filters section you can define parameters for individual filters. Of course it
+			is possible to define more filters of the same type (f.e. different loggers).
+		  - In the mappings section is defined mapping of the filters to the request path. In case
+			there are more filters mapped to some location they will be executed all in order of
+			appearance in the mapping section.
+		-->
+		<component class="com.ataccama.dqc.web.HttpDispatcher">
+			<listeners>
+                <listener name="default" port="8888" threads="10" healthStateRecoveryTimeout="3600000" ssl="false">
+                    <contexts>
+                        <listenerContext path="/">
+                            <securityFilter class="com.ataccama.server.http.security.def.NoSecurity"/>
+                            <!--
+                            <securityFilter class="com.ataccama.server.http.security.custom.XmlSpringSecurity">
+                                <configFile>spring-security.xml</configFile>
+                            </securityFilter>
+                            -->
+                            <filterChains>
+								<filterChain path="/*" filters="accessLog, loggingFilter, securityResponseHeaders, securityFilter"/>
+                            </filterChains>
+                        </listenerContext>
+                    </contexts>
+                </listener>
+				<!--
+                <listener name="console" port="8887" threads="5" ssl="false">
+                    <contexts>
+                        <listenerContext path="/">
+                            <securityFilter class="com.ataccama.server.http.security.def.NoSecurity"/>
+                            <filterChains>
+                                <filterChain path="/*" filters="accessLog, securityResponseHeaders, securityFilter"/>
+                            </filterChains>
+                        </listenerContext>
+                    </contexts>
+                </listener>
+                <listener name="ssl" port="443" threads="5" ssl="true" keyStoreFile="c:/keystore" keyStorePassword="secret">
+                    <contexts>
+                        <listenerContext path="/">
+                            <securityFilter class="com.ataccama.server.http.security.def.NoSecurity"/>
+                            <filterChains>
+                                <filterChain path="/*" filters="accessLog, loggingFilter, securityResponseHeaders, securityFilter"/>
+                            </filterChains>
+                        </listenerContext>
+                    </contexts>
+                </listener>
+				-->
+			</listeners>
+            <servletFilters>
+                <servletFilter name="accessLog" class="com.ataccama.dqc.web.filters.RequestResponseTimeLogger">
+                    <headers>
+                        <header>soapAction</header>
+                        <header>host</header>
+                    </headers>
+                    <level>INFO</level>
+                    <appendClientInfo>false</appendClientInfo>
+                </servletFilter>
+                <servletFilter name="loggingFilter" class="com.ataccama.dqc.web.filters.LoggingFilter">
+                    <logFile>../logs/request.log</logFile>
+                    <maxRequestLogSize>10000</maxRequestLogSize>
+                    <maxResponseLogSize>10000</maxResponseLogSize>
+                    <appendLog>false</appendLog>
+                </servletFilter>
+                <servletFilter name="securityResponseHeaders" class="com.ataccama.server.http.filters.ResponseHeadersFilter">
+                    <headers>
+                        <header name="Referrer-Policy" value="strict-origin"/>
+                        <header name="Content-Security-Policy" value="default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; script-src 'self' 'unsafe-eval' 'sha256-LUuXJZWv+iqAoiEz+MR1HORFiNthxhltt8do2N6NPik=' 'sha256-/mbPbpM/5kbI0U1nQQaSnj/7MnXyUvjKw/L8Idja3aM=' 'sha256-p84Nz3iaL6DfouAdT0PYnH2faQMd0JnPZwbTGcMKruU=' 'sha256-x7+pkV1goejarh4RQD5Y42rGzOTq5Eua3ewQ05/JuII=' 'sha256-XOzDrAubQd8HYnvuIR+gLUroMdKPJpC815MJZALgsbY=' 'sha256-+31JvG/At7T/70nPaNMoqrnWyK9HknCKNU6QFh4BfHs='; img-src 'self' data:"/>
+                        <header name="X-Permitted-Cross-Domain-Policies" value="none"/>
+
+                        <!-- for secured endpoints only -->
+                        <!-- <header name="Strict-Transport-Security" value="max-age=31536000; includeSubDomains"/> -->
+
+                        <!-- following headers are set to these defaults, uncomment and change it if needed -->
+                        <!--
+                        <header name="Cache-Control" value="no-cache, no-store, max-age=0, must-revalidate
+                        <header name="Expires" value="0"/>
+                        <header name="Pragma" value="no-cache"/>
+                        <header name="X-Content-Type-Options" value="nosniff"/>
+                        <header name="X-Frame-Options" value="DENY"/>
+                        <header name="X-XSS-Protection" value="1; mode=block"/>
+                        -->
+                    </headers>
+                </servletFilter>
+            </servletFilters>
+		</component>
+
+		<!--
+			JmsProviderComponent is used for selecting active connections
+			from JMS configuration pool and for configuration of JMS loggers.
+
+			The 'jmsResources' section contains references to 'jmsConnection' nodes
+			defined in runtime configuration file. Runtime configuration serves as
+			an address book of JMS Resources. Only connections explicitly mentioned
+			in JmsProviderComponent will be active and available for server use.
+			Therefore ALL JMS CONNECTIONS USED BY THIS SERVER CONFIGURATION
+			MUST BE LISTED IN THE 'jmsResources' ARRAY.
+
+			The filters section (optional) contains filter definitions and their
+			mapping to connections and input or output destinations. The following
+			filters are available:
+				com.ataccama.dqc.jms.filters.JmsLoggingFilter
+					- logs contents of the request/response to a file
+					- allows selective logging of response headers and contents
+					- message cotent may be trimmed by optional attributes
+					  'maxRequestLogSize' and 'maxResponseLogSize' (maximum number
+					  of characters to be logged)
+
+				com.ataccama.dqc.jms.filters.JmsResponseTimeLogger
+					- logs request processing time to the logger
+
+			The mapping section (optional) limits the logging filter to specific
+			connection / destination. When no mapping (or mapping attribute) is
+			present, the filter affects all connections / destinations.
+		-->
+
+
+		<!--
+		<component class="com.ataccama.dqc.jms.JmsProviderComponent">
+			<connectionPoolSize>5</connectionPoolSize>
+
+			<jmsResources>
+				<resource>myJmsConnection1</resource>
+				<resource>myJmsConnection2</resource>
+				<resource>myJmsConnection3</resource>
+			</jmsResources>
+
+			<filters>
+				<filter>
+					<filter class="com.ataccama.dqc.jms.filters.JmsLoggingFilter">
+						<logFile>myRequestResponse.log</logFile>
+						<appendLog>true</appendLog>
+						<maxRequestLogSize>128</maxRequestLogSize>
+						<maxResponseLogSize>128</maxResponseLogSize>
+						<logRequestHeaders>true</logRequestHeaders>
+						<logRequestContents>true</logRequestContents>
+						<logResponseHeaders>true</logResponseHeaders>
+						<logResponseContents>true</logResponseContents>
+					</filter>
+					<mappings>
+						<mapping connection="myJmsConnection1" destination="myMessageQueue1"/>
+						<mapping connection="myJmsConnection2" destination="myMessageQueue2"/>
+					</mappings>
+				</filter>
+				<filter>
+					<filter class="com.ataccama.dqc.jms.filters.JmsResponseTimeLogger">
+						<name>myTimeLogger</name>
+						<level>INFO</level>
+					</filter>
+					<mappings>
+						<mapping connection="myJmsConnection2"/>
+					</mappings>
+				</filter>
+			</filters>
+		</component>
+		-->
+
+
+		<!--
+		  Following part enables access to Derby database.
+		-->
+		<!--
+		<component class="com.ataccama.server.component.derby.DerbyServerComponent">
+			<port>1527</port>
+			<dataDir>../../../derby</dataDir>
+		</component>
+		-->
+		
+
+		<!--
+		  Following part enables access to server filesystem from the GUI.
+		  This component defines root folders for the remote filesystem (at least one root must be defined).
+		  Defined paths:
+		  - are not restricted any way (e.g. you can refer to c:/)
+		  - can be defined either as absolute or relative ones. If the path is relative then it is resolved against the
+		  server's default path (folder which contains serverConfig.xml)
+		  - path variables from the runtime configuration are supported
+		-->
+		<!--
+		<component class="com.ataccama.dqc.server.services.ServerFilesystemServiceComponent">
+			<roots>
+				<root>d:/opt</root>
+				<root>pathvar://data/ext</root>
+			</roots>
+		</component>
+		-->
+
+		<!--
+		  HealthStateProviders component adds several sensors that will report health status
+		  of the server's parts such as the path variables and database connections.
+		-->
+		<component class="com.ataccama.dqc.server.services.HealthStateProviders"
+				pathVariableRefreshRate="60" dataSourceRefreshRate="60"/>
+
+		<!--
+		  Following part enables the WebConsole component. Currently it has no parameters.
+		  The OnlineServicesComponent requires the HttpDispatcher component to be started.
+		-->
+		<component class="com.ataccama.dqc.web.console.WebConsoleComponent"/>
+
+		<!--
+		  HealthStateWebConsole component adds section to the Admin Center that will display
+		  all server's health sensor statuses.
+		-->
+		<component class="com.ataccama.dqc.web.health.HealthStateWebConsole"/>
+		
+		<!--
+		     Following component will log all sensor status changes to the standardly configured logger (i.e. to the configured file or stdout).
+		-->
+		<!--
+		<component class="com.ataccama.dqc.server.services.HealthStateLogger"/>
+		-->
+		
+		<!--
+		  VersionedFileSystemComponent is used to monitor configuration file changes in order to be
+		  able to reload the new configuration without restarting of the server. Just put the path
+		  to the folder that should be monitored to 'versionedFolder' section.
+		-->
+		<!--
+		<component class="com.ataccama.dqc.server.services.VersionedFileSystemComponent">
+			<versionedFolders>
+				<versionedFolder>../services/data1</versionedFolder>
+				<versionedFolder>../services/data2</versionedFolder>
+			</versionedFolders>
+		</component>
+		-->
+
+		<!--
+		  OnlineServicesComponent will start configurations and expose them as web services. The
+		  component has one parameter and that is the configuration folder where are location
+		  *.online files which contains definition of online services. All *.online files from that
+		  configuration folder will be processed and the defined services started.
+
+		  The OnlineServicesComponent requires the HttpDispatcher component to be started.
+
+		  If you need more folders to be monitored for changes add folder paths to 'versionedFolders'
+		  section. If you don't need any additional folders, you can leave it empty or remove the
+		  'versionedFolders' section.
+		-->
+		<component class="com.ataccama.dqc.online.OnlineServicesComponent">
+			<serviceLookupFolders>
+				<configFolder>../services</configFolder>
+			</serviceLookupFolders>
+		</component>
+
+		<!--
+		  Following part enables workflow component; multiple sources of workflow can be defined.
+		  Each source/path points where .ewf files are stored.
+		  Note resolving resourcesFolder: in relation to definition in runtimeConfiguration, the final value is resolved with this priority:
+			- serverConfig.WorkflowComponent.resourcesFolder
+			- runtimeConfig.resourcesFolder
+			- "." (current directory, i.e. where server/runtimeConfiguration resides) 
+		  Also note logLevel. It is the maximum level of events that will be logged into server console. These levels are followings:
+		    - -1 log everything
+		    -  0 do not log
+		    -  1 log everything related to workflow server component
+		    -  2 log starts and ends of workflows, changing states of workflow tasks
+		    -  3 log activities of workflow tasks
+		    -  4 and more: another subloggers (e.g. DQC plans started by workflows)
+		-->
+		<!--
+		<component class="com.ataccama.adt.web.WorkflowServerComponent">
+			<sources>
+				<source>
+					<path>../workflows/workflow</path>
+					<id>WF1</id>
+				</source>
+				<source>
+					<path>../workflows/workflow</path>
+					<id>WF2</id>
+				</source>
+			</sources>
+			<resourcesFolder>../workflows/resources</resourcesFolder>
+			<logLevel>2</logLevel>
+			<stateStorageProvider class="com.ataccama.adt.runtime.state.storage.FileStateStorageProvider"/>
+			 <!- -
+			 <stateStorageProvider class="com.ataccama.adt.runtime.state.storage.DbStateStorageProvider">
+				<dialectFile>../../db/modules/oracle</dialectFile>
+					<dataSource>oracle</dataSource>
+					<prefix>WF_</prefix>
+			 </stateStorageProvider>
+			 - ->
+		 </component>
+		-->
+
+		<!--
+		  Following part enables scheduler component; multiple sources of scheduler can be defined.
+		  Each source/path points where .sch files are stored.
+		  Scheduler component can be used only together with a WorkflowServerComponent component and
+		  must be placed after the WorkflowServerComponent component in the Server Configuration file.
+		-->
+		<!--
+		<component class="com.ataccama.adt.scheduler.server.SchedulerServerComponent">
+			<sources>
+				<source>
+					<path>../scheduler/schedules</path>
+					<id>S1</id>
+				</source>
+			</sources>
+			<resourcesFolder>../scheduler/resources</resourcesFolder>
+			<resultPersister class="com.ataccama.adt.scheduler.persister.FileStateResultPersister"/>
+			 <!- -
+			 <resultPersister class="com.ataccama.adt.scheduler.persister.DbStateResultPersister">
+				<dialectFile>../../db/modules/oracle</dialectFile>
+					<dataSource>oracle</dataSource>
+					<prefix>SCH_</prefix>
+			 </resultPersister>
+			 - ->
+		 </component>
+		-->
+
+		<!--
+		  Following part enables notification handler component; multiple sources can be defined.
+		  Each source/path points where .noth files are stored.
+		  Scheduler component can be used only together with a WorkflowServerComponent component and
+		  must be placed after the WorkflowServerComponent component in the Server Configuration file.
+		-->
+		<!--
+		<component class="com.ataccama.adt.notification.NotificationHandlerServerComponent">
+			<sources>
+				<source>
+					<path>../notifications/handlers</path>
+					<id>S1</id>
+				</source>
+			</sources>
+			<resourcesFolder>../notifications/resources</resourcesFolder>
+			<resultPersister class="com.ataccama.adt.scheduler.persister.FileStateResultPersister"/>
+			 <!- -
+			 <resultPersister class="com.ataccama.adt.scheduler.persister.DbStateResultPersister">
+				<dialectFile>../../db/modules/oracle</dialectFile>
+					<dataSource>oracle</dataSource>
+					<prefix>SCH_</prefix>
+			 </resultPersister>
+			 - ->
+		 </component>
+		-->
+		
+		<!--
+			Following part enables Ataccama Remote Executor component that is able to run jobs (Spark, AdHoc, Profiling, etc.) from remote servers. 
+			After enabling, a new page in Admin Center will appear with history of running jobs.
+		-->
+		<!--
+		 <component localRootFolder="/tmp/ataccama_executor" propertiesFile="../executor/executor.properties" enableEditProperties="false" prefix="/executor" disabled="false" maxRunningJobs="5" class="com.ataccama.dqc.executor.RemoteExecutorComponent"/>
+		 -->
+		
+		<!--
+			Following part enables access to Hive Metastore. The service is exposing WebHCat-like REST API.
+			Hive Metastore can be accessed using HCatalog via native distribution or JDBC or both.
+			- cluster property - The name of the hadoop cluster specified in runtime configuration file
+			- dataSourceName is definition of database connection in runtime configuration file, authentication will be taken from HCatalog service
+			  from the cluster definition (so the database can use SIMPLE or KERBEROS authentication), authentication in database definition is ignored
+			  
+			IMPORTANT! Please choose one of the services and disable/delete the others.
+		-->
+		<!-- 
+		<component impersonate="false" prefix="/metadata" disabled="false" class="com.ataccama.server.component.hadoop.RemoteAccessComponent">
+			<services>
+				<iHadoopService prefix="/hcatalog" disabled="false" class="com.ataccama.server.component.hadoop.hcatalog.HCatalogService" cluster="hadoop"/>
+				<iHadoopService prefix="/hcatalogJdbc" disabled="false" class="com.ataccama.server.component.hadoop.hcatalog.jdbc.HCatalogJdbcService" dataSourceName="database" cluster="hadoop" />
+				<iHadoopService prefix="/jdbc" disabled="false" class="com.ataccama.server.component.hadoop.hcatalog.jdbc.HCatalogJdbcService" dataSourceName="database"/>
+			</services>
+		</component>
+		-->		
+
+		<!--
+		  Following part enables custom pages in Admin Center:
+		  - page containing result of SQL query
+		  - page containing listing of files in directory
+		-->
+		<!--
+		<component class="com.ataccama.dqc.web.console.custom.CustomWebConsolePagesComponent">
+			<customCategories>
+			<cc label="Custom info pages" configFile="custom-pages.xml" />
+			<!- - every cc is one category in left menu and has it own configuration file - ->
+			</customCategories>
+		</component>
+		-->
+
+		<!--
+		  Following part enables Drill-through database
+			- folder - required parameter, the destination folder has to exist before the start of the server, path is relative to /runtime folder
+			- port - optional parameter, used for connection to dtdb, if it is not specified then the default value is 5103
+		<component class="com.ataccama.dqc.dtdb.server.DtDbServerComponent"	folder="./dtdb_data" port="5103"/>
+		-->
+
+	</serverComponents>
+</server>

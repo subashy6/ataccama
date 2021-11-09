@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<runtimeconfig>
+ 
+	<!--
+		Configuration for named url resources (used in steps like Soap Call, etc.)
+	-->
+ 
+	<contributedConfigs> 
+	<!--
+	<config class="com.ataccama.dqc.processor.support.UrlResourceContributor"/>
+		<!- - Optional authorization: user, password - -/>
+	   	<urls>
+			<url name="localhost" url="localhost:7777" user="test" password="crypted:DES:NsuAku14ipInv4Z7FZAFKRjAVIxjqxmTpX8HwSTGUlE=" />
+	    </urls>
+	</config>
+	--> 
+	
+	<config class="com.ataccama.server.keycloak.KeycloakDeploymentContributor">
+			<keycloakConfigs>
+				<keycloakConfig name="keycloak-local">
+					<url>http://localhost:8083/auth</url>
+					<realm>ataccamaone</realm>
+					<attributes>
+						<attribute name="ssl-required" value="external"/>
+						<attribute name="principal-attribute" value="preferred_username"/>
+					</attributes>
+					<clients>
+						<client id="one-admin-center">
+							<secret>one-admin-center-s3cret</secret>
+							<attributes>
+								<attribute name="use-resource-role-mappings" value="false"/>
+								<attribute name="public-client" value="false"/>
+								<attribute name="bearer-only" value="false"/>
+								<attribute name="autodetect-bearer-only" value="false"/>
+								<attribute name="always-refresh-token" value="false"/>
+							</attributes>
+						</client>
+					</clients>
+				</keycloakConfig>
+			</keycloakConfigs>
+		</config> 
+	</contributedConfigs>
+ 
+	<!--
+		List of database connection definitions.
+	  	These optional attributes are available (configuration of the pooling behaviour):
+                 -  minSize
+                 -  maxAge
+                 -  maxIdleSize	 
+	-->
+ 
+	<dataSources> 
+	<!--
+		name		- unique identifier of the data source connection.
+		url		  	- connection string to data source (JDBC)
+		driverClass - java class name of the driver used for connection (JDBC)
+		user		- name of the data source user (DB schema)
+		password	- password used for data source connection
+		minSize	  	- minimum number of connections in the connection pool
+		maxAge	  	- if the connection is not used for specified time (in miliseconds) the connection will be closed
+	-->
+ 
+	</dataSources>
+ 
+	<!--
+		Bellow you can define path variables. You can use path variables in configuration files like 
+	  	configuration plans as shortcuts to folders which may be on each system on different path location.
+	-->
+ 
+	<pathVariables/>
+	<parallelismLevel>1</parallelismLevel>
+ 
+	<!--<loggingConfig>runtimeConfigLogging.xml</loggingConfig>-->
+ 
+</runtimeconfig>

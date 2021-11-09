@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model>
+    <entities>
+        <entity name="Stat" type="ST" path="Data/Staty/Stat">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NutsLau" type="STRING" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="sti:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="sti:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="sti:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="RegionSoudrznosti" type="RS" path="Data/RegionySoudrznosti/RegionSoudrznosti">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="Stat" type="INTEGER" foreignKey="Stat.Kod"/>
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NutsLau" type="STRING" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="rsi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="rsi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="rsi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="Kraj" type="KR" path="Data/Kraje/Kraj">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="Stat" type="INTEGER" path="kri:Stat/sti:Kod" foreignKey="Stat.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="kri:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="kri:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="kri:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+                <column name="nuts3" type="STRING" />
+                <column name="oblast_kod" type="INTEGER" />
+            </columns>
+        </entity>
+        <entity name="Vusc" type="VC" path="Data/Vusc/Vusc">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="RegionSoudrznosti" type="INTEGER" foreignKey="RegionSoudrznosti.Kod"/>
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NutsLau" type="STRING" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="vci:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="vci:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="vci:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="Okres" type="OK" path="Data/Okresy/Okres">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="Kraj" type="INTEGER" path="oki:Kraj/kri:Kod" foreignKey="Kraj.Kod" />
+                <column name="Vusc" type="INTEGER" path="oki:Vusc/vci:Kod" foreignKey="Vusc.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NutsLau" type="STRING" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="oki:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="oki:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="oki:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="Orp" type="OP" path="Data/Orp/Orp">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="SpravniObecKod" type="INTEGER" foreignKey="Obec.Kod" />
+                <column name="Vusc" type="INTEGER" foreignKey="Vusc.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="opi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="opi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="opi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="Pou" type="PU" path="Data/Pou/Pou">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="SpravniObecKod" type="INTEGER" foreignKey="Obec.Kod" />
+                <column name="Orp" type="INTEGER" foreignKey="Orp.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="pui:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="pui:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="pui:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="Obec" type="OB" path="Data/Obce/Obec">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="StatusKod" type="INTEGER" />
+                <column name="Okres" type="INTEGER" path="obi:Okres/oki:Kod" foreignKey="Okres.Kod" />
+                <column name="Pou" type="INTEGER" path="obi:Pou/pui:Kod" foreignKey="Pou.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="obi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="obi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="obi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="SpravniObvod" type="SP" path="Data/SpravniObvody/SpravniObvod">
+        	<columns>
+        		<column name="Kod" type="INTEGER" primaryKey="true" />
+        		<column name="SpravniMomcKod" type="INTEGER" path="spi:SpravniMomc/mci:Kod" foreignKey="Momc.Kod" />
+        		<column name="Obec" type="INTEGER" path="spi:Obec/obi:Kod" foreignKey="Obec.Kod" />
+        		<column name="Nazev" type="STRING" />
+        		<column name="Nespravny" type="BOOLEAN" />
+        		<column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="spi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="spi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="spi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+        	</columns>
+        </entity>
+        <entity name="Mop" type="MP" path="Data/Mop/Mop">
+        	<columns>
+        		<column name="Kod" type="INTEGER" primaryKey="true" />
+        		<column name="Obec" type="INTEGER" path="mpi:Obec/obi:Kod" foreignKey="Obec.Kod" />
+        		<column name="Nazev" type="STRING" />
+        		<column name="Nespravny" type="BOOLEAN" />
+        		<column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="mpi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="mpi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="mpi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+        	</columns>
+        </entity>
+        <entity name="Momc" type="MC" path="Data/Momc/Momc">
+        	<columns>
+        		<column name="Kod" type="INTEGER" primaryKey="true" />
+        		<column name="Mop" type="INTEGER" path="mci:Mop/mpi:Kod" foreignKey="Mop.Kod" />
+        		<column name="Obec" type="INTEGER" path="mci:Obec/obi:Kod" foreignKey="Obec.Kod" />
+        		<column name="SpravniObvod" type="INTEGER" path="/SpravniObvod/Kod" foreignKey="SpravniObvod.Kod" />
+        		<column name="Nazev" type="STRING" />
+        		<column name="Nespravny" type="BOOLEAN" />
+        		<column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="mci:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="mci:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="mci:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+        	</columns>
+        </entity>
+        <entity name="CastObce" type="CO" path="Data/CastiObci/CastObce">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="Obec" type="INTEGER" path="coi:Obec/obi:Kod" foreignKey="Obec.Kod" />
+                <column name="Pou" type="INTEGER" path="coi:Pou/pui:Kod" foreignKey="Pou.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="coi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="coi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="coi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="KatastralniUzemi" type="KU" path="Data/KatastralniUzemi/KatastralniUzemi">
+        	<columns>
+        		<column name="Kod" type="INTEGER" primaryKey="true" />
+        		<column name="Obec" type="INTEGER" path="kui:Obec/obi:Kod" foreignKey="Obec.Kod" />
+        		<column name="Nazev" type="STRING" />
+        		<column name="Nespravny" type="BOOLEAN" />
+        		<column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="kui:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="kui:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="kui:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+        	</columns>
+        </entity>
+        <entity name="Zsj" type="ZJ" path="Data/Zsj/Zsj">
+        	<columns>
+        		<column name="Kod" type="INTEGER" primaryKey="true" />
+        		<column name="KatastralniUzemi" type="INTEGER" path="zji:KatastralniUzemi/kui:Kod" foreignKey="KatastralniUzemi.Kod" />
+        		<column name="Nazev" type="STRING" />
+        		<column name="Vymera" type="LONG" />
+        		<column name="CharakterZsjKod" type="INTEGER" />
+        		<column name="Nespravny" type="BOOLEAN" />
+        		<column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="zji:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="zji:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="zji:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+        	</columns>
+        </entity>
+        <entity name="Ulice" type="UL" path="Data/Ulice/Ulice">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="Nazev" type="STRING" />
+                <column name="Obec" type="INTEGER" path="uli:Obec/obi:Kod" foreignKey="Obec.Kod" />
+                <column name="Pou" type="INTEGER" path="uli:Pou/pui:Kod" foreignKey="Pou.Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="uli:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="uli:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="uli:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+            </columns>
+        </entity>
+        <entity name="StavebniObjekt" type="SO" path="Data/StavebniObjekty/StavebniObjekt">
+            <columns>
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="CislaDomovni" type="LIST_INTEGER" path="soi:CislaDomovni/com:CisloDomovni" />
+                <column name="IdentifikacniParcela" type="LONG" path="soi:IdentifikacniParcela/pai:Id" />
+                <column name="TypStavebnihoObjektuKod" type="INTEGER" />
+                <column name="ZpusobVyuzitiKod" type="INTEGER" />
+                <column name="CastObce" type="INTEGER" path="soi:CastObce/coi:Kod" />
+                <column name="Momc" type="INTEGER" path="soi:Momc/mci:Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="IsknBudovaId" type="LONG" />
+                <column name="Dokonceni" type="DAY" />
+                <column name="ZastavenaPlocha" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="soi:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="soi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="soi:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+                <column name="IdentifikactniParcela" type="INTEGER" />
+                <column name="PocetBytu" type="INTEGER" />
+                <column name="PocetPodlazi" type="INTEGER" />
+                <column name="PodlahovaPlocha" type="FLOAT" />
+                <column name="VybaveniVytahemKod" type="INTEGER" />
+                <column name="x" type="FLOAT" path="soi:Geometrie/soi:DefinicniBod/gml:Point/gml:pos[0]" />
+                <column name="y" type="FLOAT" path="soi:Geometrie/soi:DefinicniBod/gml:Point/gml:pos[1]" />
+            </columns>
+        </entity>
+        <entity name="AdresniMisto" type="AD" path="Data/AdresniMista/AdresniMisto">
+            <columns>
+                <!-- path is relative to the ruianPath above -->
+                <column name="Kod" type="INTEGER" primaryKey="true" />
+                <column name="CisloDomovni" type="INTEGER" references="StavebniObjekt.CislaDomovni" />
+                <column name="CisloOrientacni" type="INTEGER" />
+                <column name="CisloOrientacniPismeno" type="STRING" />
+                <column name="Psc" type="INTEGER" />
+                <column name="StavebniObjekt" type="INTEGER" path="ami:StavebniObjekt/soi:Kod" foreignKey="StavebniObjekt.Kod" />
+                <column name="Ulice" type="INTEGER" path="ami:Ulice/uli:Kod" />
+                <column name="Nespravny" type="BOOLEAN" />
+                <column name="PlatiOd" type="DAY" />
+                <column name="PlatiDo" type="DAY" />
+                <column name="IdTransakce" type="INTEGER" />
+                <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+                <column name="NespravneUdaje" type="LIST_STRING" path="ami:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+                <column name="OznacenoDne" type="LIST_DAY" path="ami:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+                <column name="OznacenoInfo" type="LIST_STRING" path="ami:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+                <column name="x" type="FLOAT" path="ami:Geometrie/ami:DefinicniBod/ami:AdresniBod/gml:Point/gml:pos[0]" />
+                <column name="y" type="FLOAT" path="ami:Geometrie/ami:DefinicniBod/ami:AdresniBod/gml:Point/gml:pos[1]" />
+            </columns>
+        </entity>
+        <entity name="ZaniklyPrvek" path="Data/ZaniklePrvky/ZaniklyPrvek" delete="true">
+            <columns>
+                <column name="TypPrvkuKod" type="STRING" />
+                <column name="PrvekId" type="LONG" />
+                <column name="IdTransakce" type="INTEGER" />
+            </columns>
+        </entity>
+    </entities>
+    <deleteInfo entityType="TypPrvkuKod" entityId="PrvekId" transactionId="Idtransakce" />
+    
+    <!-- Additional entities -->
+    <!--
+    <entity name="Parcela" type="PA" path="Data/Parcely/Parcela">
+    	<columns>
+    		<column name="Id" type="LONG" primaryKey="true" />
+    		<column name="KatastralniUzemi" type="INTEGER" path="pai:KatastralniUzemi/kui:Kod" foreignKey="KatastralniUzemi.Kod" />
+    		<column name="KmenoveCislo" type="INTEGER" />
+    		<column name="PododdeleniCisla" type="INTEGER" />
+    		<column name="VymeraParcely" type="LONG" />
+    		<column name="ZpusobVyuzitiPozemku" type="INTEGER" />
+    		<column name="DruhCislovaniKod" type="INTEGER" />
+    		<column name="DruhPozemkuKod" type="INTEGER" />
+    		<column name="Nespravny" type="BOOLEAN" />
+    		<column name="PlatiOd" type="DAY" />
+            <column name="PlatiDo" type="DAY" />
+            <column name="IdTransakce" type="INTEGER" />
+            <column name="GlobalniIdNavrhuZmeny" type="INTEGER" />
+            <column name="NespravneUdaje" type="LIST_STRING" path="pai:NespravneUdaje/com:NespravnyUdaj/com:NazevUdaje" />
+            <column name="OznacenoDne" type="LIST_DAY" path="pai:NespravneUdaje/com:NespravnyUdaj/com:OznacenoDne" />
+            <column name="OznacenoInfo" type="LIST_STRING" path="pai:NespravneUdaje/com:NespravnyUdaj/com:OznacenoInfo" />
+    	</columns>
+    </entity>
+	-->
+    <namespaces>
+        <namespace prefix="gml" uri="http://www.opengis.net/gml/3.2" />
+        <namespace prefix="xlink" uri="http://www.w3.org/1999/xlink" /> 
+        <namespace prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance" /> 
+        <namespace prefix="ami" uri="urn:cz:isvs:ruian:schemas:AdrMistoIntTypy:v1" /> 
+        <namespace prefix="base" uri="urn:cz:isvs:ruian:schemas:BaseTypy:v1" />
+        <namespace prefix="coi" uri="urn:cz:isvs:ruian:schemas:CastObceIntTypy:v1" /> 
+        <namespace prefix="com" uri="urn:cz:isvs:ruian:schemas:CommonTypy:v1" />
+        <namespace prefix="kui" uri="urn:cz:isvs:ruian:schemas:KatUzIntTypy:v1" />
+        <namespace prefix="kri" uri="urn:cz:isvs:ruian:schemas:KrajIntTypy:v1" />
+        <namespace prefix="mci" uri="urn:cz:isvs:ruian:schemas:MomcIntTypy:v1" />
+        <namespace prefix="mpi" uri="urn:cz:isvs:ruian:schemas:MopIntTypy:v1" />
+        <namespace prefix="obi" uri="urn:cz:isvs:ruian:schemas:ObecIntTypy:v1" />
+        <namespace prefix="oki" uri="urn:cz:isvs:ruian:schemas:OkresIntTypy:v1" />
+        <namespace prefix="opi" uri="urn:cz:isvs:ruian:schemas:OrpIntTypy:v1" />
+        <namespace prefix="pai" uri="urn:cz:isvs:ruian:schemas:ParcelaIntTypy:v1" />
+        <namespace prefix="pui" uri="urn:cz:isvs:ruian:schemas:PouIntTypy:v1" />
+        <namespace prefix="rsi" uri="urn:cz:isvs:ruian:schemas:RegSouIntiTypy:v1" />
+        <namespace prefix="spi" uri="urn:cz:isvs:ruian:schemas:SpravObvIntTypy:v1" />
+        <namespace prefix="sti" uri="urn:cz:isvs:ruian:schemas:StatIntTypy:v1" />
+        <namespace prefix="soi" uri="urn:cz:isvs:ruian:schemas:StavObjIntTypy:v1" />
+        <namespace prefix="uli" uri="urn:cz:isvs:ruian:schemas:UliceIntTypy:v1" />
+        <namespace prefix="vci" uri="urn:cz:isvs:ruian:schemas:VuscIntTypy:v1" />
+        <namespace prefix="vf" uri="urn:cz:isvs:ruian:schemas:VymennyFormatTypy:v1" />
+        <namespace prefix="zji" uri="urn:cz:isvs:ruian:schemas:ZsjIntTypy:v1" />
+    </namespaces>
+</model>

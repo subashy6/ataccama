@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="mssql" driver="net.sourceforge.jtds.jdbc.Driver" urlTemplate="jdbc:jtds:sqlserver://&lt;host&gt;/&lt;database&gt;">
+	
+	<jars>
+		<jar file="../libs/jtds-1.2.2.jar"/>
+	</jars>
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter=";">
+		<createScript>CREATE TABLE &lt;tableName&gt; (&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;}; separator=&quot;,&quot;&gt;);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; ALTER COLUMN &lt;attr.name&gt; &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<sequenceCreate>CREATE TABLE &lt;seqName&gt; (ID INTEGER IDENTITY)</sequenceCreate>
+		<sequenceNext>INSERT INTO &lt;seqName&gt; DEFAULT VALUES;SELECT max(ID) from &lt;seqName&gt;</sequenceNext>
+		<sequenceDrop>DROP TABLE &lt;seqName&gt;</sequenceDrop>
+		<sequenceSet>set</sequenceSet>
+		
+		<!-- indexes -->
+		<createIndex>CREATE INDEX &lt;indexName&gt; ON &lt;tableName&gt; (&lt;columns;separator=&quot;,&quot;&gt;)</createIndex>
+		<dropIndex>DROP INDEX &lt;indexName&gt; ON &lt;tableName&gt;</dropIndex>
+		
+	</templates>
+
+    <!-- I. mappings from persistence type to the DB type -->
+    <persistenceMappings>
+    	<mapping type="STRING" dbType="VARCHAR($size)" defaultSize="255" />
+    	<mapping type="BOOLEAN" dbType="BIT" />
+    	<mapping type="INTEGER" dbType="INT" />
+    	<mapping type="LONG_INTEGER" dbType="BIGINT" />
+    	<mapping type="BIG_INTEGER" dbType="BIGINT" />
+    	<mapping type="FLOAT" dbType="FLOAT" />
+    	<mapping type="DATETIME" dbType="DATETIME" />
+    	<mapping type="BLOB" dbType="VARBINARY(MAX)" />
+    	<mapping type="CLOB" dbType="NTEXT" />
+    </persistenceMappings>
+
+    <!-- definition of non-parametric DB types -->
+    <!-- types defined here are considered non-parametric: their size,precision attributes are
+         ignored (because of either DB type has no such attributes or we do not want to deal
+         with them, since generic type does not use such attributes) -->
+    <nonParametricDbTypes>
+    	FLOAT,REAL,BIGINT,SMALLINT,TINYINT,DATE,DATETIME,DATETIME2,SMALLDATETIME,DATETIMEOFFSET,INT,BIT
+    </nonParametricDbTypes> 
+	
+	<!-- II. mappings from the DB type to the generic DB type -->        
+	<genericMappings>
+		<!-- strings -->
+		<mapping sourceType="CHAR(%s)" targetType="VARCHAR($1)" />
+		<mapping sourceType="CHAR" targetType="VARCHAR(255)" />
+		<mapping sourceType="NCHAR(%s)" targetType="VARCHAR($1)" />
+		<mapping sourceType="NCHAR" targetType="VARCHAR(255)" />
+		<mapping sourceType="NVARCHAR(%s)" targetType="VARCHAR($1)" />
+		<mapping sourceType="NVARCHAR" targetType="VARCHAR(255)" />
+		<mapping sourceType="TEXT(%s)" targetType="TEXT($1)" />
+		<mapping sourceType="TEXT" targetType="TEXT(255)" />
+		<mapping sourceType="NTEXT(%s)" targetType="NTEXT($1)" />
+		<mapping sourceType="NTEXT" targetType="NTEXT" />	
+		<!-- datetime -->
+		<mapping sourceType="DATE" targetType="DATETIME" />
+		<mapping sourceType="DATETIME2" targetType="DATETIME" />
+		<mapping sourceType="SMALLDATETIME" targetType="DATETIME" />
+		<mapping sourceType="DATETIMEOFFSET" targetType="DATETIME" />
+		<!-- numeric types -->		 
+		<mapping sourceType="REAL" targetType="FLOAT" />
+		<mapping sourceType="INTEGER" targetType="INT" />
+		<mapping sourceType="SMALLINT" targetType="INT" />
+		<mapping sourceType="TINYINT" targetType="INT" />
+		<mapping sourceType="VARBINARY(%s)" targetType="VARBINARY(MAX)" />
+		<!-- generic numeric types -->
+		<mapping sourceType="DECIMAL(%s,%d)" targetType="NUMERIC($1,$2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL" targetType="NUMERIC(20,2)" />
+		<mapping sourceType="NUMERIC" targetType="NUMERIC(20,2)" />
+	</genericMappings>
+	
+	<!-- III. mappings from the DB type to the DQC type -->
+    <dqcMappings>
+    	<mapping sourceType="VARCHAR(%s)" targetType="STRING" />
+    	<mapping sourceType="NUMERIC(%s,%p)" targetType="FLOAT">
+    		<cases>
+    			<case maxSize="10" maxPrecision="0" targetType="INTEGER" />
+    			<case maxPrecision="0" targetType="LONG" />
+    		</cases>
+    	</mapping>
+    	<!-- TODO: recognize DAY and DATETIME: make those types parametric and
+    	     distinguish by size -->
+    	<mapping sourceType="DATETIME" targetType="DATETIME"/>
+    	<mapping sourceType="BIT" targetType="BOOLEAN" />
+    	<mapping sourceType="FLOAT" targetType="FLOAT" />
+    	<mapping sourceType="REAL" targetType="FLOAT" />
+    	<mapping sourceType="INT" targetType="INTEGER" />
+    	<mapping sourceType="BIGINT" targetType="LONG" />
+    	<mapping sourceType="SMALLINT" targetType="INTEGER" />
+    	<mapping sourceType="TINYINT" targetType="INTEGER" />
+    	<mapping sourceType="BIT" targetType="BOOLEAN" />
+    </dqcMappings>
+
+</dbModule>

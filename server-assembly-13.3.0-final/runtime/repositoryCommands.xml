@@ -1,0 +1,76 @@
+<commands>
+<!--
+
+Symbolic names used in templates in {}:
+
+	data		table of data records
+	key			table of unification keys
+	ts			table for timestamps
+	morules
+	moreuni
+	meta
+	
+	idxpk		pk - index on table {key}
+	idxukey		ukey - index on table {key}
+	
+	tmpkey		tmp table of input unif.keys
+	tmpdkey		tmp table of expanded unif.keys
+	tmppk		tmp table of input/expandex pks
+	tmppkt		tmp table of input/expanded pks with timestamp
+
+-->
+	<!-- called after connect and initialize repository when runtime starts -->
+	<afterStart/>
+
+	<!-- -->
+	<beforeBatch/>
+
+	<!-- -->
+	<afterBatch/>
+
+	<!-- -->
+	<beforeExpand/>
+
+	<!-- expand commands -->
+	<!-- default:
+	<addPks>INSERT INTO {tmppk} (pk, ord, stat) SELECT DISTINCT pk, 0, :iter + 3 FROM {tmpdkey} d JOIN {key} k ON k.ukey = d.ukey AND d.stat &gt;= :iter WHERE NOT EXISTS (SELECT 1 FROM {tmppk} x WHERE x.pk = k.pk)</addPks>
+	<addKeys>INSERT INTO {tmpdkey} (ukey, stat) SELECT DISTINCT ukey, :iter FROM {tmppk} p JOIN {key} k ON k.pk = p.pk AND p.stat &gt;= :iter WHERE NOT EXISTS (SELECT 1 FROM {tmpdkey} x WHERE x.ukey = k.ukey)</addKeys>
+	<preparePk>INSERT INTO {tmppk} (pk, ord, stat, ts, rts) SELECT p.pk, p.ord, p.stat, p.ts, d.ts FROM {tmppkt} p LEFT JOIN {ts} d ON d.pk = p.pk</preparePk>
+	<prepareKeys>INSERT INTO {tmpdkey} (ukey, stat) SELECT DISTINCT k.ukey, 0 FROM {tmpkey} k JOIN {tmppk} p ON p.pk = k.pk WHERE p.ts IS NULL OR p.rts IS NULL OR p.rts &lt;= p.ts</prepareKeys>
+	<prepareKeysIgnoreOlder>INSERT INTO {tmpdkey} (ukey, stat) SELECT DISTINCT k.ukey, 0 FROM {tmpkey} k JOIN {tmppk} p ON p.pk = k.pk</prepareKeysIgnoreOlder>
+	<preparePkIgnoreOlder>INSERT INTO {tmppk} (pk, ord, stat, ts, rts) SELECT p.pk, p.ord, p.stat, p.ts, d.ts FROM {tmppkt} p LEFT JOIN {ts} d ON d.pk = p.pk WHERE p.ts IS NULL OR d.ts IS NULL OR d.ts &lt;= p.ts</preparePkIgnoreOlder>
+	<addMoReunify>INSERT INTO {tmppk} (pk, ord, stat) SELECT m.childPk, 0, 2 FROM {moreuni} m WHERE NOT EXISTS (SELECT 1 FROM {tmppk} x WHERE x.pk = m.childPk)</addMoReunify>
+	<addMoChild>INSERT INTO {tmppk} (pk, ord, stat) SELECT childPk, 0, :iter + 3 FROM {tmppk} p JOIN {morules} m ON m.parentPk = p.pk AND p.stat &gt;= :iter WHERE NOT EXISTS (SELECT 1 FROM {tmppk} x WHERE x.pk = m.childPk)</addMoChild>
+	<addMoParent>INSERT INTO {tmppk} (pk, ord, stat) SELECT DISTINCT parentPk, 0, :iter + 3 FROM {tmppk} p JOIN {morules} m ON m.childPk = p.pk AND p.stat &gt;= :iter WHERE NOT EXISTS (SELECT 1 FROM {tmppk} x WHERE x.pk = m.parentPk)</addMoParent>
+	<dataFetch>SELECT p.pk, p.ord, p.stat, p.ts, p.rts, d.attr{*, d.data#} FROM {tmppk} p LEFT JOIN {data} d ON d.pk = p.pk ORDER BY p.ord</dataFetch>
+	-->
+
+	<!-- -->
+	<afterExpand/>
+
+	<!-- before reading expanded recs from repository and sending them to unify -->
+	<beforeUpdate>
+	</beforeUpdate>
+
+	<!-- -->
+	<afterUpdate>
+	</afterUpdate>
+
+	<!-- -->
+	<beforeDelayedUpdate>
+	</beforeDelayedUpdate>
+
+	<delayedUpdate>
+	</delayedUpdate>
+
+	<!-- -->
+	<afterDelayedUpdate>
+	</afterDelayedUpdate>
+
+	<!-- -->
+	<beforeStop/>
+
+	<!-- [DIRECT] | DELAYED | DELAY_DELETE | SERVER_DELETE -->
+	<updateStrategy>DIRECT</updateStrategy>
+
+</commands>

@@ -1,0 +1,12 @@
+"id_i","parent_id_i","path_i","type_i","referencedNodePath_s","referencedId_s","referencedHcn_s","from_h","to_h"
+"60c4131b-3530-420d-bfbd-3271068716b2","141e2fe9-bcd2-4435-b69f-ee3293777578","/policies/conditions/references","simpleExpressionReference","/terms","194e2db8-f939-45ae-8ebd-db7cf8c10bab",,"208",
+"18a43a79-86d3-4bf4-8739-ed1850a767ff","141e2fe9-bcd2-4435-b69f-ee3293777578","/policies/conditions/references","simpleExpressionReference","/terms","b1eb14b9-b165-4a82-90fb-f27b34f1cbfd",,"208",
+"c62555f0-6557-4301-9b78-6eb2adb91b16","141e2fe9-bcd2-4435-b69f-ee3293777578","/policies/conditions/references","simpleExpressionReference","/terms","2491bad5-d692-45bc-a92e-1dc4cad51423",,"208",
+"75391f63-4590-4573-bc70-e3c15bf0649c","3a3ebd7e-d8ba-4af0-b7dc-06b665d764bf","/policies/conditions/references","simpleExpressionReference","/terms","033df1b9-ef3c-48c7-b40a-a8fc98249221",,"208",
+"a59d4bb9-32bf-4462-980b-7fccb5123e72","db23a7df-1f53-4ed3-a51e-43e061a28621","/policies/conditions/references","simpleExpressionReference","/terms","842a85c8-ed02-4383-b0c4-9dc08bb9cbcd",,"208",
+"551567ad-88b1-4adb-9687-0005f274c7d3","db23a7df-1f53-4ed3-a51e-43e061a28621","/policies/conditions/references","simpleExpressionReference","/terms","8da5589f-9fcd-4755-a71c-1404e5523f72",,"208",
+"dcfeb232-26b9-40fa-a785-753e00cabac8","db23a7df-1f53-4ed3-a51e-43e061a28621","/policies/conditions/references","simpleExpressionReference","/terms","8e0a584d-0420-407c-955b-19d93a3c5cac",,"208",
+"fbe566fa-333a-40ca-9233-b69d2d639b0e","db23a7df-1f53-4ed3-a51e-43e061a28621","/policies/conditions/references","simpleExpressionReference","/terms","884b81a2-8d9d-4812-9a7b-ba03cdfcc388",,"208",
+"9905b4d1-6f01-4309-8290-87fcf57fbbb7","db23a7df-1f53-4ed3-a51e-43e061a28621","/policies/conditions/references","simpleExpressionReference","/terms","e2cd2cad-b808-4c7b-8feb-7787e4da1567",,"208",
+"28dbb362-ae0b-4705-9315-036fd9ef3afb","9df89d49-2fd8-4668-8f6b-9726ff03ddc8","/policies/conditions/references","simpleExpressionReference","/terms","fa5778f9-f74b-4f06-8749-7883429e56c8",,"208",
+"5aa90c0c-cd66-461e-9f66-a2364956a894","3a2d7b19-8141-481e-a9af-0b36087f03ea","/rules/implementation/expression/references","simpleExpressionReference","/rules/inputGroups/inputs","00de1be5-f75b-4072-ba30-c67e4fdf2333",,"73",

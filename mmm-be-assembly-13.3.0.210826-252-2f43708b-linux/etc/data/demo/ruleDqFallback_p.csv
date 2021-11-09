@@ -1,0 +1,6 @@
+"id_i","parent_id_i","path_i","type_i","result_ri","result_rh","score_s","explanation_s","from_h","to_h"
+"cbafa419-3e8b-48cc-9de6-0c54ca03bed4","d2b85350-0504-4f9f-815c-19f615d1a548","/rules/implementation/fallback","ruleDqFallback","67b7aed6-b54f-4be3-a987-95899f605029",,"0","VALID","73",
+"f685ccaa-1e00-4b21-bd89-ba9dcbf1aec2","c41da24a-fbba-442b-84d7-0cf0a7506f8f","/rules/implementation/fallback","ruleDqFallback","67b7aed6-b54f-4be3-a987-95899f605029",,,,"73",
+"b46f58f2-4d64-435f-96fb-f8d32a3273e8","c9ed69d6-ce76-4d24-a4e4-e50ca7f08092","/rules/implementation/fallback","ruleDqFallback","67b7aed6-b54f-4be3-a987-95899f605029",,,,"73",
+"a395df38-08c3-4800-93cf-c4c9abd3aa1e","3c89e693-a577-426b-abb1-927c6b04b00e","/rules/implementation/fallback","ruleDqFallback","67b7aed6-b54f-4be3-a987-95899f605029",,"0","VALID","73",
+"fab68e8e-e9de-4ac7-9fd8-d5d0442ef8c2","8b529d06-179a-46a0-83de-d34cf3346008","/rules/implementation/fallback","ruleDqFallback","67b7aed6-b54f-4be3-a987-95899f605029",,,,"73",

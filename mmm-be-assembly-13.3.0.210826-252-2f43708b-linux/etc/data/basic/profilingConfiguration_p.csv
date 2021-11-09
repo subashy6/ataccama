@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","name_s","type_s","description_s","anomalyDetectionEnabled_s","samplingLimitCount_s","samplingLimitPercentage_s","partitioned_s","dqEvalEnabled_s","from_h","to_h"
+"723fa8c2-9ea9-4119-b0a7-d49f1f6e4c45","00000000-0000-0000-0000-000000000001","/profilingConfigurations","profilingConfiguration","Full profiling","FULL","Full profiling of all the table rows","true",,,"true","false","0",
+"bb3815bc-6b30-49b0-94c1-d19915750aa4","00000000-0000-0000-0000-000000000001","/profilingConfigurations","profilingConfiguration","Sample profiling","SAMPLE","Sample profiling of table","false","10000","20","true","false","0",

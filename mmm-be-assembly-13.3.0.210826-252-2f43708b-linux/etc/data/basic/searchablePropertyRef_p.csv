@@ -1,0 +1,5 @@
+id_i                                  ,parent_id_i                           ,path_i                                               ,type_i                 ,target_ri                             ,from_h,to_h
+"1a28ab83-154f-4726-acac-e923987cd52e","ecb8bb09-8dd6-4766-9244-ceeabe93f251","/searchConfiguration/propertyFilters/referencedFrom","searchablePropertyRef","0120ff3f-8b20-4555-8330-c187752ea3e5","0"   ,
+"df4cb1a0-050b-4079-8aab-bdb0303046d9","ecb8bb09-8dd6-4766-9244-ceeabe93f251","/searchConfiguration/propertyFilters/referencedFrom","searchablePropertyRef","51a79eb1-7f28-46e6-9d54-32a26b50b0a2","0"   ,
+"9bdc18c4-3e66-42b5-9278-6803a528e46e","2ef068ca-0251-45b2-b6ac-1a4bf8878b72","/searchConfiguration/propertyFilters/referencedFrom","searchablePropertyRef","a4c2863a-f75c-49d1-9a5a-1d564dda85a8","0"   ,
+"a96ee322-303e-4e9f-9c47-46f07e6e6c3c","2b058305-7f2c-4d15-a81b-656e9d0061ef","/searchConfiguration/propertyFilters/referencedFrom","searchablePropertyRef","428f6916-6ac5-465f-b194-4a6764cc3b80","0"   ,

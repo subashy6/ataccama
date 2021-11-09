@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","name_s","description_s","about_s","externalLinks_s","from_h","to_h"
+"58aa5b95-311a-4562-b8db-0b71b2a136d5","00000000-0000-0000-0000-000000000001","/regulations","regulation","GDPR","GDPR stands for General Data Protection Regulation. It's the core of Europe's digital privacy legislation.",,,"102",
+"b15bf0df-6bd7-482f-87bc-5895f26c2bbb","00000000-0000-0000-0000-000000000001","/regulations","regulation","CCPA","The California Consumer Privacy Act (CCPA) is a state-wide data privacy law that regulates how businesses all over the world are allowed to handle the personal information (PI) of California residents.The effective date of the CCPA is January 1, 2020. It is the first law of its kind in the United States.",,,"102",

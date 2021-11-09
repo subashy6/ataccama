@@ -1,0 +1,11 @@
+"id_i","parent_id_i","path_i","type_i","partitionType_s","partitionName_s","partitionValue_s","from_h","to_h"
+"3a974115-d185-40f4-b439-b56070e4ecd7","feb296c0-e707-4c6e-b2b3-bb857faf8525","/sources/locations/catalogItems/attributes/dqEvalAggr/partitionInfo","partitionInfo","ALL","","","540",
+"6f16d9ee-c79d-45f3-9826-70fedd426238","b0bae5a1-070a-4967-8eb7-41205842554d","/sources/locations/catalogItems/attributes/dqEvalAggr/partitionInfo","partitionInfo","ALL","","","540",
+"fb5a2482-8309-4a67-8774-c4f7003d7a93","b30b65cf-283c-4ed9-8674-8e50bef65975","/sources/locations/catalogItems/attributes/dqEvalAggr/partitionInfo","partitionInfo","ALL","","","540",
+"79ab4b9c-a306-45da-919a-d53104d2645a","95f90409-5336-440e-a7a6-1f601f56b556","/sources/locations/catalogItems/attributes/dqEvalAggr/partitionInfo","partitionInfo","ALL","","","540",
+"53b2fdba-dba2-424d-8621-07f730202de8","af6ab0c1-a38d-4fbb-8ea7-5dd180c98d24","/sources/locations/catalogItems/dqEvalAggr/partitionInfo","partitionInfo","ALL","","","540",
+"128fd615-2a2f-485f-9b04-5984acce9a4c","a8293284-502b-4811-a2b7-5d0216982be1","/monitoringProjects/processings/items/dqResult/dqCombinationResults/partitionInfo","partitionInfo","ALL","","","542",
+"56d9d389-1b26-4476-8153-4863bf143f33","f10c3eb7-f521-4335-8668-b74d12c056ba","/monitoringProjects/processings/items/attributeResults/dqCombinationResults/partitionInfo","partitionInfo","ALL","","","542",
+"b3281fa4-97a7-4600-a7a5-ffb1a4eeedb1","4e12349c-63ab-4a77-83a8-e113a19ce47c","/monitoringProjects/processings/items/attributeResults/dqCombinationResults/partitionInfo","partitionInfo","ALL","","","542",
+"428b1dd3-3850-43b6-8553-e5a5d4be99f0","7ca597fd-80ef-400e-860d-2569b1230ce5","/monitoringProjects/processings/items/attributeResults/dqCombinationResults/partitionInfo","partitionInfo","ALL","","","542",
+"dc95b522-5131-419a-9ebd-5aeae959cee9","ac0f8945-fbb0-4e97-8755-fd10c81dfce7","/monitoringProjects/processings/items/attributeResults/dqCombinationResults/partitionInfo","partitionInfo","ALL","","","542",

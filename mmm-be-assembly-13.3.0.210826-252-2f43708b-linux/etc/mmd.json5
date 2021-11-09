@@ -1,0 +1,5102 @@
+{
+  "plugins": {
+    "catalog": {
+      configuration: {
+        default: {
+          properties: {
+            "attributeNodeInstance": "/sources/locations/catalogItems/attributes",
+            "catalogItemNodeInstance": "/sources/locations/catalogItems",
+            "termNode": "term",
+            "termInstanceNode": "termInstance"
+          }
+        }
+      }
+    },
+    "catalog-search": {
+      configuration: {
+        default: {
+          properties: {
+            "catalogItemNode": "catalogItem",
+            "searchConfigurationNode": "searchConfiguration"
+          }
+        }
+      }
+    },
+    "catalog-item-with-connection": {},
+    "datasources": {
+      configuration: {
+        default: {
+          properties: {
+            "catalogItemRelationshipNodeInstance": "/catalogItemRelationships",
+            "connectionNodeInstance": "/sources/connections",
+            "credentialNodeInstance": "/sources/connections/credentials",
+            "userNamePasswordCredentialNode": "userNamePasswordCredential",
+            "dataSourceNodeInstance": "/sources",
+            "importLogNodeInstance": "/sources/locations/catalogItems/importLog",
+            "locationNodeInstance": "/sources/locations"
+          }
+        }
+      }
+    },
+    "rdmconfig": {
+      configuration: {
+        default: {
+          properties: {
+            "rdmConfigurationNode": "rdmConfiguration",
+            "rdmTableNode": "rdmTable",
+            "rdmColumnNode": "rdmColumn",
+            "rdmRelationshipNode": "rdmRelationship",
+            "rdmRelationshipColumnNode": "rdmRelationshipColumn"
+          }
+        }
+      }
+    },
+    "profiling": {
+      configuration: {
+        default: {
+          properties: {
+            catalogItemNode : "catalogItem",
+            attributeNodeInstance : "/sources/locations/catalogItems/attributes",
+            profileConfigurationNode : "profilingConfiguration",
+            profilingConfigurationInstanceNodeInstance : "/sources/locations/catalogItems/profilingConfigurationInstances",
+            catalogItemProfileNode : "catalogItemProfile",
+            attributeProfileNodeInstance : "/sources/locations/catalogItems/profilingConfigurationInstances/profiles/attributeProfiles",
+            attributeProfileDataNode : "attributeProfileData",
+            valueCountNode : "valueCount",
+            quantileNode : "quantile",
+            patternNode : "patternCounts",
+            longValueCountNode: "longValueCount",
+            anomalyStateNode : "anomalyState",
+            anomalyExplanationNode: "anomalyExplanation"
+          }
+        }
+      }
+    },
+    "rules-detection": {
+      configuration: {
+        default: {
+          properties: {
+            termNode:  "term",
+            ruleInstanceNodeInstance: "/terms/detectionRules/ruleInstances",
+            termDetectionRulesNode : "termDetectionRules"
+          }
+        }
+      }
+    },
+    "components": {
+      configuration: {
+        default: {
+          properties: {
+            componentNode: "component",
+            validationComponentNode: "validationComponent",
+            postProcessingComponentNode: "postProcessingComponent",
+            transformationComponentNode: "transformationComponent",
+            componentFileNode: "componentFile"
+          }
+        }
+      }
+    },
+    "synonyms": {
+      configuration: {
+        termSynonyms: {
+          properties: {
+            node: "term"
+          }
+        }
+      }
+    },
+    "statistics": {
+      configuration: {
+        term: {
+          properties: {
+            node: "term",
+            usageNode: "termInstance",
+            relationshipNode: "termRelationship",
+            relationshipTypeNode: "relationshipType",
+            ignoredPaths: "/sources/locations/catalogItems/attributes/hiddenTermInstances",
+            hiddenPaths: "/,/rules/inputGroups,/rules/inputGroups/inputs,/components/inputs"
+          }
+        },
+        rule: {
+          properties: {
+            node: "rule",
+            usageNode: "ruleInstance",
+            relationshipNode: "ruleRelationship",
+            relationshipTypeNode: "relationshipType",
+            ignoredPaths: "/",
+            hiddenPaths: "/,/terms/detectionRules,/terms/validationRules,/terms/standardizationRules,/monitoringProjects/configuration,/monitoringProjects/configuration/items,/monitoringProjects/configuration/items/dqChecks"
+          }
+        }
+      }
+    },
+    "relationships-graph": {
+      configuration: {
+        default: {
+          properties: {
+            "relationshipTypeNode": "relationshipType",
+            "attributeNode": "attribute",
+            "catalogItemNode": "catalogItem",
+            "tableCatalogItemNode": "tableCatalogItem",
+            "connectionNode": "connection",
+            "locationNode": "location"
+          }
+        }
+      }
+    },
+    "term-suggestions": {
+      configuration: {
+        default: {
+          properties: {
+            "profilingConfigurationInstanceNodeInstance" : "/sources/locations/catalogItems/profilingConfigurationInstances",
+            "suggestionsNodeInstance": "/sources/locations/catalogItems/attributes/termSuggestions",
+            "termInstanceNode": "termInstance",
+            "suggestedTermInstanceNode": "suggestedTermInstance",
+            "attributeNodeInstance": "/sources/locations/catalogItems/attributes",
+            "termInstanceNodeInstance": "/sources/locations/catalogItems/attributes/termInstances",
+            "termSuggestionNode": "termSuggestion",
+            "attributeNode": "attribute",
+            "termNode": "term",
+            "termDetectionRulesNode" : "termDetectionRules",
+            "attributeProfileNode": "attributeProfile",
+            "catalogItemNodeInstance": "/sources/locations/catalogItems",
+            "attributeNodeInstancePath" : "attributes",
+            "attributeProfileInstancePath" : "profiles/attributeProfiles"
+          }
+        }
+      }
+    },
+    //    "generic-fingerprints": {}, // FIXME temporarily disabled for the alpha release
+    "rules": {
+      configuration: {
+        default: {
+          properties: {
+            ruleNode: "rule",
+            dqImplementationNode:  "ruleDqImplementation",
+            detectionImplementationNode:  "ruleDetectionImplementation",
+            ruleInputNode: "inputAttribute",
+            ruleDqConditionNode: "ruleDqCondition",
+            ruleExpressionNode: "ruleExpression",
+            dqDimensionNode: "dqDimension",
+            dqDimensionResultNode: "dqDimensionResult"
+          }
+        }
+      }
+    },
+    "lookup-management": {
+      "configuration": {
+        "default": {
+          "properties": {
+            "lookupMetadataNode": "lookupMetadata",
+            "lookupItemNode": "lookupItem",
+            "rootNode": "metadata"
+          }
+        }
+      }
+    },
+    "domain-detection": {
+      configuration: {
+        default: {
+          properties: {
+            attributeNode: "attribute",
+            termNode: "term",
+            termInstanceNode: "termInstance",
+            detectionRulesNode: "termDetectionRules",
+            manualTermInstanceNode: "manualTermInstance",
+            profilingTermInstanceNode: "profilingTermInstance",
+            ruleInstanceNode: "ruleInstance",
+            profilingTermInstanceNodeInstance: "/sources/locations/catalogItems/attributes/termInstances"
+          }
+        }
+      }
+    },
+    "anomaly-detection": {
+      configuration: {
+        default: {
+          properties: {
+            catalogItemNodeInstance: "/sources/locations/catalogItems",
+            attributeNodeInstance: "/sources/locations/catalogItems/attributes",
+            catalogItemProfileNodeInstance: "/sources/locations/catalogItems/profilingConfigurationInstances/profiles",
+            attributeProfileNodeInstance: "/sources/locations/catalogItems/profilingConfigurationInstances/profiles/attributeProfiles",
+            profileConfigurationNode: "profilingConfiguration",
+            profileConfigurationInstanceNode: "profilingConfigurationInstance",
+            anomalyStateNode: "anomalyState",
+            anomalyExplanationNode: "anomalyExplanation",
+            anomalyDetectionJobNode: "anomalyDetectionJob"
+          }
+        }
+      }
+    }
+  },
+  "root": "metadata",
+  "nodes": {
+    "metadata": {
+      "properties": {
+        "sources": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "source"
+          }
+        },
+        "terms": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "term"
+          }
+        },
+        "catalogItemRelationships": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "catalogItemRelationship"
+          }
+        },
+        "termRelationships": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termRelationship"
+          }
+        },
+        "ruleRelationships": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleRelationship"
+          }
+        },
+        "relationshipTypes": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "relationshipType"
+          }
+        },
+        "dqDimensions": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "dqDimension"
+          }
+        },
+        "rules": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "rule"
+          }
+        },
+        "components": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "component"
+          }
+        },
+        "profilingConfigurations": {
+          "type": {
+            "reference": "false",
+            "array" : "true",
+            "object": "profilingConfiguration"
+          }
+        },
+        "graphConfigurations": {
+          "type": {
+            "reference": "false",
+            "array" : "true",
+            "object": "graphConfiguration"
+          }
+        },
+        "monitoringProjects": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "monitoringProject" //defined in monitoringProjectMmd.json5
+          }
+        },
+        "projectCheckAlertConfiguration": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "projectCheckAlertConfiguration" //defined in monitoringProjectMmd.json5
+          }
+        },
+        "lookupItems": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "lookupItem"
+          }
+        },
+        "emailTemplates": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "emailTemplate" //defined in emailMmd.json5
+          }
+        }
+      }
+    },
+    "source": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "description": "source name"
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "connections": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "connection"
+          }
+        },
+        "locations": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "location"
+          }
+        },
+        "workspace": {
+          type: {
+            "reference": false,
+            "array": true,
+            "object": "folder"
+          }
+        },
+        "deployment": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "deployment"
+          },
+          "traits": [
+            {
+              "traitName": "valueList:property"
+            },
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL" // FIXME strategy
+              }
+            }
+          ]
+        },
+        "catalogItemStats": {
+          type: {
+            reference: "false",
+            array: true,
+            object: "sourceCatalogItemStats"
+          }
+        },
+        "locationStats": {
+          type: {
+            reference: "false",
+            array: true,
+            object: "sourceLocationStats"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "source"
+          }
+        },
+        {
+          "traitName": "audit:auditEnabled"
+        }
+      ]
+    },
+    "connection": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "description": "source name",
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "executorType": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "dataSourceDriverTypes"
+          }
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "catalogItemStates": {
+          type: {
+            reference: "false",
+            array: false,
+            object: "connectionCatalogItemStates"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "audit:auditEnabled"
+        }
+      ]
+    },
+    connectionCatalogItemStates: {
+      properties: {
+        totalCount: {
+          type: {
+            type: "integer"
+          }
+        },
+        profiledCount: {
+          type: {
+            type: "integer"
+          }
+        },
+        sampledCount: {
+          type: {
+            type: "integer"
+          }
+        },
+        dqCount: {
+          type: {
+            type: "integer"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          "sql": "include:sql/connectionCatalogItemProgress.sql",
+          nodes: {
+            con: {
+              node: "connection",
+              permissions: "false",
+              nodeProperties: []
+            },
+            ci: {
+              node: "catalogItem",
+              permissions: "false",
+              nodeProperties: []
+            },
+            cp: {
+              node: "catalogItemProfile",
+              permissions: "false"
+            },
+            dqEval: {
+              node: "dqEvalAggr",
+              permissions: "false",
+              nodeProperties: []
+            },
+            pci: {
+              "node": "profilingConfigurationInstance",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            procon: {
+              "node": "profilingConfiguration",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          columns: {
+            conId: {
+              nodeAlias: "con",
+              systemProperty: "ID"
+            },
+            conFrom: {
+              nodeAlias: "con",
+              systemProperty: "FROM"
+            },
+            conPath: {
+              nodeAlias: "con",
+              systemProperty: "PATH"
+            },
+            ciId: {
+              nodeAlias: "ci",
+              systemProperty: "ID"
+            },
+            cpParentId: {
+              nodeAlias: "cp",
+              systemProperty: "PARENT_ID"
+            },
+            dqEvalParentId: {
+              nodeAlias: "dqEval",
+              systemProperty: "PARENT_ID"
+            },
+            "proconType": {
+              "nodeAlias": "procon",
+              "systemProperty": "TYPE",
+              "simpleProperty": "type"
+            },
+            "proconId": {
+              "nodeAlias": "procon",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "pciParentId": {
+              "nodeAlias": "pci",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "pciId": {
+              "nodeAlias": "pci",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            }
+          }
+        }
+      }
+    },
+    "connectionWithCredentials": {
+      "extends": "connection",
+      "properties": {
+        "credentials": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "credential"
+          }
+        },
+        "defaultCredential": {
+          "type": {
+            "reference": true,
+            "object": "credential"
+          },
+          "valueProvider": {
+            "type": "sameParent",
+            "name": "credentials"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "SET_NULL"
+              }
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        }
+      ]
+    },
+    "credential": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "displayNameSingular": "Credentials",
+            "displayNamePlural": "Credentials"
+          }
+        }
+      ]
+    },
+    "emptyCredential": {
+      "extends": "credential",
+      "properties": {},
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "audit:auditEnabled"
+        }
+      ]
+    },
+    "userNamePasswordCredential": {
+      "extends": "credential",
+      "properties": {
+        "username": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "password": {
+          "type": {
+            "type": "secret"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        }
+      ]
+    },
+    "folder": {
+      // TODO don't we want to use more specific name to distinguish between namespace folders and filesystem folders?
+      "properties": {
+        "folders": {
+          "type": {
+            reference: false,
+            array: true,
+            object: "folder"
+          }
+        },
+        "catalogItems": {
+          "type": {
+            "reference": false,
+            "array": true,
+            "object": "catalogItem"
+          }
+        },
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "location": {
+      "properties": {
+        "locations": {
+          "type": {
+            reference: false,
+            array: true,
+            object: "location"
+          }
+        },
+        "catalogItems": {
+          "type": {
+            "reference": false,
+            "array": true,
+            "object": "catalogItem"
+          }
+        },
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "originPath": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "termInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termInstance"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "LOCATION_UNIQUE_NAME",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "name"
+          ]
+        }
+      ],
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "scheme"
+          }
+        },
+        {
+          "traitName": "audit:auditEnabled"
+        }
+      ]
+    },
+    "databaseLocation": {
+      "extends": "location",
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "database"
+          }
+        }
+      ]
+    },
+    "catalogItem": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "connection": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "connection"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "description": {
+          "type": {
+            "type": "richtext"
+          }
+        },
+        "owner": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "person"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "steward": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "person"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "originPath": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "termInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termInstance"
+          }
+        },
+        "attributes": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "attribute"
+          }
+        },
+        "profilingConfigurationInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "profilingConfigurationInstance"
+          }
+        },
+        "anomalyState": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "catalogItemAnomalyState"
+          }
+        },
+        attributesStatistics: {
+          type: {
+            reference: "false",
+            array: false,
+            object: "attributesStatistics"
+          }
+        },
+        "numberOfAttributes" : {
+          "delegate": {
+            "viaProperty": "attributesStatistics",
+            "delegateProperty": "c"
+          }
+        },
+        "numberOfRecordsCC": {
+          type: {
+            reference: "false",
+            array: false,
+            object: "catalogItemNumberOfRecords"
+          }
+        },
+        "numberOfRecords" : {
+          "delegate": {
+            "viaProperty": "numberOfRecordsCC",
+            "delegateProperty": "numberOfRecords"
+          }
+        },
+        "aggregatedTerms": {
+          type: {
+            reference: "false",
+            array: true,
+            object: "catalogItemAggregatedTerms"
+          }
+        },
+        "importLog": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "importLog"
+          }
+        },
+        "dqEvalAggr": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "dqEvalAggr"
+          }
+        },
+        catalogItemSource: { // Hack! Remove as soon as AQL supports filtering by ancestors.
+          type: {
+            reference: false,
+            array: false,
+            object: "catalogItemSource"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "CATALOG_ITEM_UNIQUE_NAME",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "name"
+          ]
+        },
+        {
+          "type": "UNIQUE",
+          "id": "CATALOG_ITEM_UNIQUE_CONNECTION_ORIGIN_PATH",
+          "scope": "GLOBAL",
+          "properties": [
+            "connection",
+            "originPath"
+          ]
+        }
+      ],
+      "traits": [
+        // FIXME temporarily disabled for the alpha release
+        // {
+        //   "traitName": "generic-fingerprints:root"
+        // }
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "book"
+          }
+        },
+        {
+          "traitName": "audit:auditEnabled"
+        }
+      ]
+    },
+    catalogItemSource: {
+      properties: {
+        sourceId: {
+          type: {
+            type: "string"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          sql: "include:sql/catalogItemSource.sql",
+          nodes: {
+            ci: {
+              node: "catalogItem",
+              permissions: false,
+            }
+          },
+          columns: {
+            ciId: {
+              nodeAlias: "ci",
+              systemProperty: "ID"
+            },
+            ciFrom: {
+              nodeAlias: "ci",
+              systemProperty: "FROM"
+            },
+            ciPath: {
+              nodeAlias: "ci",
+              systemProperty: "PATH"
+            }
+          }
+        }
+      }
+    },
+    "importLog": {
+      "properties": {
+        "importedOn": {
+          "type": {
+            "type": "timestamp"
+          }
+        }
+      }
+    },
+    catalogItemNumberOfRecords: {
+      properties: {
+        numberOfRecords: {
+          type: {
+            type: "integer"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          "sql": "include:sql/numberOfRecordsCatalogItem.sql",
+          nodes: {
+            ci: {
+              node: "catalogItem",
+              permissions: "false",
+              nodeProperties: []
+            },
+            p: {
+              node: "catalogItemProfile",
+              permissions: "false"
+            },
+            pci: {
+              "node": "profilingConfigurationInstance",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          columns: {
+            ciId: {
+              nodeAlias: "ci",
+              systemProperty: "ID"
+            },
+            ciFrom: {
+              nodeAlias: "ci",
+              systemProperty: "FROM"
+            },
+            ciPath: {
+              nodeAlias: "ci",
+              systemProperty: "PATH"
+            },
+            pParentId: {
+              nodeAlias: "p",
+              systemProperty: "PARENT_ID"
+            },
+            pFrom: {
+              nodeAlias: "p",
+              systemProperty: "FROM"
+            },
+            pNumberOfRecords: {
+              nodeAlias: "p",
+              simpleProperty: "totalNumOfRecords"
+            },
+            pciParentId: {
+              "nodeAlias": "pci",
+              "systemProperty": "PARENT_ID"
+            },
+            pciId: {
+              "nodeAlias": "pci",
+              "systemProperty": "ID"
+            }
+          }
+        }
+      }
+    },
+    catalogItemAggregatedTerms: {
+      properties: {
+        term_path: {
+          type: {
+            type: "path"
+          }
+        },
+        term_name: {
+          type: {
+            type: "string"
+          }
+        },
+        term_type: {
+          type: {
+            type: "string"
+          }
+        },
+        term_depth: {
+          type: {
+            type: "integer"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          "sql": "include:sql/aggregatedTermsForCatalogItem.sql",
+          nodes: {
+            ci: {
+              node: "catalogItem",
+              permissions: "false",
+              nodeProperties: []
+            },
+            ti: {
+              node: "termInstance",
+              permissions: "false"
+            },
+            t: {
+              node: "term",
+              permissions: "false"
+            }
+          },
+          columns: {
+            ciId: {
+              nodeAlias: "ci",
+              systemProperty: "ID"
+            },
+            ciFrom: {
+              nodeAlias: "ci",
+              systemProperty: "FROM"
+            },
+            ciPath: {
+              nodeAlias: "ci",
+              systemProperty: "PATH"
+            },
+            tiId: {
+              nodeAlias: "ti",
+              systemProperty: "ID"
+            },
+            tiPath: {
+              nodeAlias: "ti",
+              systemProperty: "PATH"
+            },
+            tId: {
+              nodeAlias: "t",
+              systemProperty: "ID"
+            },
+            tFrom: {
+              nodeAlias: "t",
+              systemProperty: "FROM"
+            },
+            tType: {
+              nodeAlias: "t",
+              systemProperty: "TYPE"
+            },
+            tPath: {
+              nodeAlias: "t",
+              systemProperty: "PATH"
+            },
+            tName: {
+              nodeAlias: "t",
+              simpleProperty: "name"
+            }
+          }
+        }
+      }
+    },
+    attributesStatistics: {
+      properties: {
+        c: {
+          type: {
+            type: "integer"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          "sql": "include:sql/attributeStatistics.sql",
+          nodes: {
+            t: {
+              node: "catalogItem",
+              permissions: "false",
+              nodeProperties: []
+            },
+            c: {
+              node: "attribute",
+              permissions: "false"
+            }
+          },
+          columns: {
+            tId: {
+              nodeAlias: "t",
+              systemProperty: "ID"
+            },
+            tFrom: {
+              nodeAlias: "t",
+              systemProperty: "FROM"
+            },
+            tPath: {
+              nodeAlias: "t",
+              systemProperty: "PATH"
+            },
+            cParentId: {
+              nodeAlias: "c",
+              systemProperty: "PARENT_ID"
+            }
+          }
+        }
+      }
+    },
+    sourceCatalogItemStats: {
+      properties: {
+        groupType: {
+          type: {
+            type: "string"
+          }
+        },
+        groupCount: {
+          type: {
+            type: "integer"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          "sql": "include:sql/sourceCatalogItemStats.sql",
+          nodes: {
+            s: {
+              node: "source",
+              permissions: "false"
+            },
+            ci: {
+              node: "catalogItem",
+              permissions: "false"
+            }
+          },
+          columns: {
+            ciId: {
+              nodeAlias: "ci",
+              systemProperty: "ID"
+            },
+            ciType: {
+              nodeAlias: "ci",
+              systemProperty: "TYPE"
+            },
+            sFrom: {
+              nodeAlias: "s",
+              systemProperty: "FROM"
+            },
+            sId: {
+              nodeAlias: "s",
+              systemProperty: "ID"
+            },
+            sPath: {
+              nodeAlias: "s",
+              systemProperty: "PATH"
+            }
+          }
+        }
+      }
+    },
+    sourceLocationStats: {
+      properties: {
+        groupType: {
+          type: {
+            type: "string"
+          }
+        },
+        groupCount: {
+          type: {
+            type: "integer"
+          }
+        }
+      },
+      persistence: {
+        "sqlSelect": {
+          "sql": "include:sql/sourceLocationStats.sql",
+          nodes: {
+            s: {
+              node: "source",
+              permissions: "false"
+            },
+            loc: {
+              node: "location",
+              permissions: "false"
+            },
+            fol: {
+              node: "folder",
+              permissions: "false"
+            }
+          },
+          columns: {
+            locId: {
+              nodeAlias: "loc",
+              systemProperty: "ID"
+            },
+            locType: {
+              nodeAlias: "loc",
+              systemProperty: "TYPE"
+            },
+            folId: {
+              nodeAlias: "fol",
+              systemProperty: "ID"
+            },
+            folType: {
+              nodeAlias: "fol",
+              systemProperty: "TYPE"
+            },
+            sFrom: {
+              nodeAlias: "s",
+              systemProperty: "FROM"
+            },
+            sId: {
+              nodeAlias: "s",
+              systemProperty: "ID"
+            }
+          }
+        }
+      }
+    },
+    "attribute": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "columnType": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "dataType": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "comment": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "termInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termInstance"
+          }
+        },
+        "hiddenTermInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termInstance"
+          }
+        },
+        "termSuggestions": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termSuggestion"
+          }
+        },
+        "supported": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "catalogItem": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "attributeCatalogItem"
+          }
+        },
+        "dqEvalAggr": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "dqEvalAggr"
+          }
+        },
+        "anomalyState": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "attributeAnomalyState"
+          }
+        },
+        "anomalyExplanations": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "attributeAnomalyExplanation"
+          }
+        },
+        "order": {
+          "type": {
+            type: "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "plugins": {
+        "anomaly-detection": {
+          "enabled": true
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "ATTRIBUTE_UNIQUE_NAME",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "name"
+          ]
+        }
+      ],
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "lineagePlaceholder"
+          }
+        },
+        {
+          "traitName": "audit:auditEnabled"
+        }
+      ]
+    },
+    "profilingConfigurationInstance": {
+      "properties": {
+        "configuration": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "profilingConfiguration"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN" // FIXME strategy
+              }
+            }
+          ]
+        },
+        "profiles": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "catalogItemProfile"
+          }
+        },
+        "partition": {
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "catalogItemProfile": {
+      properties: {
+        "profileType": {
+          "type": {
+            "type": "string"
+          }
+        },
+
+        "totalNumOfRecords": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "numberOfProfiledRecords": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "attributeProfiles": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "attributeProfile"
+          }
+        },
+        "anomalyState": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "anomalyState"
+          }
+        },
+        "partition": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "profiledAt": {
+          "type": {
+            "type": "timestamp"
+          }
+        }
+      },
+      "plugins": {
+        "anomaly-detection": {
+          "enabled": true
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        }
+      ]
+    },
+    "profilingConfiguration": {
+      properties: {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "type": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "profilingConfigurationTypes"
+          }
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "anomalyDetectionEnabled": {
+          "type": {
+            "type": "boolean"
+          },
+          "defaultValue": false
+        },
+        "partitioned": {
+          "type": {
+            "type": "boolean"
+          },
+          "defaultValue": false
+        },
+        "samplingLimitCount": {
+          "type": {
+            "type": "long"
+          },
+          "defaultValue": "100000",
+          "constraints": [
+            {
+              "type": "INTERVAL",
+              "id": "SAMPLING_LIMIT_COUNT_INTERVAL",
+              "min": 10000,
+              "message": "Must be 10000 or more"
+            }
+          ]
+        },
+        "samplingLimitPercentage": {
+          "type": {
+            "type": "integer"
+          },
+          "defaultValue": "20",
+          "constraints": [
+            {
+              "type": "INTERVAL",
+              "id": "SAMPLING_LIMIT_PERCENTAGE_INTERVAL",
+              "min": 0,
+              "minIncluded": false,
+              "max": 100,
+              "maxIncluded": false,
+              "message": "Must be between 0 and 100"
+            }
+          ]
+        }
+      },
+      "plugins": {
+        profiling: {
+          "enabled": true
+        },
+        "anomaly-detection": {
+          "enabled": true
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "configuration"
+          }
+        }
+      ]
+    },
+    "attributeProfile": {
+      "properties": {
+        "fingerprintType": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "fingerprintVersion": {
+          "type": {
+            "type": "string"
+          }
+        },
+        fingerprint: {
+          type: {
+            type: "string"
+          }
+          //          traits: [ // FIXME temporarily disabled for the alpha release
+          //            {
+          //              traitName: "generic-fingerprints:fingerprint"
+          //            }
+          //          ]
+        },
+        "attributeProfileData": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "attributeProfileData"
+          }
+        },
+        "anomalyState": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "anomalyState"
+          }
+        },
+        "attribute": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "attribute"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "displayName": {
+          "delegate": {
+            "viaProperty": "attribute",
+            "delegateProperty": "name"
+          }
+        },
+        "order": {
+          "type": {
+            type: "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "plugins": {
+        "anomaly-detection": {
+          "enabled": true
+        },
+        "profiling": {
+          "enabled": true
+        }
+      }
+    },
+    "attributeProfileData": {
+      "properties": {
+        "totalCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "nullCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "uniqueCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "nonUniqueCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "distinctCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "duplicateCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "minValue": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "maxValue": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "stringMinLength": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "stringMeanLength": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "stringMaxLength": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "numMin": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "numMean": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "numMax": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "numSum": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "numVariance": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "numStdDeviation": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "isDate": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "hasTime": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "isFloat": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "isInteger": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "maskLimitExceeded": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "frequencyLimitExceeded": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "frequencyCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "frequencyHead": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "valueCount"
+          },
+          "traits" : [
+            {
+              "traitName": "core:classification",
+              "properties": {
+                "type": "data",
+                "level": 3
+              }
+            }
+          ]
+        },
+        "frequencyTail": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "valueCount"
+          }
+        },
+        "frequencyGroupsCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "frequencyGroupsHead": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "longValueCount"
+          }
+        },
+        "frequencyGroupsTail": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "longValueCount"
+          }
+        },
+        "masksCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "masksHead": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "valueCount"
+          }
+        },
+        "masksTail": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "valueCount"
+          }
+        },
+        "patternsCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "patternsHead": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "patternCounts"
+          }
+        },
+        "patternsTail": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "patternCounts"
+          }
+        },
+        "quantiles": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "quantile"
+          },
+          "traits" : [
+            {
+              "traitName": "core:classification",
+              "properties": {
+                "type": "data",
+                "level": 3
+              }
+            }
+          ]
+        }
+      },
+      "plugins": {
+        "anomaly-detection": {
+          "enabled": true
+        },
+        "profiling": {
+          "enabled": true
+        }
+      },
+      "persistence": {
+        "physicalPersistence": {
+          "storeAsSimple": true
+        }
+      }
+    },
+    "valueCount": {
+      "properties": {
+        "value": {
+          "type": {
+            "type": "string"
+          },
+          "traits" : [
+            {
+              "traitName": "core:dataMasking"
+            }
+          ]
+        },
+        "count": {
+          "type": {
+            "type": "long"
+          }
+        }
+      },
+      "plugins": {
+        "profiling": {
+          "enabled": true,
+          "mappings": {
+          }
+        },
+        "anomaly-detection": {
+          "enabled": true
+        }
+      },
+      "persistence": {
+        "physicalPersistence": {
+          "storeAsSimple": true
+        }
+      }
+    },
+    "longValueCount": {
+      "properties": {
+        "value": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "count": {
+          "type": {
+            "type": "long"
+          }
+        }
+      },
+      "plugins": {
+        "profiling": {
+          "enabled": true,
+          "mappings": {
+          }
+        }
+      },
+      "persistence": {
+        "physicalPersistence": {
+          "storeAsSimple": true
+        }
+      }
+    },
+    "patternCounts": {
+      "properties": {
+        "value": {
+          "type" : {
+            "type" : "string"
+          }
+        },
+        "count": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "distinctCount": {
+          "type": {
+            "type": "long"
+          }
+        }
+      },
+      "plugins": {
+        "profiling": {
+          "enabled": true,
+          "mappings": {
+          }
+        }
+      },
+      "persistence": {
+        "physicalPersistence": {
+          "storeAsSimple": true
+        }
+      }
+    },
+    "quantile": {
+      "properties": {
+        "value": {
+          "type": {
+            "type": "string"
+          },
+          "traits" : [
+            {
+              "traitName": "core:dataMasking"
+            }
+          ]
+        },
+        "percentile": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "rank": {
+          "type": {
+            "type": "float"
+          }
+        }
+      },
+      "plugins": {
+        "profiling": {
+          "enabled": true,
+          "mappings": {
+          }
+        },
+        "anomaly-detection": {
+          "enabled": true
+        }
+      },
+      "persistence": {
+        "physicalPersistence": {
+          "storeAsSimple": true
+        }
+      }
+    },
+    "attributeCatalogItem": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "originPath": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "partitions": {
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:sql/attributeCatalogItem.sql",
+          "nodes": {
+            "ci": {
+              "node": "catalogItem",
+              "permissions": "true"
+            },
+            "a": {
+              "node": "attribute",
+              "permissions": "true"
+            },
+            "mtci": {
+              "node": "metastoreTableCatalogItem",
+              "permissions": "true"
+            }
+          },
+          "columns": {
+            "ciId": {
+              "nodeAlias": "ci",
+              "systemProperty": "ID"
+            },
+            "aId": {
+              "nodeAlias": "a",
+              "systemProperty": "ID"
+            },
+            "aFrom": {
+              "nodeAlias": "a",
+              "systemProperty": "FROM"
+            },
+            "aPath": {
+              "nodeAlias": "a",
+              "systemProperty": "PATH"
+            },
+            "aParentId": {
+              "nodeAlias": "a",
+              "systemProperty": "PARENT_ID"
+            },
+            "ciName": {
+              "nodeAlias": "ci",
+              "simpleProperty": "name"
+            },
+            "ciOriginPath": {
+              "nodeAlias": "ci",
+              "simpleProperty": "originPath"
+            },
+            "mtciPartitions": {
+              "nodeAlias": "mtci",
+              "systemProperty": "ID",
+              "simpleProperty": "partitions"
+            },
+            "mtciId": {
+              "nodeAlias": "mtci",
+              "systemProperty": "ID"
+            }
+          }
+        }
+      }
+    },
+    "graphConfiguration": {
+      properties: {
+        "configurationKey": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "entityName": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "nodes": {
+          "type": {
+            "reference": "false",
+            "array" : "true",
+            "object": "graphNodeConfiguration"
+          }
+        },
+        "relationshipTypes": {
+          "type": {
+            "reference": "false",
+            "array" : "true",
+            "object": "graphRelationshipTypeConfiguration"
+          }
+        },
+        "allowAllRelationships": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "configuration"
+          }
+        }
+      ]
+    },
+    "graphNodeConfiguration": {
+      properties: {
+        "entityName": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "allowed": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "core:displayName",
+          "properties": {
+            "propertyName": "entityName"
+          }
+        }
+      ]
+    },
+    "graphRelationshipTypeConfiguration": {
+      properties: {
+        "relationshipType": {
+          "type": {
+            "reference": "true",
+            "array" : "false",
+            "object": "relationshipType"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "displayName" : {
+          "delegate": {
+            "viaProperty": "relationshipType",
+            "delegateProperty": "name"
+          }
+        },
+        "allowed": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "boxed": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        }
+      ]
+    },
+    "graphBasicRelationshipTypeConfiguration": {
+      properties: {
+        "relationshipType": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "allowed": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "core:displayName",
+          "properties": {
+            "propertyName": "relationshipType"
+          }
+        }
+      ]
+    },
+    "termInstance": {
+      "properties": {
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "term"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "displayName": {
+          delegate: {
+            viaProperty: "target",
+            delegateProperty: "name"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:searchable",
+          "properties": {
+            "searchable": false
+          }
+        }
+      ]
+    },
+    "manualTermInstance": {
+      "extends": "termInstance"
+    },
+    "metadataTermInstance": {
+      "extends": "termInstance"
+    },
+    "suggestedTermInstance": {
+      "extends": "termInstance",
+      "properties": {
+        "suggestion": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "termSuggestion"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "profilingTermInstance": {
+      "extends": "termInstance",
+      "properties": {
+        "matchCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "exceptionCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "totalCount": {
+          "type": {
+            "type": "long"
+          }
+        },
+        "singleRule": {
+          "type": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "termSuggestion": {
+      "properties": {
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "term"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "displayName": {
+          delegate: {
+            viaProperty: "target",
+            delegateProperty: "name"
+          }
+        },
+        "advisedBy": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "advisedBy"
+          }
+        },
+        "status": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "suggestionStatus"
+          }
+        },
+        "confidence": {
+          "type": {
+            "type": "float"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:searchable",
+          "properties": {
+            "searchable": false
+          }
+        }
+      ]
+    },
+    // TERMS
+    "term": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "abbreviation": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "businessDefinition": {
+          "type": {
+            "type": "richtext"
+          }
+        },
+        "synonym": {
+          "type": {
+            "type": "string"
+          }
+        },
+        //        "valueListEntityRef": { // TODO: left out temporarily - ONE-18092
+        //          "type": {
+        //            "reference": true,
+        //            "array": false,
+        //            "object": "mmdNode"
+        //          },
+        //          "valueProvider": {
+        //            "type": "valueListReferenceDataNode"
+        //          },
+        //          "traits": [
+        //            {
+        //              "traitName": "core:cascade",
+        //              "properties": {
+        //                "deleteStrategy": "FAIL" // FIXME strategy
+        //              }
+        //            }
+        //          ]
+        //        },
+        "detectionRules": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "termDetectionRules"
+          }
+        },
+        "metadataRules": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "termMetadataRules"
+          }
+        },
+        "validationRules": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "termValidationRules"
+          }
+        },
+        "standardizationRules": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "termStandardizationRules"
+          }
+        },
+        dqEvalTermAggr: {
+          type: {
+            reference: false,
+            array: false,
+            object: "dqEvalTermAggr"
+          }
+        },
+        termDefinitionSource: {
+          "type": {
+            "type": "string"
+          }
+        },
+        "owner": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "person"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "steward": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "person"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        }
+      },
+      "plugins": {
+        "glossary": {
+          "enabled": true
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "term"
+          }
+        }
+      ]
+    },
+    "businessTerm": {
+      "properties": {
+        "securityClassification": {
+          "type": {
+            "type": "string"
+          },
+          "valueProvider": {
+            "type": "securityClassification"
+          }
+        }
+      },
+      "extends": "term",
+      "traits": [
+        {
+          "traitName": "fe:term",
+          "properties": {
+            "color": "#1458E9"
+          }
+        }
+      ]
+    },
+    "securityTerm": {
+      "properties": {
+        "regulation": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "responsiblePerson": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "effectiveDate": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "threshold": {
+          "type": {
+            "type": "float"
+          }
+        }
+      },
+      "extends": "term",
+      "traits": [
+        {
+          "traitName": "fe:term",
+          "properties": {
+            "color": "#E82610"
+          }
+        }
+      ]
+    },
+    "keyPerformanceIndicator" : {
+      "properties" : {
+        "formula" : {
+          "type" : {
+            "type" : "string",
+            "reference" : false,
+            "array" : false
+          },
+          "constraints" : [ ],
+          "traits" : [ ]
+        },
+        "tagetValue" : {
+          "type" : {
+            "type" : "float",
+            "reference" : false,
+            "array" : false
+          },
+          "constraints" : [ ],
+          "traits" : [ ]
+        },
+        "dataCollectionMethod" : {
+          "type" : {
+            "type" : "string",
+            "reference" : false,
+            "array" : false
+          },
+          "constraints" : [ ],
+          "traits" : [ ]
+        },
+        "dataCollectionFrequency" : {
+          "type" : {
+            "type" : "string",
+            "reference" : false,
+            "array" : false
+          },
+          "constraints" : [ ],
+          "traits" : [ ]
+        },
+        "dataReportingFrequency" : {
+          "type" : {
+            "type" : "string",
+            "reference" : false,
+            "array" : false
+          },
+          "constraints" : [ ],
+          "traits" : [ ]
+        },
+        "expiry" : {
+          "type" : {
+            "type" : "string",
+            "reference" : false,
+            "array" : false
+          },
+          "constraints" : [ ],
+          "traits" : [ ]
+        }
+      },
+      "plugins" : { },
+      "traits" : [ ],
+      "constraints" : [ ],
+      "extends" : "term",
+      "traits": [
+        {
+          "traitName": "fe:term",
+          "properties": {
+            "color": "#6451A2"
+          }
+        }
+      ]
+    },
+    "termRelationship": {
+      "properties": {
+        "order": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "source": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "term"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "term"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "type": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "relationshipType"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "termRelationship"
+          }
+        }
+      ]
+    },
+    "ruleRelationship": {
+      "properties": {
+        "order": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "source": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "rule"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "rule"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "type": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "relationshipType"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "ruleRelationship"
+          }
+        }
+      ]
+    },
+    "catalogItemRelationship": {
+      "properties": {
+        "order": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "source": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "catalogItem"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "catalogItem"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "type": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "relationshipType"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "sourceOriginPath": {
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "RELATIONSHIP_UNIQ",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "source",
+            "target",
+            "type"
+          ]
+        },
+        {
+          "type": "UNIQUE",
+          "id": "PARTIAL_RELATIONSHIP_UNIQ",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "target",
+            "type",
+            "sourceOriginPath"
+          ]
+        }
+      ]
+    },
+    "relationshipType": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "sourceRelName": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "targetRelName": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "RELATIONSHIP_TYPE_UNIQUE_NAME",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "name"
+          ]
+        }
+      ],
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        },
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "relationshipType"
+          }
+        }
+      ]
+    },
+    "dqDimension": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "multipleRules": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "order": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "results": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "dqDimensionResult"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "configuration",
+            "displayNameSingular": "DQ Dimension"
+          }
+        }
+      ]
+    },
+    "dqDimensionResult": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "color": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "order": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "mainResult": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "defaultConditionResult": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "defaultFallbackResult": {
+          "type": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "termDetectionRules": {
+      "properties": {
+        "hasAIRuleDetection": {
+          "type": {
+            "type": "boolean"
+          },
+          "defaultValue": true
+        },
+        "operator": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "ruleInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleInstance"
+          }
+        }
+      }
+    },
+    "termValidationRules": {
+      "properties": {
+        "enabled": {
+          "type": {
+            "type": "boolean"
+          },
+          "defaultValue": "true"
+        },
+        "ruleInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleInstance"
+          }
+        }
+      }
+    },
+    "termStandardizationRules": {
+      "properties": {
+        "enabled": {
+          "type": {
+            "type": "boolean"
+          },
+          "defaultValue": "true"
+        },
+        "ruleInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleInstance"
+          }
+        }
+      }
+    },
+    "termMetadataRules": {
+      "properties": {
+        "operator": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "rules": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "metadataRule"
+          }
+        }
+      }
+    },
+    "metadataRule": {
+      "properties": {
+        "operator": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "termInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "metadataRuleTermInstance"
+          }
+        }
+      }
+    },
+    "metadataRuleTermInstance": {
+      "properties": {
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "term"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN" // FIXME stratey
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ruleInstance": {
+      "properties": {
+        "threshold": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "rule"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL" // change to FIX_HCN once issues mentioned in ONE-19789 are resolved
+              }
+            }
+          ]
+        },
+        "order": {// TODO: Remove this once we are gonna support ordering of arrays on BE
+          "type": {
+            "type": "integer"
+          }
+        },
+        "displayName": {
+          "delegate": {
+            "viaProperty": "target",
+            "delegateProperty": "name"
+          }
+        }
+      }
+    },
+    "rule": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "description": {
+          "type": {
+            "type": "richtext"
+          }
+        },
+        "inputGroups": {
+          "type": {
+            "reference": false,
+            "array": true,
+            "object": "ruleInputGroup"
+          }
+        },
+        "outputs": {
+          "type": {
+            "reference": false,
+            "array": true,
+            "object": "outputAttribute"
+          }
+        },
+        "implementation": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "ruleImplementation"
+          }
+        },
+        ruleDefinitionSource: {
+          "type": {
+            "type": "string"
+          }
+        },
+        "owner": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "person"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "steward": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "person"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "termInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termInstance"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "rules"
+          }
+        }
+      ]
+    },
+    "ruleInputGroup": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "order": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "inputs": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "inputAttribute"
+          }
+        }
+      }
+    },
+    "ioAttribute": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "order": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "dataType": {
+          "type": {
+            "type": "string"
+          },
+          "valueProvider": {
+            "type": "attributeDataTypes"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      }
+    },
+    "inputAttribute": {
+      "extends": "ioAttribute",
+      "properties": {
+        "termInstances": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "termInstance"
+          }
+        }
+      }
+    },
+    "outputAttribute": {
+      "extends": "ioAttribute",
+      "properties": {
+        "shadow": {
+          "type": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "ruleImplementation": {
+      "properties": {}
+    },
+    "ruleDetectionImplementation": {
+      "extends": "ruleImplementation",
+      "properties": {
+        "expression": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "ruleExpression"
+          }
+        }
+      }
+    },
+    "ruleDqImplementation": {
+      "extends": "ruleImplementation",
+      "properties": {
+        "conditions": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleDqCondition"
+          }
+        },
+        "fallback": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "ruleDqFallback"
+          }
+        },
+        "dqDimension": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "dqDimension"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "componentInstance": {
+          "type": {
+            "reference": "false",
+            "array": "false",
+            "object": "ruleComponentInstance"
+          }
+        },
+        "component": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      }
+    },
+    "ruleStandardizationImplementation": {
+      "extends": "ruleImplementation",
+      "properties": {
+        "steps": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleStandardizationStep"
+          }
+        }
+      }
+    },
+    "ruleExpression": {
+      properties: {
+        useFriendly: {
+          type: {
+            type: "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        stringExpression: {
+          type: {
+            type: "string"
+          }
+        },
+        friendlyExpression: {
+          type: {
+            type: "json"
+          }
+        },
+        references: {
+          type: {
+            /* TODO arbitraryReference: true */
+            reference: false,
+            array: true,
+            object: "simpleExpressionReference"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "RULE_EXPRESSION"
+        }
+      ]
+    },
+    "simpleExpressionReference": {
+      "properties": {
+        "referencedNodePath": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "referencedId": {
+          "type": {
+            "type": "id"
+          }
+        },
+        "referencedHcn": {
+          "type": {
+            "type": "long"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "MD_CHANGE_SET_NODE",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "referencedId", "referencedNodePath"
+          ]
+        }
+      ]
+    },
+    "ruleDqCondition": {
+      "properties": {
+        "order": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REGEXP",
+              "id": "NAME_NOT_EMPTY",
+              "pattern": "^(?!\\s*$).+",
+              "message": "Explanation cannot be empty."
+            },
+            {
+              "type": "REGEXP",
+              "id": "NAME_NOT_OTHER",
+              "pattern": "^(?!OTHER$)",
+              "message": "Explanation cannot be OTHER. OTHER is reserved keyword."
+            }
+          ]
+        },
+        "result": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "dqDimensionResult"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "expression": {
+          "type": {
+            "reference": false,
+            "array": false,
+            "object": "ruleExpression"
+          }
+        },
+        "aggregated": {
+          "type": {
+            "type": "boolean"
+          }
+        },
+        "groupBy": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "inputAttribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "score": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "disabled": {
+          "type": {
+            "type": "boolean"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "defaultValue": "false"
+        }
+      },
+      constraints: [
+        {
+          "type": "UNIQUE",
+          "id": "CONDITION_UNIQUE_NAME",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "name"
+          ]
+        }
+      ]
+    },
+    "ruleDqFallback": {
+      "properties": {
+        "result": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "dqDimensionResult"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        },
+        "score": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "explanation": {
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ruleValidationOutputsSettings": {
+      "properties": {
+        "evaluationType": {
+          "type": {
+            "type": "string"
+          },
+          "valueProvider": {
+            "type": "evaluationType"
+          }
+        },
+        "resultType": {
+          "type": {
+            "type": "string"
+          },
+          "valueProvider": {
+            "type": "resultType"
+          }
+        },
+        "scoreType": {
+          "type": {
+            "type": "string"
+          },
+          "valueProvider": {
+            "type": "scoreType"
+          }
+        },
+        "explanationType": {
+          "type": {
+            "type": "string"
+          },
+          "valueProvider": {
+            "type": "explanationType"
+          }
+        }
+      }
+    },
+    "ruleComponentInstance": {
+      "properties": {
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "component"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "inputMappings": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleComponentInputMapping"
+          }
+        },
+        "outputMappings": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleComponentOutputMapping"
+          }
+        }
+      }
+    },
+    "ruleComponentInputMapping": {
+      "properties": {
+        "source": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "ioAttribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "ioAttribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ruleComponentOutputMapping": {
+      "properties": {
+        "source": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "ioAttribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "ioAttribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ruleStandardizationStep": {
+      "properties": {
+        "order": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "expression": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            },
+            {
+              "type" : "DQC_EXPRESSION",
+              "rulePath": "../.."
+            }
+          ]
+        },
+        "outputsMappings": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "ruleOutputsMapping"
+          }
+        }
+      }
+    },
+    "ruleOutputsMapping": {
+      "properties": {
+        "source": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "target": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "outputAttribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FAIL"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "component": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "componentDescription": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "logicDescription": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "state": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "componentState"
+          },
+          "defaultValue": "DRAFT"
+        },
+        "inputs": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "inputAttribute"
+          }
+        },
+        "outputs": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "outputAttribute"
+          }
+        },
+        "componentFiles": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "componentFile"
+          }
+        },
+        "file": {
+          "type": {
+            "reference": true,
+            "array": false,
+            "object": "componentFile"
+          },
+          "valueProvider": {
+            "type": "sameParent",
+            "name": "componentFiles"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "SET_NULL"
+              }
+            }
+          ]
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "refresh"
+          }
+        }
+      ]
+    },
+    "componentFile": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "fileLink": {
+          "type": {
+            "type": "objectLink"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "checksum": {
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      constraints: [
+        {
+          "type": "UNIQUE",
+          "id": "COMPONENT_FILE_UNIQUE_NAME",
+          "scope": "WITHIN_PARENT",
+          "properties": [
+            "name"
+          ]
+        }
+      ]
+    },
+    "anomalyState": {
+      "properties": {
+        "state": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "anomalyStateTypes"
+          }
+        },
+        "explanations": {
+          "type": {
+            reference: false,
+            array: true,
+            object: "anomalyExplanation"
+          }
+        },
+        "algorithm": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "feedback": {
+          "type": {
+            "type": "string"
+          },
+          "defaultValue": "UNKNOWN",
+          "valueProvider": {
+            "type": "anomalyFeedbackTypes"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "core:hasNoWorkflow"
+        }
+      ],
+      "plugins": {
+        "profiling": {
+          "enabled": true,
+          "mappings": {
+          }
+        },
+        "anomaly-detection": {
+          "enabled": true
+        }
+      }/*,
+      "persistence": {
+        "physicalPersistence": {
+          "storeAsSimple": true
+        }
+      }*/
+    },
+    "anomalyExplanation": {
+      "properties": {
+        "category": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "explanation": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "state": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "anomalyStateTypes"
+          }
+        },
+        "score": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "upperBound": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "expectedValue": {
+          "type": {
+            "type": "float"
+          }
+        },
+        "lowerBound": {
+          "type": {
+            "type": "float"
+          }
+        }
+      }
+    },
+    "catalogItemAnomalyState": {
+      "properties": {
+        "state": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "feedback": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "catalogItemProfileGid": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "numAnomalousAttributes": {
+          "type": {
+            "type": "integer"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:sql/catalogItemAnomalyState.sql",
+          "nodes": {
+            "anomalyState": {
+              "node": "anomalyState",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "attributeProfile": {
+              "node": "attributeProfile",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "catalogItem": {
+              "node": "catalogItem",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "attribute": {
+              "node": "attribute",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "profilingConfigurationInstance": {
+              "node": "profilingConfigurationInstance",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "catalogItemProfile": {
+              "node": "catalogItemProfile",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          "columns": {
+            "ciId": {
+              "nodeAlias": "catalogItem",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "ciFrom": {
+              "nodeAlias": "catalogItem",
+              "systemProperty": "FROM",
+              "simpleProperty": null
+            },
+            "ciPath": {
+              "nodeAlias": "catalogItem",
+              "systemProperty": "PATH"
+            },
+            "cpId": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "cpParentId": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "cpProfiledAt": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": null,
+              "simpleProperty": "profiledAt"
+            },
+            "cpProfileType": {
+              nodeAlias: "catalogItemProfile",
+              "systemProperty": null,
+              "simpleProperty": "profileType"
+            },
+            "apId": {
+              nodeAlias: "attributeProfile",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "apParentId": {
+              nodeAlias: "attributeProfile",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "pcId": {
+              "nodeAlias": "profilingConfigurationInstance",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "pcParentId": {
+              "nodeAlias": "profilingConfigurationInstance",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "sId": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "sParentId": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "sState": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": null,
+              "simpleProperty": "state"
+            },
+            "sFeedback": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": null,
+              "simpleProperty": "feedback"
+            }
+          }
+        }
+      }
+    },
+    "attributeAnomalyState": {
+      "properties": {
+        "state": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "feedback": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "catalogItemProfileGid": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "profiledAt": {
+          "type": {
+            "type": "timestamp"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:sql/attributeAnomalyState.sql",
+          "nodes": {
+            "profilingConfiguration": {
+              "node": "profilingConfiguration",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "catalogItemProfile": {
+              "node": "catalogItemProfile",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "anomalyState": {
+              "node": "anomalyState",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "attributeProfile": {
+              "node": "attributeProfile",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "attribute": {
+              "node": "attribute",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          "columns": {
+            "aId": {
+              "nodeAlias": "attribute",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "aFrom": {
+              "nodeAlias": "attribute",
+              "systemProperty": "FROM",
+              "simpleProperty": null
+            },
+            "aPath": {
+              "nodeAlias": "attribute",
+              "systemProperty": "PATH"
+            },
+            "sId": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "sParentId": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "sFeedback": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": null,
+              "simpleProperty": "feedback"
+            },
+            "sState": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": null,
+              "simpleProperty": "state"
+            },
+            "pId": {
+              "nodeAlias": "attributeProfile",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "pParentId": {
+              "nodeAlias": "attributeProfile",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "cpId": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "cpProfileType": {
+              nodeAlias: "catalogItemProfile",
+              "systemProperty": null,
+              "simpleProperty": "profileType"
+            },
+            "cpProfiledAt": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": null,
+              "simpleProperty": "profiledAt"
+            }
+          }
+        }
+      }
+    },
+    "attributeAnomalyExplanation": {
+      "properties": {
+        "explanation": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "state": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:sql/attributeAnomalyExplanation.sql",
+          "nodes": {
+            "catalogItemProfile": {
+              "node": "catalogItemProfile",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "attribute": {
+              "node": "attribute",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "anomalyExplanation": {
+              "node": "anomalyExplanation",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "anomalyState": {
+              "node": "anomalyState",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "attributeProfile": {
+              "node": "attributeProfile",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          "columns": {
+            "eExplanation": {
+              "nodeAlias": "anomalyExplanation",
+              "systemProperty": null,
+              "simpleProperty": "explanation"
+            },
+            "eId": {
+              "nodeAlias": "anomalyExplanation",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "eState": {
+              "nodeAlias": "anomalyExplanation",
+              "systemProperty": null,
+              "simpleProperty": "state"
+            },
+            "eCategory": {
+              "nodeAlias": "anomalyExplanation",
+              "systemProperty": null,
+              "simpleProperty": "category"
+            },
+            "eParentId": {
+              "nodeAlias": "anomalyExplanation",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "pParentId": {
+              "nodeAlias": "attributeProfile",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "pId": {
+              "nodeAlias": "attributeProfile",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "sParentId": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "sId": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "sState": {
+              "nodeAlias": "anomalyState",
+              "systemProperty": null,
+              "simpleProperty": "state"
+            },
+            "aId": {
+              "nodeAlias": "attribute",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "aFrom": {
+              "nodeAlias": "attribute",
+              "systemProperty": "FROM",
+              "simpleProperty": null
+            },
+            "aPath": {
+              "nodeAlias": "attribute",
+              "systemProperty": "PATH"
+            },
+            "cpId": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "cpProfileType": {
+              nodeAlias: "catalogItemProfile",
+              "systemProperty": null,
+              "simpleProperty": "profileType"
+            },
+            "cpProfiledAt": {
+              "nodeAlias": "catalogItemProfile",
+              "systemProperty": null,
+              "simpleProperty": "profiledAt"
+            }
+          }
+        }
+      }
+    },
+    "lookupItem": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          },
+          "description": "lookup name",
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "description": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "sourceItem": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "catalogItem"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "key": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "attribute"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "FIX_HCN"
+              }
+            }
+          ]
+        },
+        "lookup": {
+          "type":{
+            "reference": "false",
+            "array": "false",
+            "object": "lookupMetadata"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "UNIQUE",
+          "id": "LOOKUP_UNIQUE_NAME",
+          "scope": "GLOBAL",
+          "properties": [
+            "name"
+          ]
+        }
+      ],
+      "plugins": {
+        "catalog": {
+          "enabled": true
+        },
+        "lookup-management": {
+          "enabled": true
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "burgerMenu"
+          }
+        }
+      ]
+    },
+    "lookupMetadata": {
+      "properties": {
+        "lookupPath": {
+          "type": {
+            "type": "objectLink"
+          },
+          constraints: [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        },
+        "size": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "created": {
+          "type": {
+            "type": "long" //timestamp
+          }
+        }
+      },
+      "plugins": {
+        "lookup-management": {
+          "enabled": true
+        }
+      }
+    },
+    // CHECK ALERTS
+    "checkAlert": {
+      "properties": {
+        "type": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ],
+          "valueProvider": {
+            "type": "projectCheckAlertResultTypes"
+          }
+        },
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "iconName": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "defaultDqThreshold": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "INTERVAL",
+              "id": "ALERT_LIMIT_PERCENTAGE_INTERVAL",
+              "min": 0,
+              "minIncluded": true,
+              "max": 100,
+              "maxIncluded": false,
+              "message": "Must be between 0 and 100"
+            }
+          ]
+        },
+        "color": {
+          "type": {
+            "type": "string"
+          },
+          "constraints": [
+            {
+              "type": "REQUIRED"
+            }
+          ]
+        }
+      }
+    },
+    "checkAlertInstance": {
+      "properties": {
+        "checkAlert": {
+          "type": {
+            "reference": "true",
+            "array": "false",
+            "object": "checkAlert"
+          },
+          "traits": [
+            {
+              "traitName": "core:cascade",
+              "properties": {
+                "deleteStrategy": "DELETE"
+              }
+            }
+          ]
+        },
+        "dqThreshold": {
+          "type": {
+            "type": "integer"
+          },
+          "constraints": [
+            {
+              "type": "INTERVAL",
+              "id": "ALERT_LIMIT_PERCENTAGE_INTERVAL",
+              "min": 0,
+              "minIncluded": true,
+              "max": 100,
+              "maxIncluded": false,
+              "message": "Must be between 0 and 100"
+            }
+          ]
+        }
+      }
+    },
+    "dqEvalValidityAggr": {
+      "properties": {
+        "validCount": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "validColor": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "invalidCount": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "invalidColor": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "overallQuality": {
+          "type": {
+            "type": "float"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:sql/dqEvalValidityAggr.sql",
+          "nodes": {
+            "aggr": {
+              "node": "dqEvalAggr",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dimAggr": {
+              "node": "dqEvalDimensionAggr",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dimAggrResult": {
+              "node": "dqEvalDimensionAggrResult",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dqDim": {
+              "node": "dqDimension",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dqDimResult": {
+              "node": "dqDimensionResult",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          "columns": {
+            "aggrFrom": {
+              "nodeAlias": "aggr",
+              "systemProperty": "FROM",
+              "simpleProperty": null
+            },
+            "aggrPath": {
+              "nodeAlias": "aggr",
+              "systemProperty": "PATH"
+            },
+            "aggrId": {
+              "nodeAlias": "dimAggr",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "aggrPid": {
+              "nodeAlias": "aggr",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dimAggrId": {
+              "nodeAlias": "dimAggr",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dimAggrPid": {
+              "nodeAlias": "dimAggr",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dimAggrResultId": {
+              "nodeAlias": "dimAggrResult",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dimAggrResultPid": {
+              "nodeAlias": "dimAggrResult",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dqDimId": {
+              "nodeAlias": "dqDim",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dqDimPid": {
+              "nodeAlias": "dqDim",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dqDimResultId": {
+              "nodeAlias": "dqDimResult",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dqDimResultPid": {
+              "nodeAlias": "dqDimResult",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            }
+          }
+        }
+      }
+    },
+    "projectDqEvalValidityAggr": {
+      "properties": {
+        "validCount": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "validColor": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "invalidCount": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "invalidColor": {
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:/sql/dqEvalValidityAggr.sql",
+          "nodes": {
+            "aggr": {
+              "node": "projectOverallDqResult",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dimAggr": {
+              "node": "dqEvalDimensionAggr",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dimAggrResult": {
+              "node": "dqEvalDimensionAggrResult",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dqDim": {
+              "node": "dqDimension",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dqDimResult": {
+              "node": "dqDimensionResult",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          "columns": {
+            "aggrFrom": {
+              "nodeAlias": "aggr",
+              "systemProperty": "FROM",
+              "simpleProperty": null
+            },
+            "aggrPath": {
+              "nodeAlias": "aggr",
+              "systemProperty": "PATH"
+            },
+            "aggrId": {
+              "nodeAlias": "dimAggr",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "aggrPid": {
+              "nodeAlias": "aggr",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dimAggrId": {
+              "nodeAlias": "dimAggr",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dimAggrPid": {
+              "nodeAlias": "dimAggr",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dimAggrResultId": {
+              "nodeAlias": "dimAggrResult",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dimAggrResultPid": {
+              "nodeAlias": "dimAggrResult",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dqDimId": {
+              "nodeAlias": "dqDim",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dqDimPid": {
+              "nodeAlias": "dqDim",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dqDimResultId": {
+              "nodeAlias": "dqDimResult",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dqDimResultPid": {
+              "nodeAlias": "dqDimResult",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            }
+          }
+        }
+      }
+    },
+    "aggregationDqEvalValidityAggr": {
+      "properties": {
+        "validCount": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "validColor": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "invalidCount": {
+          "type": {
+            "type": "integer"
+          }
+        },
+        "invalidColor": {
+          "type": {
+            "type": "string"
+          }
+        },
+        "overallQuality": {
+          "type": {
+            "type": "float"
+          }
+        }
+      },
+      "persistence": {
+        "sqlSelect": {
+          "sql": "include:sql/aggregationDqEvalValidityAggr.sql",
+          "nodes": {
+            "aggr": {
+              "node": "dqAggregation",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dimAggrResult": {
+              "node": "dqEvalDimensionAggrResult",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dqDim": {
+              "node": "dqDimension",
+              "permissions": false,
+              "nodeProperties": []
+            },
+            "dqDimResult": {
+              "node": "dqDimensionResult",
+              "permissions": false,
+              "nodeProperties": []
+            }
+          },
+          "columns": {
+            "aggrFrom": {
+              "nodeAlias": "aggr",
+              "systemProperty": "FROM",
+              "simpleProperty": null
+            },
+            "aggrPath": {
+              "nodeAlias": "aggr",
+              "systemProperty": "PATH"
+            },
+            "aggrId": {
+              "nodeAlias": "aggr",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "aggrPid": {
+              "nodeAlias": "aggr",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dimAggrResultId": {
+              "nodeAlias": "dimAggrResult",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dimAggrResultPid": {
+              "nodeAlias": "dimAggrResult",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dqDimId": {
+              "nodeAlias": "dqDim",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dqDimPid": {
+              "nodeAlias": "dqDim",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            },
+            "dqDimResultId": {
+              "nodeAlias": "dqDimResult",
+              "systemProperty": "ID",
+              "simpleProperty": null
+            },
+            "dqDimResultPid": {
+              "nodeAlias": "dqDimResult",
+              "systemProperty": "PARENT_ID",
+              "simpleProperty": null
+            }
+          }
+        }
+      }
+    },
+    "valueLists": {
+      "properties": {
+        "deployments": {
+          "type": {
+            "reference": "false",
+            "array": "true",
+            "object": "deployment"
+          }
+        }
+      },
+      "traits": [
+        {
+          "traitName": "fe:mmdEntity",
+          "properties": {
+            "iconName": "list"
+          }
+        }
+      ]
+    },
+    "deployment": {
+      "properties": {
+        "name": {
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

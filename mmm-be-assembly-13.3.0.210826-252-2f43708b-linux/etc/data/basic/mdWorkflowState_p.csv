@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","name_s","displayName_s","nextState_ri","nextState_rh","from_h","to_h"
+"bbceb2dd-5ee5-4268-89d3-4cf9a15ba63f","fc9d73af-b83b-428f-805a-f27dc4d94573","/system/workflows/states","mdWorkflowState","published","Published",,,1,
+"8cb566b7-ff63-4c58-82ef-34c362645abe","fc9d73af-b83b-428f-805a-f27dc4d94573","/system/workflows/states","mdWorkflowState","to-approve","Waiting for Approval","bbceb2dd-5ee5-4268-89d3-4cf9a15ba63f",,1,

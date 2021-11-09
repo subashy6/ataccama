@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="mysql" driver="com.mysql.jdbc.Driver" urlTemplate="jdbc:mysql://&lt;host&gt;[:port]/&lt;database&gt;?characterEncoding=utf8&amp;useUnicode=true&amp;useCursorFetch=true&amp;defaultFetchSize=1000">
+	<jars>
+		<jar file="../libs/mysql-connector-java-5.1.5-bin.jar"/>
+	</jars>
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter="">
+		<createScript>CREATE TABLE &lt;tableName&gt; (
+	&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;}; separator=&quot;,\n&quot;&gt;
+);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD COLUMN &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; MODIFY COLUMN &lt;attr.name&gt; &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<pagedSelectScript>
+		SELECT &lt;selNames:{it | &lt;it&gt;};separator=","&gt; FROM &lt;tableName&gt; &lt;if(columns)&gt; WHERE &lt;columns:{it | &lt;it&gt;=?};separator=" AND "&gt;&lt;endif&gt; 
+		&lt;if(groups)&gt; GROUP BY &lt;groups:{it | &lt;it&gt;};separator=","&gt;&lt;endif&gt; 
+		&lt;if(sorters)&gt; ORDER BY &lt;sorters:{it | &lt;it&gt;};separator=","&gt;&lt;endif&gt;
+		 LIMIT &lt;offset&gt;, &lt;count&gt;
+		</pagedSelectScript>
+		
+		<!-- indexes -->
+		<createIndex>CREATE INDEX &lt;indexName&gt; ON &lt;tableName&gt; (&lt;columns;separator=&quot;,&quot;&gt;)</createIndex>
+		<dropIndex>DROP INDEX &lt;indexName&gt; ON &lt;tableName&gt;</dropIndex>
+		
+		<sequenceCreate>CREATE TABLE &lt;seqName&gt; (ID BIGINT AUTO_INCREMENT PRIMARY KEY)</sequenceCreate>
+		<sequenceNext>INSERT INTO &lt;seqName&gt; values (DEFAULT);SELECT max(ID) FROM &lt;seqName&gt;</sequenceNext>
+		<sequenceDrop>DROP TABLE &lt;seqName&gt;</sequenceDrop>
+		<sequenceSet></sequenceSet>
+	</templates>
+	
+	<persistenceMappings>
+    	<mapping type="STRING" dbType="VARCHAR($size)" defaultSize="255" />
+    	<mapping type="BOOLEAN" dbType="BOOL" />
+    	<mapping type="INTEGER" dbType="INT" />
+    	<mapping type="LONG_INTEGER" dbType="BIGINT" />
+    	<mapping type="BIG_INTEGER" dbType="BIGINT" />
+    	<mapping type="FLOAT" dbType="DOUBLE" />
+    	<mapping type="DATETIME" dbType="DATETIME" />
+    	<mapping type="BLOB" dbType="BLOB" />
+    	<mapping type="CLOB" dbType="LONGTEXT" />   
+    </persistenceMappings>
+	
+	<nonParametricDbTypes>
+		DATE,TIME,BLOB,TIMESTAMP,DEC,DOUBLE,DOUBLE PRECISION,REAL,FLOAT,MEDIUMINT,SMALLINT,TINYINT,INTEGER,INT,BIGINT,BIT,BOOLEAN
+	</nonParametricDbTypes>
+	
+    <genericMappings>
+        <!-- string -->
+        <mapping sourceType="CHAR" targetType="VARCHAR(255)" />
+        <mapping sourceType="CHAR(%s)" targetType="VARCHAR($1)" />
+        <mapping sourceType="NCHAR" targetType="VARCHAR(255)" />
+        <mapping sourceType="NCHAR(%s)" targetType="VARCHAR($1)" />
+        <mapping sourceType="NATIONAL CHAR(%s)" targetType="VARCHAR($1)" />
+        <mapping sourceType="NATIONAL CHAR" targetType="VARCHAR(255)" />
+        <mapping sourceType="TEXT" targetType="VARCHAR(255)" />
+        <mapping sourceType="TEXT(%s)" targetType="VARCHAR($1)" />
+        <mapping sourceType="TINYTEXT" targetType="VARCHAR(255)" />
+        <mapping sourceType="TINYTEXT(%s)" targetType="VARCHAR($1)" />
+        <mapping sourceType="MEDIUMTEXT" targetType="VARCHAR(255)" />
+        <mapping sourceType="MEDIUMTEXT(%s)" targetType="VARCHAR($1)" />
+        <mapping sourceType="LONGTEXT" targetType="LONGTEXT" />
+        <mapping sourceType="LONGTEXT(%s)" targetType="LONGTEXT($1)" />
+        <!-- datetime -->
+        <mapping sourceType="TIMESTAMP" targetType="DATETIME" /> 
+        <mapping sourceType="DATE" targetType="DATETIME" />
+        <mapping sourceType="TIME" targetType="DATETIME" />    
+        <!-- boolean -->
+        <mapping sourceType="BOOLEAN" targetType="BOOL" />
+        <mapping sourceType="BIT" targetType="BOOL" />
+        <!-- numeric types -->
+        <mapping sourceType="INTEGER" targetType="INT" />
+        <mapping sourceType="TINYINT" targetType="INT" />
+        <mapping sourceType="SMALLINT" targetType="INT" />
+        <mapping sourceType="MEDIUMINT" targetType="INT" />
+        <mapping sourceType="FLOAT" targetType="DOUBLE" />
+        <mapping sourceType="REAL" targetType="DOUBLE" />
+        <mapping sourceType="DOUBLE PRECISION" targetType="DOUBLE" />
+        <mapping sourceType="DECIMAL" targetType="DOUBLE" />
+        <mapping sourceType="DEC" targetType="DOUBLE" />
+		<!-- generic numeric types -->
+		<mapping sourceType="DECIMAL(%s,%p)" targetType="NUMERIC($1,$2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL" targetType="NUMERIC(20,2)" />
+		<mapping sourceType="NUMERIC" targetType="NUMERIC(20,2)" />
+    </genericMappings>
+    
+    <dqcMappings>
+    	<mapping sourceType="NUMERIC(%s,%p)" targetType="FLOAT">
+    		<cases>
+    			<case maxSize="10" maxPrecision="0" targetType="INTEGER" />
+    			<case maxPrecision="0" targetType="LONG" />
+    		</cases>
+    	</mapping>
+    	<mapping sourceType="VARCHAR(%s)" targetType="STRING" />
+    	<mapping sourceType="DATETIME" targetType="DATETIME" />
+    	<mapping sourceType="BOOL" targetType="BOOLEAN" />
+    	<mapping sourceType="INT" targetType="INTEGER" />
+    	<mapping sourceType="DOUBLE" targetType="FLOAT" />
+    	<mapping sourceType="BIGINT" targetType="LONG"/>
+    </dqcMappings>
+    
+</dbModule>

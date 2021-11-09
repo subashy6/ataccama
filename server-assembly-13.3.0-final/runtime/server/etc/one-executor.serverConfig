@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<server xmlns:comm="http://www.ataccama.com/purity/comment" version="12.4.0.daily-2019-05-11">
+	<port>7799</port>
+	<runtimeConfiguration>one-executor.runtimeConfig</runtimeConfiguration>
+	<serverComponents>
+		<component disabled="false" class="com.ataccama.dqc.web.HttpDispatcher">
+			<filters/>
+			<listeners>
+				<listenerBean healthstateRefreshRate="60000" maxWaitingRequests="10" backlog="50" waitingRequestsWarningThreshold="1" port="8888" threadPoolTimeout="10000" healthStateRecoveryTimeout="300000" name="default" threads="10" servletOnly="false" ssl="false">
+					<contexts>
+						<listenerContext path="/">
+							<filterChains>
+								<filterChain path="/*" filters="securityFilter">
+									<conditions/>
+								</filterChain>
+							</filterChains>
+							<securityFilter loginUrl="/sso/login" class="com.ataccama.server.http.security.keycloak.KeycloakSecurity">
+								<identityProviders>
+									<identityProvider configName="keycloak-local" clientId="one-admin-center" pattern="/**"/>
+								</identityProviders>
+								<interceptUrls>
+									<interceptUrl access="isAuthenticated()" pattern="/console/**">
+										<comm:comment>Admin center web console</comm:comment>
+									</interceptUrl>
+									<interceptUrl access="isAuthenticated()" pattern="/executor/**">
+										<comm:comment>Remote Executor API</comm:comment>
+									</interceptUrl>
+									<interceptUrl access="isAuthenticated()" pattern="/api/dqd/**">
+										<comm:comment>Dqd Management API</comm:comment>
+									</interceptUrl>
+								</interceptUrls>
+							</securityFilter>
+						</listenerContext>
+					</contexts>
+				</listenerBean>
+			</listeners>
+			<servletFilters/>
+		</component>
+		<component disabled="false" class="com.ataccama.dqc.server.services.AuthenticationService">
+			<methods/>
+		</component>
+		<component dataSourceRefreshRate="60" pathVariableRefreshRate="60" disabled="false" class="com.ataccama.dqc.server.services.HealthStateProviders"/>
+		<component listeners="all" disabled="false" cacheTemplate="true" class="com.ataccama.dqc.web.console.WebConsoleComponent">
+			<customMenuCategories/>
+			<customMenuItems/>
+		</component>
+		<component disabled="false" class="com.ataccama.dqc.web.health.HealthStateWebConsole"/>
+		<component localRootFolder="../one-executor/tmp" propertiesFile="../one-executor/executor.properties" prefix="/executor" maxRunningJobs="0" disabled="false" enableEditProperties="false" class="com.ataccama.dqc.executor.RemoteExecutorComponent"/>
+		<component listener="default" disabled="false" class="com.ataccama.dqd.engine.DqdManagementServerComponent"/>
+		<component configFile="logging.xml" disabled="false" class="com.ataccama.dqc.web.logging.LoggingComponent"/>
+	</serverComponents>
+</server>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<notificationHandler>
+    <description>some notification handler description (will be shown on the Admin Center)</description>
+    <enabled>true</enabled>
+      <!--
+      <job class="job_class">
+            ... job configuration goes here, see individual job configurations in schedule-config.sch ...
+
+            Workflow jobs automatically receive additional variables ewf_NotificationEvents and ewf_NotificationEventsJson containing received events.
+
+            The first one is a string with semicolon separated events where each event is comma separated list of values:
+                id,timestamp,entityStatus,entityType,entityId
+            where:
+            - id - ID of event
+            - timestamp - event timestamp, in XML format
+            - entityStatus - what happened - CREATED, UPDATED...
+            - entityType - type of entity which was affected
+            - entityId - ID of entity which was affected
+            The second one contains events in JSON array, for example:
+            [ {
+                "id":1,
+                "timestamp":"2021-05-25T09:03:23.730010Z",
+                "entityId":"cd456b86-157f-4432-b5df-c5602d5b9af5",
+                "entityType":"tableAttribute",
+                "entityStatus":"UPDATED"
+            }, ... ]
+
+            You can use variable expansion when definiting script in script jobs or variables in workflow job.
+            For example <variable name="events" value="${ewf_NotificationEvents}"/>
+      </job>
+      -->
+    <!-- Name of ONE server configuration to which to subscribe -->
+    <serverName>localOne</serverName>
+    <!-- Subscription definition -->
+    <subscription>
+        <!-- From following properties, only ackLimit is mandatory. subscriptionId will be generated if not set
+             and if no entity specification is provided, all events from server will be received -->
+
+        <!-- Subscription ID - each subscription must have unique ID. If not set, server will generate one and save it into definition file -->
+        <subscriptionId>uuid</subscriptionId>
+        <!-- Max number of events server will send without acknowledge. This amount of messages might be sent multiple times (unless acked) -->
+        <ackLimit>5</ackLimit>
+        <!-- Publish events for this particular entity only -->
+        <entityId>uuid</entityId>
+        <!-- Publish events for any descendant entity -->
+        <entityAncestorId>uuid</entityAncestorId>
+        <!-- Publish events for for entities of this type (and descendant types) -->
+        <entityType></entityType>
+        <!-- Max number of events to sent at once -->
+        <chunkSize>5</chunkSize>
+        <!-- If server has less events than chunkSize, it should wait at most this number of milliseconds -->
+        <chunkMaxDelay>1000</chunkMaxDelay>
+        <!-- If true then you will not get events triggered by the same user. This is important when event handler may generate new events
+             which would again trigger this handler invocation. The result could be infinite loop of generating events. -->
+        <excludeOwnModifications>true</excludeOwnModifications>
+    </subscription>
+</notificationHandler>

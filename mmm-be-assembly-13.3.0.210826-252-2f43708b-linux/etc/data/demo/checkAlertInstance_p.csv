@@ -1,0 +1,5 @@
+"id_i","parent_id_i","path_i","type_i","checkAlert_ri","checkAlert_rh","dqThreshold_s","from_h","to_h"
+"8384cd64-946f-40e1-a128-1ea92583b8a0","6bcbd55b-db41-45fc-abd7-d4d16f14ff6e","/monitoringProjects/configuration/items/dqChecks/checkAlertInstances","checkAlertInstance","1ca0598b-4159-4234-99bd-182f6721dce8",,,"541",
+"8f0ab46b-e7d7-4a91-8b06-68a0757c7cd4","ea62b476-e290-4d8a-841b-b30908f6c749","/monitoringProjects/configuration/items/dqChecks/checkAlertInstances","checkAlertInstance","1ca0598b-4159-4234-99bd-182f6721dce8",,,"541",
+"2122386c-4292-42f2-8f18-39800616f3e1","fb3f387b-82b3-45f6-9c16-104c7c4bde16","/monitoringProjects/configuration/items/dqChecks/checkAlertInstances","checkAlertInstance","1ca0598b-4159-4234-99bd-182f6721dce8",,,"541",
+"59b58283-320c-4e29-870c-96f86238672d","14294e82-692b-43f7-a08b-ed832b2bb109","/monitoringProjects/configuration/items/dqChecks/checkAlertInstances","checkAlertInstance","1ca0598b-4159-4234-99bd-182f6721dce8",,,"541",

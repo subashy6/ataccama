@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="postgres" driver="org.postgresql.Driver" urlTemplate="jdbc:postgresql://&lt;server&gt;[:port:5432]/&lt;database&gt;">
+	<jars>
+		<jar file="../libs/postgresql-8.3-604.jdbc3.jar"/>
+	</jars>
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter="">
+		<createScript>CREATE TABLE &lt;tableName&gt; (
+	&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;}; separator=&quot;,\n&quot;&gt;
+);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD COLUMN &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; ALTER COLUMN &lt;attr.name&gt; TYPE &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<pagedSelectScript>
+		SELECT &lt;selNames:{it | &lt;it&gt;};separator=","&gt; FROM &lt;tableName&gt; &lt;if(columns)&gt; WHERE &lt;columns:{it | &lt;it&gt;=?};separator=" AND "&gt;&lt;endif&gt; 
+		&lt;if(groups)&gt; GROUP BY &lt;groups:{it | &lt;it&gt;};separator=","&gt;&lt;endif&gt; 
+		&lt;if(sorters)&gt; ORDER BY &lt;sorters:{it | &lt;it&gt;};separator=","&gt;&lt;endif&gt;
+		 LIMIT &lt;count&gt; OFFSET &lt;offset&gt;
+		</pagedSelectScript>
+		
+		<!-- indexes -->
+		<createIndex>CREATE INDEX &lt;indexName&gt; ON &lt;tableName&gt; (&lt;columns;separator=&quot;,&quot;&gt;)</createIndex>
+		<dropIndex>DROP INDEX &lt;indexName&gt;</dropIndex>
+		
+		<!-- SEQUENCES -->
+		<sequenceCreate>CREATE SEQUENCE &lt;seqName&gt;</sequenceCreate>
+		<sequenceNext>SELECT NEXTVAL('&lt;seqName&gt;')</sequenceNext>
+		<sequenceDrop>DROP SEQUENCE &lt;seqName&gt;</sequenceDrop>
+		<sequenceSet></sequenceSet>
+	</templates>
+	
+	<nonParametricDbTypes>
+		TIME,TIMESTAMP,TEXT,DATE,REAL,FLOAT4,FLOAT8,INT2,INT4,SMALLINT,INT8,BYTEA
+	</nonParametricDbTypes>
+	
+    <persistenceMappings>
+    	<mapping type="STRING" dbType="TEXT" />
+    	<mapping type="BOOLEAN" dbType="BOOLEAN" />
+    	<mapping type="INTEGER" dbType="INTEGER" />
+    	<mapping type="LONG_INTEGER" dbType="BIGINT" />
+    	<mapping type="BIG_INTEGER" dbType="BIGINT" />
+    	<mapping type="FLOAT" dbType="DOUBLE PRECISION" />
+    	<mapping type="DATETIME" dbType="TIMESTAMP" />
+    	<mapping type="BLOB" dbType="BYTEA" />
+    	<mapping type="CLOB" dbType="TEXT" />    	
+    </persistenceMappings>
+	
+    <genericMappings>
+		<!-- String -->
+		<mapping sourceType="TEXT(%s)" targetType="TEXT" />
+		<mapping sourceType="CHAR" targetType="CHAR(255)" />
+		<mapping sourceType="CHAR(%s)" targetType="CHAR($1)" />
+		<mapping sourceType="CHARACTER" targetType="CHAR(255)" />
+		<mapping sourceType="CHARACTER(%s)" targetType="CHAR($1)" />
+		<mapping sourceType="CHARACTER VARYING" targetType="CHAR(255)" />
+		<mapping sourceType="CHARACTER VARYING(%s)" targetType="CHAR($1)" />
+		<!-- boolean -->
+		<mapping sourceType="BOOL(%s)" targetType="BOOLEAN" />		
+    	<!-- datetime -->
+    	<mapping sourceType="TIME" targetType="TIMESTAMP" />
+    	<!-- numeric -->
+		<mapping sourceType="REAL"	targetType="DOUBLE PRECISION" />
+    	<mapping sourceType="FLOAT4" targetType="DOUBLE PRECISION" />
+    	<mapping sourceType="FLOAT8" targetType="DOUBLE PRECISION" />    	
+      	<mapping sourceType="INT2" targetType="INTEGER" />
+      	<mapping sourceType="INT4" targetType="INTEGER" />
+      	<mapping sourceType="SMALLINT" targetType="INTEGER" />
+		<mapping sourceType="INT8" targetType="BIGINT" />
+		<!-- generic numeric types -->
+		<mapping sourceType="DECIMAL(%s,%d)" targetType="NUMERIC($1,$2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL" targetType="NUMERIC(20,2)" />
+		<mapping sourceType="NUMERIC" targetType="NUMERIC(20,2)" />
+    </genericMappings>
+    
+    <dqcMappings>
+    	<mapping sourceType="NUMERIC(%s,%p)" targetType="FLOAT">
+    		<cases>
+    			<case maxSize="10" maxPrecision="0" targetType="INTEGER" />
+    			<case maxPrecision="0" targetType="LONG" />
+    		</cases>
+    	</mapping>    
+		<mapping sourceType="DOUBLE PRECISION" targetType="FLOAT" />
+		<mapping sourceType="TEXT" targetType="STRING" />
+		<mapping sourceType="CHAR" targetType="STRING" />
+		<mapping sourceType="CHAR(%s)" targetType="STRING"/>
+		<mapping sourceType="TIMESTAMP" targetType="DATETIME" />
+		<mapping sourceType="INTEGER" targetType="INTEGER" />
+		<mapping sourceType="BIGINT" targetType="LONG" />
+    </dqcMappings>
+
+</dbModule>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <!-- <property name="logging.useDefaultConfig" value="true" /> -->
+    <!-- <property name="root.level" value="INFO" /> -->
+    <!-- <property name="stdout.level" value="DEBUG" /> -->
+    <!-- <property name="ataccama.level" value="DEBUG" /> -->
+    <!-- <property name="ataccama.stdout.level" value="DEBUG" /> -->
+    <!-- <property name="ataccama.additivity" value="false" /> -->
+
+    <!--
+    <appender name="ATACCAMA_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ataccama.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>ataccama.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-7([%level])   %msg%n</pattern>
+        </encoder>
+    </appender>
+    -->
+    <!--
+    <appender name="ACCESS_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/access.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-7([%level])   %msg%n</pattern>
+        </encoder>
+    </appender>
+    -->
+    <!--
+    <appender name="SECURITY_LOG" class="ch.qos.logback.core.FileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <file>logs/security.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-7([%level])   %logger %msg%n</pattern>
+        </encoder>
+    </appender>
+    -->
+
+    <!--
+    <logger name="ataccama" additivity="false">
+        <appender-ref ref="ATACCAMA_FILE" />
+    </logger>
+    -->
+    <!--
+    <logger name="ataccama.HttpDispatcher.accessLog" level="INFO">
+        <appender-ref ref="ACCESS_LOG" />
+    </logger>
+    -->
+    <!--  debug spring/keycloak security -->
+    <!--
+    <logger name="org.keycloak" level="DEBUG">
+        <appender-ref ref="SECURITY_LOG" />
+    </logger>
+    <logger name="org.springframework.security" level="DEBUG">
+        <appender-ref ref="SECURITY_LOG" />
+    </logger>
+    -->
+</included>

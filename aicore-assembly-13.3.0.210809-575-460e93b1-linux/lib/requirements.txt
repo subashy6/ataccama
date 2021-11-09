@@ -1,0 +1,57 @@
+# Package names should only use lowercase letters, numbers and dashes!
+# Extra dependencies (in square brackets) should be also explicitly listed (to freeze them + check their license)!
+
+# Precompiled requirements
+--extra-index-url https://artifactory.ataccama.dev/artifactory/api/pypi/python-external/simple  # Necessary for fast-autocomplete
+
+# GRPC
+grpcio==1.39.0
+grpcio-tools==1.39.0
+protobuf==3.17.3
+
+# S3
+minio==7.1.0
+
+# Database
+alembic==1.6.5
+cx-oracle==8.2.1
+psycopg2-binary==2.9.1
+pyodbc==4.0.31
+sqlalchemy==1.4.22
+
+# Infrastructure
+cryptography==3.4.7
+jwcrypto==0.9.1
+loguru==0.5.3
+prometheus-client==0.11.0
+psutil==5.8.0
+pyjks==20.0.0
+pyjwt==2.1.0
+requests==2.26.0
+setproctitle==1.2.2
+tenacity==8.0.1
+typer==0.3.2
+
+# Data science
+dedupe==2.0.6
+faiss-cpu==1.7.1.post2
+fast-autocomplete[pylev]==0.7.2
+jellyfish==0.8.2
+numpy==1.21.1
+pandas==1.3.1
+pylev==1.4.0
+scikit-learn==0.24.2
+scipy==1.7.0
+statsmodels==0.12.2
+symspellpy==6.7.0
+# Temporary usage of MIT-licensed version from our Artifactory
+Levenshtein-search==2.0.0
+
+# Helpers
+bidict==0.21.2
+more-itertools==8.8.0
+tabulate==0.8.9
+ipython==7.25.0
+pip==21.2.1
+setuptools==57.4.0
+wheel==0.36.2

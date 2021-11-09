@@ -1,0 +1,11 @@
+"id_i","parent_id_i","path_i","type_i","name_s","color_s","order_s","mainResult_s","defaultConditionResult_s","defaultFallbackResult_s","from_h","to_h"
+"ec49b8ed-52b2-469c-8424-4866249755cb","0a2a2a64-ff0f-4e05-94c1-3413f09a50e0","/dqDimensions/results","dqDimensionResult","Invalid","#E82610","2","false","true","false","0",
+"67b7aed6-b54f-4be3-a987-95899f605029","0a2a2a64-ff0f-4e05-94c1-3413f09a50e0","/dqDimensions/results","dqDimensionResult","Valid","#4CAF50","1","true","false","true","0",
+"2e3330af-56b3-4813-81c8-bdd822047953","cd4ad4c2-cf29-4bf1-91ef-42be0eeeb5b4","/dqDimensions/results","dqDimensionResult","Not Complete","#D0D9DE","2","false","true","false","0",
+"e19f9b32-88d3-4d75-83ae-0c3c5ef41d27","cd4ad4c2-cf29-4bf1-91ef-42be0eeeb5b4","/dqDimensions/results","dqDimensionResult","Complete","#4CAF50","1","true","false","true","0",
+"7b30bc50-9f67-4617-8ea1-624e585b9c1a","885b5760-3105-4e11-ba6b-cd1c5d7928c1","/dqDimensions/results","dqDimensionResult","Unique","#4CAF50","1","true","true","false","0",
+"14ea9bab-3003-4331-bf97-0bfb9db99ecc","885b5760-3105-4e11-ba6b-cd1c5d7928c1","/dqDimensions/results","dqDimensionResult","Not Unique","#E82610","2","false","false","true","0",
+"e17cbfac-9c04-4d92-b310-bfa62d5e8a78","885b5760-3105-4e11-ba6b-cd1c5d7928c1","/dqDimensions/results","dqDimensionResult","Not Complete","#D0D9DE","3","false","false","true","0",
+"1107cf33-8e66-481e-b925-d21013950c31","94b2ceaf-a0ab-44c4-94ce-7fbf258a979d","/dqDimensions/results","dqDimensionResult","Accurate","#4CAF50","1","true","true","false","0",
+"ead4240d-51ac-491a-8233-af6a5e2fee1e","94b2ceaf-a0ab-44c4-94ce-7fbf258a979d","/dqDimensions/results","dqDimensionResult","Not Accurate","#E82610","2","false","false","true","0",
+"5f0874c9-0a5b-4243-8982-c2caad3c0429","94b2ceaf-a0ab-44c4-94ce-7fbf258a979d","/dqDimensions/results","dqDimensionResult","Not Complete","#D0D9DE","3","false","false","false","0",

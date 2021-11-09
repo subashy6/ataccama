@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="generic" driver="" urlTemplate="">
+
+	<!-- this is generic template that does not adhere to any database, it's serving
+		 just for generic query definition, when user chooses unsupported database:
+		 it means database we have no specific template created for -->
+		 
+	<params idQuoteString="&quot;" quotedCase="MIXED" unquotedCase="UPPER" />
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter="">
+		<createScript>CREATE TABLE &lt;tableName&gt; (
+	&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;}; separator=&quot;,\n&quot;&gt;
+);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD COLUMN &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; ALTER COLUMN &lt;attr.name&gt; TYPE &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<!-- SEQUENCES -->
+		<sequenceCreate>CREATE SEQUENCE &lt;seqName&gt;</sequenceCreate>
+		<sequenceNext>SELECT NEXTVAL('&lt;seqName&gt;')</sequenceNext>
+		<sequenceDrop>DROP SEQUENCE &lt;seqName&gt;</sequenceDrop>
+		<sequenceSet></sequenceSet>
+		 
+	</templates>
+    
+    <persistenceMappings>
+		<mapping type="STRING" dbType="varchar($size)" defaultSize="255"/>
+		<mapping type="BOOLEAN" dbType="CHAR(1)" />
+		<mapping type="INTEGER" dbType="INTEGER" />
+		<mapping type="LONG_INTEGER" dbType="BIGINT" />
+		<mapping type="BIG_INTEGER" dbType="BIGINT" />
+		<mapping type="FLOAT" dbType="DOUBLE" />
+		<mapping type="DATETIME" dbType="DATETIME" />
+		<mapping type="BLOB" dbType="BLOB" />
+		<mapping type="CLOB" dbType="CLOB" />		
+	</persistenceMappings>
+	    	
+</dbModule>

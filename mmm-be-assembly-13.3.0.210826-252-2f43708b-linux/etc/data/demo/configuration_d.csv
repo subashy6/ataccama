@@ -1,0 +1,2 @@
+"id_i","parent_id_i","path_i","type_i","entityName_s","propertyName_s","propertyType_s","change_type_d","author_d","timestamp_d"
+"087f7b58-54d5-43dd-9f0e-4597400b4a10","00000000-0000-0000-0000-000000000001","/configuration","configuration","Configuration","P1 - not changed in draft (1 -> 1), P2 - updated in draft (2 -> 3), P3 - deleted in draft ( -> null), P4 - created in draft (null -> 4)","v3","CHANGE","SYSTEM","2020-05-21T17:48:49+02:00"

@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","name_s","from_h","to_h"
+"a3e68ab6-21b1-4087-97ca-5e221d8f46e8","11fbfa28-5b37-4e8b-b0f2-c3aa7d85c559","/sources/locations/catalogItems/foreignKeys","foreignKey","FK_BusinessEntityAddress_AddressType_AddressTypeID","93",
+"9c728e3f-0246-4cb7-8f59-811b5815d87e","11fbfa28-5b37-4e8b-b0f2-c3aa7d85c559","/sources/locations/catalogItems/foreignKeys","foreignKey","FK_BusinessEntityAddress_Address_AddressID","93",
+"d66bed3c-dbcf-4d90-a9b0-100ebd8864b2","11fbfa28-5b37-4e8b-b0f2-c3aa7d85c559","/sources/locations/catalogItems/foreignKeys","foreignKey","FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID","93",

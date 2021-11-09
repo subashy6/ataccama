@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","result_s","state_s","startedCount_s","finishedCount_s","dqResult_ri","from_h","to_h"
+"020a96d5-7d90-4f37-a603-739d5ed73622","73c3d183-2e47-4d84-8dd3-842208edb207","/monitoringProjects/processings/items/dqResult","projectCatalogItemDqResult","NOT_PROCESSED","PENDING",,,,"540","541"
+"020a96d5-7d90-4f37-a603-739d5ed73622","73c3d183-2e47-4d84-8dd3-842208edb207","/monitoringProjects/processings/items/dqResult","projectCatalogItemDqResult","NOT_PROCESSED","RUNNING","4","0",,"541","542"
+"020a96d5-7d90-4f37-a603-739d5ed73622","73c3d183-2e47-4d84-8dd3-842208edb207","/monitoringProjects/processings/items/dqResult","projectCatalogItemDqResult","WARNING","FINISHED","4","4","a8293284-502b-4811-a2b7-5d0216982be1","542",

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dbModule name="db2" driver="com.ibm.db2.jcc.DB2Driver" urlTemplate="jdbc:db2://&lt;host&gt;:&lt;port446&gt;/&lt;database&gt;">
+	<jars>
+		<jar file="../libs/db2jcc.jar"/>
+		<jar file="../libs/db2jcc_license_cu.jar"/>
+	</jars>
+	<templates templateDelimiter="&lt;&gt;" sqlCommandDelimiter=";">
+		<createScript>CREATE TABLE &lt;tableName&gt; (&lt;columns:{attr | &lt;attr.name&gt; &lt;attr.type&gt;};separator=&quot;,&quot;&gt;);</createScript>
+		<createColumn>attr | ALTER TABLE &lt;tableName&gt; ADD &lt;attr.name&gt; &lt;attr.type&gt;;</createColumn>
+		<updateColumn>attr | ALTER TABLE &lt;tableName&gt; ALTER COLUMN &lt;attr.name&gt; SET DATA TYPE &lt;attr.type&gt;;</updateColumn>
+		<deleteColumn>attr | ALTER TABLE &lt;tableName&gt; DROP COLUMN &lt;attr.name&gt;;</deleteColumn>
+		
+		<!-- indexes -->
+		<createIndex>CREATE INDEX &lt;indexName&gt; ON &lt;tableName&gt; (&lt;columns;separator=&quot;,&quot;&gt;)</createIndex>
+		<dropIndex>DROP INDEX &lt;indexName&gt;</dropIndex>		
+		
+		<!-- identity used in dedicated table -->
+		<sequenceCreate>CREATE TABLE &lt;seqName&gt; (sqid BIGINT GENERATED ALWAYS AS IDENTITY)</sequenceCreate>
+		<sequenceNext>INSERT INTO &lt;seqName&gt; VALUES (DEFAULT); SELECT max(sqid) FROM &lt;seqName&gt;</sequenceNext>
+		<sequenceDrop>DROP TABLE &lt;seqName&gt;</sequenceDrop>
+		<sequenceSet></sequenceSet>
+		
+	</templates>
+	
+	<nonParametricDbTypes>
+		FLOAT,REAL,DOUBLE,INTEGER,SMALLINT,DATE,TIME,TIMESTAMP,BLOB,BIGINT	
+	</nonParametricDbTypes>
+	
+	<persistenceMappings>
+		<mapping type="STRING" dbType="VARCHAR($size)" defaultSize="255"/>
+		<mapping type="BOOLEAN" dbType="CHAR(1)" />
+		<mapping type="INTEGER" dbType="INTEGER" />
+		<mapping type="LONG_INTEGER" dbType="BIGINT" />
+		<mapping type="BIG_INTEGER" dbType="BIGINT" />
+		<mapping type="FLOAT" dbType="DOUBLE" />
+		<mapping type="DATETIME" dbType="TIMESTAMP" />
+		<mapping type="BLOB" dbType="BLOB" />
+		<mapping type="CLOB" dbType="CLOB" />		
+	</persistenceMappings>
+	
+	<genericMappings>
+		<!-- strings -->
+		<mapping sourceType="CHAR" targetType="VARCHAR(255)" />
+		<!-- this may represent boolean, keep it -->
+		<mapping sourceType="CHAR(1)" targetType="CHAR(1)" />
+		<mapping sourceType="CHAR(%s)" targetType="VARCHAR($1)" />
+		<mapping sourceType="VARCHAR" targetType="VARCHAR(255)" />
+		<mapping sourceType="VARCHAR(%s)" targetType="VARCHAR($1)" />
+		<!-- datetime -->
+		<mapping sourceType="DATETIME" targetType="TIMESTAMP" />
+		<mapping sourceType="TIME" targetType="TIMESTAMP"/>
+		<!-- number datatypes -->
+		<mapping sourceType="FLOAT" targetType="DOUBLE" />
+		<mapping sourceType="REAL" targetType="DOUBLE" />
+		<mapping sourceType="SMALLINT" targetType="INTEGER" />
+		<!-- generic number datatypes -->
+		<mapping sourceType="DECIMAL(%s,%d)" targetType="NUMERIC($1,$2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL" targetType="NUMERIC(20,2)" />
+		<mapping sourceType="DECIMAL(%s)" targetType="NUMERIC($1,0)" />
+		<mapping sourceType="DECIMAL(%s,%p)" targetType="NUMERIC($1,$2)" />
+		<mapping sourceType="NUMERIC" targetType="NUMERIC(20,2)" />
+		<mapping sourceType="NUMERIC(%s)" targetType="NUMERIC($1,0)" />	
+	</genericMappings>
+	
+	<dqcMappings>
+	    <mapping sourceType="NUMERIC(%s,%p)" targetType="FLOAT">
+    		<cases>
+    			<case maxSize="10" maxPrecision="0" targetType="INTEGER" />
+    			<case maxPrecision="0" targetType="LONG" />
+    		</cases>
+    	</mapping>
+    	<mapping sourceType="CHAR(1)" targetType="BOOLEAN" />
+		<mapping sourceType="VARCHAR(%s)" targetType="STRING" />
+		<mapping sourceType="DATE" targetType="DAY" />
+		<mapping sourceType="TIMESTAMP" targetType="DATETIME" />
+		<mapping sourceType="DOUBLE" targetType="FLOAT" />
+		<mapping sourceType="INTEGER" targetType="INTEGER" />
+		<mapping sourceType="BIGINT" targetType="LONG" />
+	</dqcMappings>
+</dbModule>

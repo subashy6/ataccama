@@ -1,0 +1,5 @@
+"id_i","parent_id_i","path_i","type_i","name_s","multipleRules_s","order_s","from_h","to_h"
+"0a2a2a64-ff0f-4e05-94c1-3413f09a50e0","00000000-0000-0000-0000-000000000001","/dqDimensions","dqDimension","Validity","true","1","0",
+"cd4ad4c2-cf29-4bf1-91ef-42be0eeeb5b4","00000000-0000-0000-0000-000000000001","/dqDimensions","dqDimension","Completeness","false","2","0",
+"885b5760-3105-4e11-ba6b-cd1c5d7928c1","00000000-0000-0000-0000-000000000001","/dqDimensions","dqDimension","Uniqueness","false","3","0",
+"94b2ceaf-a0ab-44c4-94ce-7fbf258a979d","00000000-0000-0000-0000-000000000001","/dqDimensions","dqDimension","Accuracy","false","4","0",

@@ -1,0 +1,3 @@
+"id_i"                                ,"parent_id_i"                         ,"path_i"               ,"type_i"             ,"name_s"            ,"label_s"                ,"description_s"                     ,"from_h","to_h"
+"8c59263b-f406-4021-9f09-9998b1560938","00000000-0000-0000-0000-000000000001","/policyConditionTypes","policyConditionType","_hasName"          ,"Name of an Asset"       ,"Checks for name property"          ,"0"     ,
+"73661b39-00e9-434b-af06-8d7b9ca91ffb","00000000-0000-0000-0000-000000000001","/policyConditionTypes","policyConditionType","_hasTerm"          ,"Term Assigned"          ,"Checks for assigned terms"         ,"0"     ,

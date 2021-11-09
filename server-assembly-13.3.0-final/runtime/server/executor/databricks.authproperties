@@ -1,0 +1,84 @@
+#---------------------------------Authentication-----------------------------------------
+# Access to the databricks platform
+# 
+dbr.url=https://<YOUR_DATABRICKS_WORKSPACE>
+
+# Authentication with a token
+dbr.authType=PERSONAL_TOKEN
+dbr.token=<YOUR_TOKEN>
+
+# Authentication with username and password
+#dbr.authType=BASIC_AUTH
+#dbr.user=
+#dbr.password=
+
+# Authentication using Azure Active Directory service principal
+#dbr.authType=AAD_CLIENT_CREDENTIAL
+#dbr.aad.tenantId=
+#dbr.aad.clientId=
+#dbr.aad.scope=
+#dbr.aad.clientSecret=
+
+# Authentication using Azure Active Directory managed identity
+#dbr.authType=AAD_MANAGED_IDENTITY
+#dbr.aad.scope=
+
+# Access to the Azure KeyVault
+#
+# Key Vault authentication using Azure Active Directory service principal
+#dbr.keyvault.authType=AAD_CLIENT_CREDENTIAL
+#dbr.aad.keyvault.vaultUrl=https://<YOUR_AZURE_KEYVAULT_URL>
+#dbr.aad.keyvault.tenantId=
+#dbr.aad.keyvault.clientId=
+#dbr.aad.keyvault.clientSecret=
+
+# Key Vault authentication using Azure Active Directory managed identity (default)
+#dbr.keyvault.authType=AAD_MANAGED_IDENTITY
+#dbr.aad.keyvault.vaultUrl=https://<YOUR_AZURE_KEYVAULT_URL>
+
+
+
+#---------------------------Amazon Web Services---------------------------------------------
+# Enable all of these properties and configure authentication if you are using Databricks on AWS
+# The same credentials can be used for mounting filesystem and for Ataccama jobs.
+
+# S3 Folder for storing libraries and files
+# mounted to some dir in dbfs, e.g.:
+#mount.point=/mnt/ataccama
+#mount.url=s3a://.../tmp/dbr
+
+# User Account to be used for mounting filesystem
+#mount.conf.fs.s3n.awsAccessKeyId=
+#mount.conf.fs.s3n.awsSecretAccessKey=
+
+# User Account to be used for configuring Ataccama job
+#conf.fs.s3a.access.key=
+#conf.fs.s3a.secret.key=
+
+# Uncomment these options if you are using AWS
+#conf.fs.s3a.fast.upload=true
+#conf.fs.s3a.fast.upload.buffer=bytebuffer
+
+
+#---------------------------------Azure--------------------------------------------------
+# Enable all of these properties and configure authentication if you are using Databricks on Azure
+# The same credentials can be used for mounting filesystem and for Ataccama jobs.
+
+# ADLS folder for storing libraries and files
+# mounted to some dir in dbfs, e.g.:
+#mount.point=/mnt/ataccama
+#mount.url=adl://.../tmp/dbr
+
+
+#mount.conf.dfs.adls.oauth2.access.token.provider.type=ClientCredential
+#mount.conf.dfs.adls.oauth2.refresh.url=<https://login.microsoftonline.com/.../oauth2/token>
+#mount.conf.dfs.adls.oauth2.client.id=
+#mount.conf.dfs.adls.oauth2.credential=
+
+#conf.fs.adl.impl=org.apache.hadoop.fs.adl.AdlFileSystem
+
+#conf.dfs.adls.oauth2.access.token.provider.type=ClientCredential
+#conf.dfs.adls.oauth2.refresh.url=<https://login.microsoftonline.com/.../oauth2/token>
+#conf.dfs.adls.oauth2.client.id=
+#conf.dfs.adls.oauth2.credential=
+

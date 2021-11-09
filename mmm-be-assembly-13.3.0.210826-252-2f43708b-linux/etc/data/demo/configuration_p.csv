@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","entityName_s","propertyName_s","propertyType_s","from_h","to_h"
+"087f7b58-54d5-43dd-9f0e-4597400b4a10","00000000-0000-0000-0000-000000000001","/configuration","configuration","Config","entity","v1","100","101"
+"087f7b58-54d5-43dd-9f0e-4597400b4a10","00000000-0000-0000-0000-000000000001","/configuration","configuration","Configuration","Param1 - v2 (value - 1), Param2 -v2 (value - 2), Param3 - v2 (value - 3)","v2","101",

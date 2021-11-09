@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","emailEnabled_s","notificationEnabled_s","notificationType_s","result_s","from_h","to_h"
+"e2d6e65d-d3bd-4d0c-a522-070647044c8a","8cd41900-1abe-4c52-a2e2-1c263764ce5d","/projectNotificationConfiguration/notificationSettings/rows","projectNotificationSettingsRow","false","true","PROJECT","FAILED","0",
+"d61ca9a8-d29b-4f4e-bd80-57c4c1f855c4","8cd41900-1abe-4c52-a2e2-1c263764ce5d","/projectNotificationConfiguration/notificationSettings/rows","projectNotificationSettingsRow","false","true","STRUCTURE_CHECK","ERROR","0",

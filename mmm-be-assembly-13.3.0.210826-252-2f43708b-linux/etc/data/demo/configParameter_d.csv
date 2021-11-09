@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","key_s","value_s","change_type_d","author_d","timestamp_d"
+"13fc38d7-0ad5-4212-8f17-1f3d7e9a1d3f","087f7b58-54d5-43dd-9f0e-4597400b4a10","/configuration/parameters","configParameter","entity.defaultPageSize","3","CHANGE","SYSTEM","2020-05-21T17:48:49+02:00"
+"d4add57c-23c8-4bea-8a1b-b478ec933250","087f7b58-54d5-43dd-9f0e-4597400b4a10","/configuration/parameters","configParameter","entity.defaultPageSize","3","DELETE","SYSTEM","2020-05-21T17:48:49+02:00"
+"59de61fe-30a9-4f50-90e5-e2c01d1e9f87","087f7b58-54d5-43dd-9f0e-4597400b4a10","/configuration/parameters","configParameter","entity.defaultPageSize","4","NEW","SYSTEM","2020-05-21T17:48:49+02:00"

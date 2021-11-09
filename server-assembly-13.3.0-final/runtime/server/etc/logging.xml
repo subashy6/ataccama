@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<loggingConfig>
+	<appenders>
+        <iLogAppenderFactory class="com.ataccama.dqc.commons.logging.factories.Slf4jLogAppenderFactory" name="slf4j"/>
+        <iLogAppenderFactory encoding="UTF-8" fileName="../logs/console.log" class="com.ataccama.dqc.commons.logging.factories.FileLogAppenderFactory" mode="append" name="console"/>
+	</appenders>
+	<loggingRules>
+        <!-- Redirect all logging to slf4j -->
+        <loggingRule level="INFO" appender="slf4j">
+            <trace/>
+        </loggingRule>
+        <!-- WebConsole requests to online.log -->
+        <loggingRule level="INFO" appender="console">
+            <trace>
+                <string>WebConsoleComponent</string>
+            </trace>
+        </loggingRule>
+	</loggingRules>
+</loggingConfig>

@@ -1,0 +1,3 @@
+"id_i","parent_id_i","path_i","type_i","type_s","name_s","iconName_s","defaultDqThreshold_s","color_s","from_h","to_h"
+"1ca0598b-4159-4234-99bd-182f6721dce8","d08528a6-22be-497f-8b80-4490d026edff","/projectCheckAlertConfiguration/projectCheckAlerts","checkAlert","WARNING","Warning","error","70","#FFAC33","0",
+"581b082c-f05e-44e4-8b01-a616621c0a4b","d08528a6-22be-497f-8b80-4490d026edff","/projectCheckAlertConfiguration/projectCheckAlerts","checkAlert","ERROR","Critical issue","error","90","#E82C17","0",

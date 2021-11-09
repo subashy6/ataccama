@@ -1,0 +1,4 @@
+"id_i","parent_id_i","path_i","type_i","name_s","from_h","to_h"
+"d99dc3e0-9e0d-4b26-830e-c4591a760428","f4591fdc-13c6-4cf1-9df6-40bedd547a70","/sources/locations/catalogItems/primaryKey/columns","primaryKeyColumn","businessentityid","93",
+"74f5ac3d-f270-438f-afda-1b382f2b5d41","f4591fdc-13c6-4cf1-9df6-40bedd547a70","/sources/locations/catalogItems/primaryKey/columns","primaryKeyColumn","addressid","93",
+"7e5116d2-85f1-461c-8879-f792343d0278","f4591fdc-13c6-4cf1-9df6-40bedd547a70","/sources/locations/catalogItems/primaryKey/columns","primaryKeyColumn","addresstypeid","93",

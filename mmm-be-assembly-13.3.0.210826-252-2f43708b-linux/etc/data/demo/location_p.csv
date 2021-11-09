@@ -1,0 +1,8 @@
+"id_i"                                ,"parent_id_i"                         ,"path_i"            ,"type_i"          ,"name_s" ,"originPath_s","description_s","from_h","to_h"
+"b0d3b477-0d5a-4987-9fc0-3a0adff122dd","3bc4a6c0-cd9f-4e6f-a1c4-d0d5de161eee","/sources/locations","databaseLocation","test-db",              ,               ,"93"    ,
+"ff3b8d48-8145-4c89-8a45-69986c06349a","81585cd2-f16f-4fe5-8f86-6efa80224912","/sources/locations","schemaLocation"  ,"person" ,"person"      ,               ,"93"    ,
+"c69be342-b2f4-4d8f-bbd7-ec9bff3e08b8","81585cd2-f16f-4fe5-8f86-6efa80224912","/sources/locations","schemaLocation"  ,"sales"  ,"sales"       ,               ,"93"    ,
+"1f40c964-fd8a-49ff-99a1-7760b2cf0a0f","81585cd2-f16f-4fe5-8f86-6efa80224912","/sources/locations","schemaLocation"  ,"public" ,"public"      ,               ,"93"    ,
+"5a22310c-38ed-470e-8fe0-bd70de9290b9","81585cd2-f16f-4fe5-8f86-6efa80224912","/sources/locations","schemaLocation"  ,"owner"  ,"owner"       ,               ,"321"   ,
+"81585cd2-f16f-4fe5-8f86-6efa80224912","d5c951ee-2080-4460-8eea-e126e239ee3a","/sources/locations","databaseLocation","test-db",""            ,               ,"321"   ,
+"81585cd2-f16f-4fe5-8f86-6efa80224912","d5c951ee-2080-4460-8eea-e126e239ee3a","/sources/locations","databaseLocation","test-db",              ,               ,"93"    ,"321"
